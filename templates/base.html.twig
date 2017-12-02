@@ -1,12 +1,22 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Akisroc{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+  <head>
+    <meta name="language" content="fr-FR" />
+    <meta charset="UTF-8">
+    <title>{% block title %}Akisroc{% endblock %}</title>
+    {# TODO: Webpack routine #}
+    {% block stylesheets %}
+      <link rel="stylesheet" href="build/css/app.css">
+    {% endblock %}
     </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+
+  <header class="grid-x">
+    <h1 class="small-3">Akisroc</h1>
+    <p class="small-3">Salut</p>
+  </header>
+
+  <body>
+    {% block body %}{% endblock %}
+    {% block javascripts %}{% endblock %}
+  </body>
 </html>

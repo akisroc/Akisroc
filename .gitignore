@@ -10,6 +10,13 @@
 .web-server-pid
 ###< symfony/web-server-bundle ###
 
-###< local ###
-/.idea/
+###> app ###
+/node_modules/
+###< app ###
+
 ###> local ###
+/.idea/
+###< local ###
+###> symfony/webpack-encore-pack ###
+/node_modules/
+###< symfony/webpack-encore-pack ###

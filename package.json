@@ -1,0 +1,27 @@
+{
+  "name": "akisroc",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Adrien-H/akisroc.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Adrien-H/akisroc/issues"
+  },
+  "homepage": "https://github.com/Adrien-H/akisroc#readme",
+  "dependencies": {
+    "foundation-sites": "^6.4.4-rc1"
+  },
+  "devDependencies": {
+    "@symfony/webpack-encore": "^0.17.0",
+    "node-sass": "^4.7.2",
+    "sass-loader": "^6.0.6"
+  }
+}
