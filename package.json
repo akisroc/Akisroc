@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/Adrien-H/akisroc#readme",
   "dependencies": {
+    "font-awesome": "^4.7.0",
     "foundation-sites": "^6.4.4-rc1"
   },
   "devDependencies": {

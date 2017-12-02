@@ -1,4 +1,15 @@
+$header-padding: 0 10px 10px 10px;
+
 header {
-  padding: 10px;
-  background-color: rgba($light-gray, 0.75);
+  background-color: rgba($light-gray, 0.95);
+  box-shadow: $black 2 2 3;
+
+  .header-menu {
+    padding: 10px;
+    background-color: rgba($black, 0.2);
+  }
+
+  .header-title {
+    padding: 10px;
+  }
 }

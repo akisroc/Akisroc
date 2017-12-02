@@ -1,0 +1,26 @@
+main {
+  max-width: 70%;
+  margin: 2vh auto 20px auto;
+
+  padding: 10px;
+  background-color: rgba($light-gray, 0.95);
+
+  section {
+    background-color: rgba(#99CDD8, 0.2);
+
+    a > section {
+      background-color: rgba(#5e5e5e, 0.2);
+      color: black;
+      transition: all 0.1s ease-out;
+
+      h4 {
+        .fa {
+          padding: 0 8px 0 0;
+        }
+      }
+    }
+    a > section:hover {
+      background-color: rgba(#5e5e5e, 0.4);
+    }
+  }
+}

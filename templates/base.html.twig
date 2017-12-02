@@ -14,23 +14,38 @@
 
     {# HEADER #}
     <header class="grid-x">
-      <h1 class="small-3 cell">Akisroc</h1>
-      <p class="small-3 cell">Salut</p>
+      <nav class="header-menu right cell grid-x">
+        <span class="small-offset-6 small-4 medium-offset-8 medium-2 large-offset-10 large-1 cell">
+          <a href="#">Se connecter</a>
+        </span>
+        <span class="small-4 medium-2 large-1 cell">
+          <a href="#">S'inscrire</a>
+        </span>
+      </nav>
+      <div class="header-title">
+        <h1 class="cell">
+          Akisroc
+        </h1>
+      </div>
     </header>
+    {# END HEADER #}
 
     {# CONTENT #}
     <main>
       {% block body %}{% endblock %}
     </main>
+    {# END CONTENT #}
 
     {# FOOTER #}
     <footer>
     </footer>
+    {# END FOOTER #}
 
     {# SCRIPTS #}
     {% block javascripts %}
       <script src="{{ asset('build/js/app.js') }}"></script>
     {% endblock %}
+    {# END SCRIPTS #}
 
   </body>
 

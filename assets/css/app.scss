@@ -1,10 +1,12 @@
 // Vendors
 @import "~foundation-sites/scss/foundation";
 @include foundation-everything;
+@import "~font-awesome/scss/font-awesome";
 
 // Includes
 @import "includes/variables";
 
 // Components
-@import "components/main";
+@import "components/body";
 @import "components/header/header";
+@import "components/main/main";
