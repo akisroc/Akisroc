@@ -175,5 +175,8 @@
             "version": "1.0",
             "ref": "9954e3835ce82fee2682be8501ce0511bb867812"
         }
+    },
+    "symfony/asset": {
+        "version": "v4.0.0"
     }
 }

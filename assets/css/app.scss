@@ -1,1 +1,10 @@
-@import "~foundation-sites/scss/foundation.scss";
+// Vendors
+@import "~foundation-sites/scss/foundation";
+@include foundation-everything;
+
+// Includes
+@import "includes/variables";
+
+// Components
+@import "components/main";
+@import "components/header/header";

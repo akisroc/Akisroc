@@ -1,22 +1,37 @@
 <!DOCTYPE html>
 <html>
+
   <head>
     <meta name="language" content="fr-FR" />
     <meta charset="UTF-8">
     <title>{% block title %}Akisroc{% endblock %}</title>
-    {# TODO: Webpack routine #}
     {% block stylesheets %}
-      <link rel="stylesheet" href="build/css/app.css">
+      <link rel="stylesheet" href="{{ asset('build/css/app.css') }}">
     {% endblock %}
-    </head>
-
-  <header class="grid-x">
-    <h1 class="small-3">Akisroc</h1>
-    <p class="small-3">Salut</p>
-  </header>
+  </head>
 
   <body>
-    {% block body %}{% endblock %}
-    {% block javascripts %}{% endblock %}
+
+    {# HEADER #}
+    <header class="grid-x">
+      <h1 class="small-3 cell">Akisroc</h1>
+      <p class="small-3 cell">Salut</p>
+    </header>
+
+    {# CONTENT #}
+    <main>
+      {% block body %}{% endblock %}
+    </main>
+
+    {# FOOTER #}
+    <footer>
+    </footer>
+
+    {# SCRIPTS #}
+    {% block javascripts %}
+      <script src="{{ asset('build/js/app.js') }}"></script>
+    {% endblock %}
+
   </body>
+
 </html>
