@@ -20,3 +20,7 @@
 ###> symfony/webpack-encore-pack ###
 /node_modules/
 ###< symfony/webpack-encore-pack ###
+
+###> phpunit/phpunit ###
+/phpunit.xml
+###< phpunit/phpunit ###
