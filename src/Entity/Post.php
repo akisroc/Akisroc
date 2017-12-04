@@ -17,9 +17,9 @@ class Post
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=31)
+     * @ORM\Column(type="string", length=8191)
      */
-    private $name;
+    private $content;
 
     /**
      * @return int|null
@@ -43,18 +43,18 @@ class Post
     /**
      * @return null|string
      */
-    public function getName(): ?string
+    public function getContent(): ?string
     {
-        return $this->name;
+        return $this->content;
     }
 
     /**
-     * @param null|string $name
+     * @param null|string $content
      * @return self
      */
-    public function setName(?string $name): self
+    public function setContent(?string $content): self
     {
-        $this->name = $name;
+        $this->content = $content;
 
         return $this;
     }
