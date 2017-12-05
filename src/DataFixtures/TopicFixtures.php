@@ -3,7 +3,7 @@
 namespace App\DataFixtures;
 
 use App\DataFixtures\Util\FixturesUtil;
-use App\Entity\Post;
+use App\Entity\Category;
 use App\Entity\Topic;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -11,18 +11,18 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Faker\Factory;
 
 /**
- * Class PostFixtures
+ * Class TopicFixtures
  * @package App\DataFixtures
  */
-class PostFixtures extends Fixture implements DependentFixtureInterface
+class TopicFixtures extends Fixture implements DependentFixtureInterface
 {
-    protected const COUNT = 2000;
+    protected const COUNT = 100;
 
     /** @var \Faker\Generator $faker */
     protected $faker;
 
     /**
-     * PostFixtures constructor.
+     * TopicFixtures constructor.
      */
     public function __construct()
     {
@@ -34,16 +34,15 @@ class PostFixtures extends Fixture implements DependentFixtureInterface
      */
     public function load(ObjectManager $manager): void
     {
-        /** @var Topic[] $topics */
-        $topics = FixturesUtil::filterReferences($this->referenceRepository->getReferences(), Topic::class);
+        /** @var Category[] $categories */
+        $categories = FixturesUtil::filterReferences($this->referenceRepository->getReferences(), Category::class);
         for ($i = 0; $i < self::COUNT; ++$i) {
-            $topic = $topics[array_rand($topics)];
-            $post = Post::create($this->faker->paragraphs(mt_rand(1, 5), true), $topic);
-            $this->setReference("post_$i", $post);
-            $manager->persist($post);
+            $topic = Topic::create($this->faker->sentence(mt_rand(2,3)), $categories[array_rand($categories)]);
+            $this->setReference("topic_$i", $topic);
+            $manager->persist($topic);
         }
 
-        $manager->flush();
+//        $manager->flush();
     }
 
     /**
@@ -52,7 +51,7 @@ class PostFixtures extends Fixture implements DependentFixtureInterface
     public function getDependencies(): array
     {
         return [
-            TopicFixtures::class
+            CategoryFixtures::class
         ];
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Category;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,6 +20,13 @@ class HomepageController extends Controller
      */
     public function index(): Response
     {
-        return $this->render('homepage.html.twig');
+        // TODO: Optimize
+        $em = $this->getDoctrine();
+        $categoryRepo = $em->getRepository(Category::class);
+        $categories = $categoryRepo->findTopCategories();
+
+        return $this->render('homepage.html.twig', [
+            'categories' => $categories
+        ]);
     }
 }
