@@ -43,10 +43,9 @@ class Category
     private $children;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Topic", mappedBy="category", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Board", mappedBy="category", cascade={"persist", "remove"})
      */
-    private $topics;
+    private $boards;
 
     /**
      * Category constructor.
@@ -54,7 +53,7 @@ class Category
     public function __construct()
     {
         $this->children = new ArrayCollection();
-        $this->topics = new ArrayCollection();
+        $this->boards = new ArrayCollection();
     }
 
     /**
@@ -70,16 +69,19 @@ class Category
      * @param string|null $description
      * @param Category|null $parent
      * @param iterable|null $children
+     * @param iterable $boards
      * @return Category
      */
     static public function create(string $title, string $description = null,
-                                  Category $parent = null, iterable $children = []
+                                  Category $parent = null, iterable $children = [],
+                                  iterable $boards = []
     ): Category {
         $category = new Category();
         $category->setTitle($title);
         $category->setDescription($description);
         $category->setParent($parent);
         $category->addChildren($children);
+        $category->addBoards($boards);
 
         return $category;
     }
@@ -208,46 +210,46 @@ class Category
     }
 
     /**
-     * @return ArrayCollection|PersistentCollection|null
+     * @return Collection|null
      */
-    public function getTopics()
+    public function getBoards(): ?Collection
     {
-        return $this->topics;
+        return $this->boards;
     }
 
     /**
-     * @param ArrayCollection|null $topics
+     * @param Collection|null $boards
      * @return self
      */
-    public function setTopics(?ArrayCollection $topics): self
+    public function setBoards(?Collection $boards): self
     {
-        $this->topics = $topics;
+        $this->boards = $boards;
 
         return $this;
     }
 
     /**
-     * @param Topic|null $topic
+     * @param Board|null $board
      * @return self
      */
-    public function addTopic(?Topic $topic): self
+    public function addBoard(?Board $board): self
     {
-        if ($topic && !$this->topics->contains($topic)) {
-            $this->topics->add($topic);
+        if ($board && !$this->boards->contains($board)) {
+            $this->boards->add($board);
         }
 
         return $this;
     }
 
     /**
-     * @param iterable $topics
-     * @return Category
+     * @param iterable $boards
+     * @return self
      */
-    public function addTopics(?iterable $topics): self
+    public function addBoards(?iterable $boards): self
     {
-        if ($topics) {
-            foreach ($topics as $topic) {
-                $this->addTopic($topic);
+        if ($boards) {
+            foreach ($boards as $board) {
+                $this->addBoard($board);
             }
         }
 

@@ -37,7 +37,7 @@ class CategoryFixtures extends Fixture
                     $parentCategory
                 );
                 $manager->persist($category);
-                $this->addReference("category_{$category->getTitle()}", $category);
+                $this->setReference("category_{$category->getTitle()}", $category);
 
                 if (!empty($node['children'])) {
                     $persistRecursive($node['children'], $category);
@@ -55,8 +55,6 @@ class CategoryFixtures extends Fixture
      */
     protected function provideCategories(): array
     {
-        $fakeDescription = function (): string { return $this->faker->paragraph(mt_rand(1, 3)); };
-
         return [
             [
                 'title' => 'RP',
@@ -65,39 +63,12 @@ class CategoryFixtures extends Fixture
                     [
                         'title' => 'Akisroc',
                         'description' => null,
-                        'children' => [
-                            [
-                                'title' => 'Place Frozell',
-                                'description' => $fakeDescription(),
-                                'children' => []
-                            ],
-                            [
-                                'title' => 'Quartier Merkin',
-                                'description' => $fakeDescription(),
-                                'children' => []
-                            ],
-                            [
-                                'title' => 'Ville basse',
-                                'description' => $fakeDescription(),
-                                'children' => []
-                            ],
-                            [
-                                'title' => 'Grande bibliothèque',
-                                'description' => $fakeDescription(),
-                                'children' => []
-                            ]
-                        ]
+                        'children' => []
                     ],
                     [
                         'title' => 'Dragostina',
                         'description' => null,
-                        'children' => [
-                            [
-                                'title' => 'Vie en Dragostina',
-                                'description' => $fakeDescription(),
-                                'children' => []
-                            ]
-                        ]
+                        'children' => []
                     ]
                 ]
             ],
@@ -108,50 +79,17 @@ class CategoryFixtures extends Fixture
                     [
                         'title' => 'Discussions',
                         'description' => null,
-                        'children' => [
-                            [
-                                'title' => 'En vrac',
-                                'description' => $fakeDescription(),
-                                'children' => []
-                            ],
-                            [
-                                'title' => 'IRL',
-                                'description' => $fakeDescription(),
-                                'children' => []
-                            ]
-                        ]
+                        'children' => []
                     ],
                     [
                         'title' => 'Organisation du RP',
                         'description' => null,
-                        'children' => [
-                            [
-                                'title' => 'Propositions de scénarii',
-                                'description' => $fakeDescription(),
-                                'children' => []
-                            ],
-                            [
-                                'title' => 'Autour du RP',
-                                'description' => $fakeDescription(),
-                                'children' => []
-                            ]
-                        ]
+                        'children' => []
                     ],
                     [
                         'title' => 'Le jeu',
                         'description' => null,
-                        'children' => [
-                            [
-                                'title' => 'Idées',
-                                'description' => $fakeDescription(),
-                                'children' => []
-                            ],
-                            [
-                                'title' => 'Bugs',
-                                'description' => $fakeDescription(),
-                                'children' => []
-                            ]
-                        ]
+                        'children' => []
                     ]
                 ]
             ]

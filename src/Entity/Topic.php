@@ -26,13 +26,13 @@ class Topic
 
     /**
      * @ORM\ManyToOne(
-     *     targetEntity="App\Entity\Category",
+     *     targetEntity="App\Entity\Board",
      *     inversedBy="topics",
      *     cascade={"persist", "remove"}
      * )
-     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $category;
+    private $board;
 
     /**
      * @ORM\OneToMany(
@@ -62,15 +62,15 @@ class Topic
 
     /**
      * @param string $title
-     * @param Category|null $category
+     * @param Board|null $board
      * @param iterable $posts
      * @return Topic
      */
-    static public function create(string $title, Category $category = null, iterable $posts = []): Topic
+    static public function create(string $title, Board $board = null, iterable $posts = []): Topic
     {
         $topic = new Topic();
         $topic->setTitle($title);
-        $topic->setCategory($category);
+        $topic->setBoard($board);
         $topic->addPosts($posts);
 
         return $topic;
@@ -104,20 +104,20 @@ class Topic
     }
 
     /**
-     * @return Category|null
+     * @return Board|null
      */
-    public function getCategory(): ?Category
+    public function getBoard(): ?Board
     {
-        return $this->category;
+        return $this->board;
     }
 
     /**
-     * @param Category|null $category
+     * @param Board|null $board
      * @return self
      */
-    public function setCategory(?Category $category): self
+    public function setBoard(?Board $board): self
     {
-        $this->category = $category;
+        $this->board = $board;
 
         return $this;
     }

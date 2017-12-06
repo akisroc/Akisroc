@@ -1,16 +1,22 @@
-language: php
-php:
-  - '7.2'
-script: ./vendor/bin/phpunit tests/
-rvm:
-  - 2.2
-  - jruby
-  - rbox-3
-install:
-  - composer install --no-dev
-  - npm install --production
-  - ./node_modules/.bin/encore production
 branches:
   only:
     - master
-    - /^[0-9]*\.{1}[0-9]*$/
+    - /^[0-9]+\.[0-9]+$/
+
+env:
+  - APP_ENV="prod" APP_SECRET="6044a41cfb95fb92a92c293a84e1601d27740171" DATABASE_URL="mysql://dev:dev@127.0.0.1:3306/akisroc"
+
+language: php
+php:
+  - '7.2'
+
+install:
+  - composer install
+  - npm install
+  - ./node_modules/.bin/encore production
+
+before_script:
+  - docker-compose up
+  - php bin/console server:run
+
+script: ./vendor/bin/phpunit tests/

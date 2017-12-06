@@ -36,9 +36,9 @@ class PostFixtures extends Fixture implements DependentFixtureInterface
     {
         /** @var Topic[] $topics */
         $topics = FixturesService::filterReferences($this->referenceRepository->getReferences(), Topic::class);
+        $randTopic = function () use (&$topics): Topic { return $topics[array_rand($topics)]; };
         for ($i = 0; $i < self::COUNT; ++$i) {
-            $topic = $topics[array_rand($topics)];
-            $post = Post::create($this->faker->paragraphs(mt_rand(1, 5), true), $topic);
+            $post = Post::create($this->faker->paragraphs(mt_rand(1, 5), true), $randTopic());
             $this->setReference("post_$i", $post);
             $manager->persist($post);
         }

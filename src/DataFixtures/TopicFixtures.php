@@ -2,7 +2,7 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\Category;
+use App\Entity\Board;
 use App\Entity\Topic;
 use App\Utils\FixturesService;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -34,10 +34,11 @@ class TopicFixtures extends Fixture implements DependentFixtureInterface
      */
     public function load(ObjectManager $manager): void
     {
-        /** @var Category[] $categories */
-        $categories = FixturesService::filterReferences($this->referenceRepository->getReferences(), Category::class);
+        /** @var Board[] $categories */
+        $boards = FixturesService::filterReferences($this->referenceRepository->getReferences(), Board::class);
+        $randBoard = function () use (&$boards): Board { return $boards[array_rand($boards)]; };
         for ($i = 0; $i < self::COUNT; ++$i) {
-            $topic = Topic::create($this->faker->sentence(mt_rand(2,3)), $categories[array_rand($categories)]);
+            $topic = Topic::create($this->faker->sentence(mt_rand(2,3)), $randBoard());
             $this->setReference("topic_$i", $topic);
             $manager->persist($topic);
         }
@@ -51,7 +52,7 @@ class TopicFixtures extends Fixture implements DependentFixtureInterface
     public function getDependencies(): array
     {
         return [
-            CategoryFixtures::class
+            BoardFixtures::class
         ];
     }
 }

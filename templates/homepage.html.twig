@@ -8,11 +8,11 @@
       {% for categoryL2 in categoryL1.children %}
         <section class="category">
           <h3>{{ categoryL2.title }}</h3>
-          {% for categoryL3 in categoryL2.children %}
+          {% for board in categoryL2.boards %}
             <section class="category grid-x">
-              <a href="#" class="description small-9 cell">
-                <h4><span class="fa fa-book"></span>{{ categoryL3.title }}</h4>
-                <p>{{ categoryL3.description }}</p>
+              <a href="{{ path('board', {'id': board.id}) }}" class="description small-9 cell">
+                <h4><span class="fa fa-book"></span>{{ board.title }}</h4>
+                <p>{{ board.description }}</p>
               </a>
               <a href="#" class="last-post small-3 cell">
                 <h5>Lorem ipsum dolor.</h5>
