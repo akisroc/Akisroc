@@ -2,6 +2,6 @@
 
 {% block body %}
   {% for topic in topics %}
-    <p>{{ topic.title }}</p>
+    <a href="{{ path('topic', {'id': topic.id}) }}"><p>{{ topic.title }}</p></a>
   {% endfor %}
 {% endblock %}

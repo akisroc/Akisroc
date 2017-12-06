@@ -14,7 +14,7 @@ class HomepageControllerTest extends WebTestCase
      * @dataProvider urlProvider
      * @param string $url
      */
-    public function testPageIsSuccessful(string $url)
+    public function testPageIsSuccessful(string $url): void
     {
         $client = static::createClient();
         $client->request('GET', $url);
@@ -25,7 +25,7 @@ class HomepageControllerTest extends WebTestCase
     /**
      * @return \Generator
      */
-    public function urlProvider()
+    public function urlProvider(): \Generator
     {
         yield ['/'];
     }
