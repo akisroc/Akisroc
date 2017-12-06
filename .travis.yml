@@ -1,0 +1,16 @@
+language: php
+php:
+  - '7.2'
+script: ./vendor/bin/phpunit tests/
+rvm:
+  - 2.2
+  - jruby
+  - rbox-3
+install:
+  - composer install --no-dev
+  - npm install --production
+  - ./node_modules/.bin/encore production
+branches:
+  only:
+    - master
+    - /^[0-9]*\.{1}[0-9]*$/
