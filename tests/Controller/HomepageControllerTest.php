@@ -17,6 +17,8 @@ class HomepageControllerTest extends WebTestCase
     public function testPageIsSuccessful(string $url)
     {
         $client = static::createClient();
+        $client->request('GET', $url);
+
         $this->assertTrue($client->getResponse()->isSuccessful());
     }
 

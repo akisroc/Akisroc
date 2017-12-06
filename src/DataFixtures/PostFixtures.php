@@ -2,9 +2,9 @@
 
 namespace App\DataFixtures;
 
-use App\DataFixtures\Util\FixturesUtil;
 use App\Entity\Post;
 use App\Entity\Topic;
+use App\Utils\FixturesService;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -35,7 +35,7 @@ class PostFixtures extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager): void
     {
         /** @var Topic[] $topics */
-        $topics = FixturesUtil::filterReferences($this->referenceRepository->getReferences(), Topic::class);
+        $topics = FixturesService::filterReferences($this->referenceRepository->getReferences(), Topic::class);
         for ($i = 0; $i < self::COUNT; ++$i) {
             $topic = $topics[array_rand($topics)];
             $post = Post::create($this->faker->paragraphs(mt_rand(1, 5), true), $topic);

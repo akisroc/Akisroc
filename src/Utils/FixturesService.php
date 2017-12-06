@@ -1,17 +1,19 @@
 <?php
 
-namespace App\DataFixtures\Util;
+namespace App\Utils;
 
 /**
- * Class FixturesUtil
- * @package App\DataFixtures\Util
+ * Class FixturesService
+ * @package App\Utils
  */
-class FixturesUtil
+class FixturesService
 {
     /**
+     * Filters given references to return only objects from given class.
+     *
      * @param array $references
      * @param string $class
-     * @return array
+     * @return object[]
      */
     static public function filterReferences(array $references, string $class): array
     {

@@ -2,9 +2,9 @@
 
 namespace App\DataFixtures;
 
-use App\DataFixtures\Util\FixturesUtil;
 use App\Entity\Category;
 use App\Entity\Topic;
+use App\Utils\FixturesService;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -35,7 +35,7 @@ class TopicFixtures extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager): void
     {
         /** @var Category[] $categories */
-        $categories = FixturesUtil::filterReferences($this->referenceRepository->getReferences(), Category::class);
+        $categories = FixturesService::filterReferences($this->referenceRepository->getReferences(), Category::class);
         for ($i = 0; $i < self::COUNT; ++$i) {
             $topic = Topic::create($this->faker->sentence(mt_rand(2,3)), $categories[array_rand($categories)]);
             $this->setReference("topic_$i", $topic);

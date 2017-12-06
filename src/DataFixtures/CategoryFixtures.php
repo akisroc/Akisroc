@@ -37,12 +37,6 @@ class CategoryFixtures extends Fixture
                     $parentCategory
                 );
                 $manager->persist($category);
-//                if ($parentCategory) {
-//                    $parentCategory->addChild($category);
-//                    $manager->persist($parentCategory);
-//                } else {
-//                    $manager->persist($category);
-//                }
                 $this->addReference("category_{$category->getTitle()}", $category);
 
                 if (!empty($node['children'])) {
