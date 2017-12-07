@@ -25,4 +25,25 @@ class FixturesService
             return get_class($entity) === $class;
         });
     }
+
+    /**
+     * Gets random entity from array. If class is specified,
+     * then the returned entity will be from this class.
+     *
+     * @param array $entities
+     * @param string|null $class
+     * @return null|object
+     */
+    static public function randEntity(array $entities, string $class = null): ?object
+    {
+        if (empty($entities)) {
+            return null;
+        }
+
+        if (!$class) {
+            return $entities[array_rand($entities)];
+        }
+
+        return self::randEntity(self::filterReferences($entities, $class));
+    }
 }

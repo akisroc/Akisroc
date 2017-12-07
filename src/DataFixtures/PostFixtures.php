@@ -36,12 +36,11 @@ class PostFixtures extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager): void
     {
         $references = $this->referenceRepository->getReferences();
-        $randEntity = function (array $entities): object { return $entities[array_rand($entities)]; };
         for ($i = 0; $i < self::COUNT; ++$i) {
             $post = Post::create(
                 $this->faker->paragraphs(mt_rand(1, 5), true),
-                $randEntity(FixturesService::filterReferences($references, Topic::class)),
-                $randEntity(FixturesService::filterReferences($references, User::class))
+                FixturesService::randEntity($references, Topic::class),
+                FixturesService::randEntity($references, User::class)
             );
             $this->setReference("post_$i", $post);
             $manager->persist($post);
