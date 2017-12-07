@@ -11,6 +11,7 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Faker\Factory;
 use Symfony\Component\Security\Core\Encoder\Argon2iPasswordEncoder;
+use Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder;
 
 /**
  * Class UserFixtures
@@ -43,9 +44,12 @@ class UserFixtures extends Fixture
                 $this->faker->imageUrl(180, 180, 'abstract')
             );
 
-            $encoder = new Argon2iPasswordEncoder();
+            $encoder = Argon2iPasswordEncoder::isSupported()
+                ? new Argon2iPasswordEncoder()
+                : new BCryptPasswordEncoder(4)
+            ;
             $user->setPassword($encoder->encodePassword(
-                $this->faker->password(50, 1000),
+                $this->faker->password(15, 70),
                 $this->faker->sha256
             ));
 
