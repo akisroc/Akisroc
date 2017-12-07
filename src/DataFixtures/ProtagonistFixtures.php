@@ -2,8 +2,7 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\Post;
-use App\Entity\Topic;
+use App\Entity\Protagonist;
 use App\Entity\User;
 use App\Utils\FixturesService;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -12,18 +11,18 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Faker\Factory;
 
 /**
- * Class PostFixtures
+ * Class ProtagonistFixtures
  * @package App\DataFixtures
  */
-class PostFixtures extends Fixture implements DependentFixtureInterface
+class ProtagonistFixtures extends Fixture implements DependentFixtureInterface
 {
-    protected const COUNT = 2000;
+    protected const COUNT = 100;
 
     /** @var \Faker\Generator $faker */
     protected $faker;
 
     /**
-     * PostFixtures constructor.
+     * ProtagonistFixtures constructor.
      */
     public function __construct()
     {
@@ -36,20 +35,15 @@ class PostFixtures extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager): void
     {
         $references = $this->referenceRepository->getReferences();
-        $userRepo = $manager->getRepository(User::class);
         for ($i = 0; $i < self::COUNT; ++$i) {
-            $post = Post::create(
-                $this->faker->paragraphs(mt_rand(1, 5), true),
-                FixturesService::randEntity($references, Topic::class),
+            $protagonist = Protagonist::create(
+                $this->faker->lastName . '_' . mt_rand(1, 999999999),
+                $this->faker->imageUrl(180, 180, 'abstract'),
                 FixturesService::randEntity($references, User::class)
             );
 
-            $this->setReference("post_$i", $post);
-            if (empty($userRepo->findBy(['name' => $post->getUser()->getName()]))) {
-                $manager->persist($post);
-            } else {
-                $manager->merge($post);
-            }
+            $this->setReference("protagonist_{$protagonist->getName()}", $protagonist);
+            $manager->persist($protagonist);
         }
 
         $manager->flush();
@@ -61,7 +55,6 @@ class PostFixtures extends Fixture implements DependentFixtureInterface
     public function getDependencies(): array
     {
         return [
-            TopicFixtures::class,
             UserFixtures::class
         ];
     }

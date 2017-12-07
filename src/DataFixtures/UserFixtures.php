@@ -38,18 +38,21 @@ class UserFixtures extends Fixture
     {
         for ($i = 0; $i < self::COUNT; ++$i) {
             $user = User::create(
-                $this->faker->firstName,
+                $this->faker->firstName . '_' . mt_rand(1, 999999999),
                 $this->faker->email,
                 $this->faker->imageUrl(180, 180, 'abstract')
             );
 
             $encoder = new Argon2iPasswordEncoder();
             $user->setPassword($encoder->encodePassword(
-                $this->faker->password(50, 300),
+                $this->faker->password(50, 1000),
                 $this->faker->sha256
             ));
-            $this->setReference("user_$i", $user);
-            $manager->persist($user);
+
+            if (empty($manager->getRepository(User::class)->findBy(['name' => $user->getName()]))) {
+                $this->setReference("user_{$user->getName()}", $user);
+                $manager->persist($user);
+            }
         }
 
 //        $manager->flush();

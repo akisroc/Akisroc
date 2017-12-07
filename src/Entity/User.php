@@ -54,11 +54,17 @@ class User
     private $posts;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Protagonist", mappedBy="user", cascade={"persist", "remove"})
+     */
+    private $protagonists;
+
+    /**
      * User constructor.
      */
     public function __construct()
     {
         $this->posts = new ArrayCollection();
+        $this->protagonists = new ArrayCollection();
     }
 
     /**
@@ -74,15 +80,18 @@ class User
      * @param string $email
      * @param string|null $avatar
      * @param iterable $posts
+     * @param iterable $protagonists
      * @return User
      */
-    static public function create(string $name, string $email, string $avatar = null, iterable $posts = []): User
-    {
+    static public function create(string $name, string $email, string $avatar = null,
+                                  iterable $posts = [], iterable $protagonists = []
+    ): User {
         $user = new User();
         $user->setName($name);
         $user->setEmail($email);
         $user->setAvatar($avatar);
         $user->addPosts($posts);
+        $user->addProtagonists($protagonists);
 
         return $user;
     }
@@ -242,6 +251,53 @@ class User
         if ($posts) {
             foreach ($posts as $post) {
                 $this->addPost($post);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|null
+     */
+    public function getProtagonists(): ?Collection
+    {
+        return $this->protagonists;
+    }
+
+    /**
+     * @param Collection|null $protagonists
+     * @return self
+     */
+    public function setProtagonists(?Collection $protagonists): self
+    {
+        $this->protagonists = $protagonists;
+
+        return $this;
+    }
+
+    /**
+     * @param Post $protagonist
+     * @return self
+     */
+    public function addProtagonist(?Post $protagonist): self
+    {
+        if ($protagonist && !$this->protagonists->contains($protagonist)) {
+            $this->protagonists->add($protagonist);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param iterable $protagonists
+     * @return self
+     */
+    public function addProtagonists(?iterable $protagonists): self
+    {
+        if ($protagonists) {
+            foreach ($protagonists as $protagonist) {
+                $this->addPost($protagonist);
             }
         }
 
