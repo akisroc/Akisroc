@@ -34,6 +34,12 @@ class Post
     private $user;
 
     /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Protagonist", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
+     */
+    private $protagonist;
+
+    /**
      * @return string
      */
     public function __toString()
@@ -45,14 +51,17 @@ class Post
      * @param string $content
      * @param Topic|null $topic
      * @param User|null $user
+     * @param Protagonist|null $protagonist
      * @return Post
      */
-    static public function create(string $content, Topic $topic = null, User $user = null): Post
-    {
+    static public function create(string $content, Topic $topic = null,
+                                  User $user = null, Protagonist $protagonist = null
+    ): Post {
         $post = new Post();
         $post->setContent($content);
         $post->setTopic($topic);
         $post->setUser($user);
+        $post->setProtagonist($protagonist);
 
         return $post;
     }
@@ -129,6 +138,25 @@ class Post
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Protagonist|null
+     */
+    public function getProtagonist(): ?Protagonist
+    {
+        return $this->protagonist;
+    }
+
+    /**
+     * @param Protagonist|null $protagonist
+     * @return self
+     */
+    public function setProtagonist(?Protagonist $protagonist): self
+    {
+        $this->protagonist = $protagonist;
 
         return $this;
     }

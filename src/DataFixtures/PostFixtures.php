@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Post;
+use App\Entity\Protagonist;
 use App\Entity\Topic;
 use App\Entity\User;
 use App\Utils\FixturesService;
@@ -38,11 +39,11 @@ class PostFixtures extends Fixture implements DependentFixtureInterface
         $references = $this->referenceRepository->getReferences();
         $userRepo = $manager->getRepository(User::class);
         for ($i = 0; $i < self::COUNT; ++$i) {
-            $post = Post::create(
-                $this->faker->paragraphs(mt_rand(1, 5), true),
-                FixturesService::randEntity($references, Topic::class),
-                FixturesService::randEntity($references, User::class)
-            );
+            $content = $this->faker->paragraphs(mt_rand(1, 5), true);
+            $topic = FixturesService::randEntity($references, Topic::class);
+            $user = FixturesService::randEntity($references, User::class);
+            $protagonist = FixturesService::randEntity($user->getProtagonists()->toArray(), Protagonist::class);
+            $post = Post::create($content, $topic, $user, $protagonist);
 
             $this->setReference("post_$i", $post);
             if (empty($userRepo->findBy(['name' => $post->getUser()->getName()]))) {
@@ -62,7 +63,8 @@ class PostFixtures extends Fixture implements DependentFixtureInterface
     {
         return [
             TopicFixtures::class,
-            UserFixtures::class
+            UserFixtures::class,
+            ProtagonistFixtures::class
         ];
     }
 }
