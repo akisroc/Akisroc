@@ -9,13 +9,13 @@
           <header class="post-header grid-x">
             <div class="post-hrp-infos cell">
               <a id="{{ post.id }}" href="{{ path('topic', {'id': topic.id}) }}#{{ post.id }}">Écrit</a>
-              par <a href="#"><span class="post-author">Harkka</span></a>
+              par <a href="#"><span class="post-author">{{ post.user.name }}</span></a>
               le <span class="post-date">6 décembre 2017</span>
               à <span class="post-hour">22h16</span>
             </div>
             <div class="post-rp-infos cell">
               <div class="character-avatar">
-                <img src="{{ asset('build/images/alma.d958c6c9.jpg') }}" alt="Avatar Ec'bêl"{#TODO: Dynamize#}>
+                <img src="{{ post.user.avatar }}" alt="Avatar : {{ post.user.name }}">
               </div>
               <div class="post-character">Ec'bêl</div>
             </div>

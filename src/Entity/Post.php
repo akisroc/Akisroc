@@ -28,6 +28,12 @@ class Post
     private $topic;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="posts", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
+     */
+    private $user;
+
+    /**
      * @return string
      */
     public function __toString()
@@ -38,13 +44,15 @@ class Post
     /**
      * @param string $content
      * @param Topic|null $topic
+     * @param User|null $user
      * @return Post
      */
-    static public function create(string $content, Topic $topic = null): Post
+    static public function create(string $content, Topic $topic = null, User $user = null): Post
     {
         $post = new Post();
         $post->setContent($content);
         $post->setTopic($topic);
+        $post->setUser($user);
 
         return $post;
     }
@@ -102,6 +110,25 @@ class Post
     public function setTopic(?Topic $topic): self
     {
         $this->topic = $topic;
+
+        return $this;
+    }
+
+    /**
+     * @return User|null
+     */
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param User|null $user
+     * @return self
+     */
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

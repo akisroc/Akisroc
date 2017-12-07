@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Post;
 use App\Entity\Topic;
+use App\Entity\User;
 use App\Utils\FixturesService;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -34,11 +35,14 @@ class PostFixtures extends Fixture implements DependentFixtureInterface
      */
     public function load(ObjectManager $manager): void
     {
-        /** @var Topic[] $topics */
-        $topics = FixturesService::filterReferences($this->referenceRepository->getReferences(), Topic::class);
-        $randTopic = function () use (&$topics): Topic { return $topics[array_rand($topics)]; };
+        $references = $this->referenceRepository->getReferences();
+        $randEntity = function (array $entities): object { return $entities[array_rand($entities)]; };
         for ($i = 0; $i < self::COUNT; ++$i) {
-            $post = Post::create($this->faker->paragraphs(mt_rand(1, 5), true), $randTopic());
+            $post = Post::create(
+                $this->faker->paragraphs(mt_rand(1, 5), true),
+                $randEntity(FixturesService::filterReferences($references, Topic::class)),
+                $randEntity(FixturesService::filterReferences($references, User::class))
+            );
             $this->setReference("post_$i", $post);
             $manager->persist($post);
         }
@@ -52,7 +56,8 @@ class PostFixtures extends Fixture implements DependentFixtureInterface
     public function getDependencies(): array
     {
         return [
-            TopicFixtures::class
+            TopicFixtures::class,
+            UserFixtures::class
         ];
     }
 }
