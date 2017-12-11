@@ -12,10 +12,6 @@ use Doctrine\ORM\PersistentCollection;
  */
 class Topic
 {
-    // Todo: CategoryType entity?
-    const TYPE_RP = 'rp';
-    const TYPE_HRP = 'hrp';
-
     /**
      * @ORM\Id
      * @ORM\GeneratedValue

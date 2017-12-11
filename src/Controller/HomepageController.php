@@ -23,10 +23,14 @@ class HomepageController extends Controller
         // TODO: Optimize
         $em = $this->getDoctrine();
         $categoryRepo = $em->getRepository(Category::class);
-        $categories = $categoryRepo->findTopCategories();
+//        $categories = $categoryRepo->findTopCategories();
+        $groups = [
+            strtoupper(Category::TYPE_RP) => $categoryRepo->findByType(Category::TYPE_RP),
+            strtoupper(Category::TYPE_HRP) => $categoryRepo->findByType(Category::TYPE_HRP)
+        ];
 
         return $this->render('homepage.html.twig', [
-            'categories' => $categories
+            'groups' => $groups
         ]);
     }
 }

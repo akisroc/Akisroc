@@ -14,6 +14,9 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  */
 class Category
 {
+    const TYPE_RP = 'rp';
+    const TYPE_HRP = 'hrp';
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -30,6 +33,11 @@ class Category
      * @ORM\Column(type="string", length=511, nullable=true)
      */
     private $description;
+
+    /**
+     * @ORM\Column(type="string", length=15, nullable=false)
+     */
+    private $type;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="children", cascade={"persist", "remove"})
@@ -67,18 +75,20 @@ class Category
     /**
      * @param string $title
      * @param string|null $description
+     * @param string $type
      * @param Category|null $parent
      * @param iterable|null $children
      * @param iterable $boards
      * @return Category
      */
-    static public function create(string $title, string $description = null,
+    static public function create(string $title, string $description = null, string $type,
                                   Category $parent = null, iterable $children = [],
                                   iterable $boards = []
     ): Category {
         $category = new Category();
         $category->setTitle($title);
         $category->setDescription($description);
+        $category->setType($type);
         $category->setParent($parent);
         $category->addChildren($children);
         $category->addBoards($boards);
@@ -139,6 +149,25 @@ class Category
     public function setDescription(?string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param null|string $type
+     * @return self
+     */
+    public function setType(?string $type): self
+    {
+        $this->type = $type;
 
         return $this;
     }

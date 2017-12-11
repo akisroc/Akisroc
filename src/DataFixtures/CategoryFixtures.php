@@ -34,6 +34,7 @@ class CategoryFixtures extends Fixture
                 $category = Category::create(
                     $node['title'] ?: $this->faker->sentence(2, 3),
                     $node['description'] ?: $this->faker->paragraph(mt_rand(1, 3)),
+                    $node['type'] ?: $this->faker->randomElement([Category::TYPE_RP, Category::TYPE_HRP]),
                     $parentCategory
                 );
                 $manager->persist($category);
@@ -57,41 +58,34 @@ class CategoryFixtures extends Fixture
     {
         return [
             [
-                'title' => 'RP',
+                'title' => 'Akisroc',
+                'type' => Category::TYPE_RP,
                 'description' => null,
-                'children' => [
-                    [
-                        'title' => 'Akisroc',
-                        'description' => null,
-                        'children' => []
-                    ],
-                    [
-                        'title' => 'Dragostina',
-                        'description' => null,
-                        'children' => []
-                    ]
-                ]
+                'children' => []
             ],
             [
-                'title' => 'HRP',
+                'title' => 'Dragostina',
+                'type' => Category::TYPE_RP,
                 'description' => null,
-                'children' => [
-                    [
-                        'title' => 'Discussions',
-                        'description' => null,
-                        'children' => []
-                    ],
-                    [
-                        'title' => 'Organisation du RP',
-                        'description' => null,
-                        'children' => []
-                    ],
-                    [
-                        'title' => 'Le jeu',
-                        'description' => null,
-                        'children' => []
-                    ]
-                ]
+                'children' => []
+            ],
+            [
+                'title' => 'Discussions',
+                'type' => Category::TYPE_HRP,
+                'description' => null,
+                'children' => []
+            ],
+            [
+                'title' => 'Organisation du RP',
+                'type' => Category::TYPE_HRP,
+                'description' => null,
+                'children' => []
+            ],
+            [
+                'title' => 'Le jeu',
+                'type' => Category::TYPE_HRP,
+                'description' => null,
+                'children' => []
             ]
         ];
     }

@@ -2,13 +2,13 @@
 
 {% block body %}
   <input type="text" placeholder="Recherche...">
-  {% for categoryL1 in categories %}
+  {% for type, group in groups %}
     <section class="category">
-      <h2>{{ categoryL1.title }}</h2>
-      {% for categoryL2 in categoryL1.children %}
+      <h2>{{ type }}</h2>
+      {% for category in group %}
         <section class="category">
-          <h3>{{ categoryL2.title }}</h3>
-          {% for board in categoryL2.boards %}
+          <h3>{{ category.title }}</h3>
+          {% for board in category.boards %}
             <section class="category grid-x">
               <a href="{{ path('board', {'id': board.id}) }}" class="description small-9 cell">
                 <h4><span class="fa fa-book"></span>{{ board.title }}</h4>
