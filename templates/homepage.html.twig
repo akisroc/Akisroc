@@ -1,6 +1,13 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+  {#@Todo Remove it#}
+  <div style="margin: 3px 0; padding: 3px; border-radius: 4px;
+              background-color: #c0a16b; box-shadow: 1px 1px 3px black;
+              color: white; font-weight: bold;"
+  >
+    Bêta Akisroc - {{ app_version() }}
+  </div>
   <input type="text" placeholder="Recherche...">
   {% for type, group in groups %}
     <section class="category">

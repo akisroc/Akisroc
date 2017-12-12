@@ -19,7 +19,7 @@ class FixturesServiceTest extends TestCase
     /**
      * References must be filtered by class name.
      */
-    function testFilterReferences(): void
+    public function testFilterReferences(): void
     {
         $refs = [new Post(), new Post(), new Post(), new Topic()];
 
@@ -44,7 +44,7 @@ class FixturesServiceTest extends TestCase
     /**
      * Random entity must match with given class.
      */
-    function testRandEntity(): void
+    public function testRandEntity(): void
     {
         $entities = (function (): array {
             $entities = [];

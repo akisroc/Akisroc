@@ -3,9 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Category;
+use App\Utils\Git;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  * Class HomepageController
@@ -20,10 +22,8 @@ class HomepageController extends Controller
      */
     public function index(): Response
     {
-        // TODO: Optimize
         $em = $this->getDoctrine();
         $categoryRepo = $em->getRepository(Category::class);
-//        $categories = $categoryRepo->findTopCategories();
         $groups = [
             strtoupper(Category::TYPE_RP) => $categoryRepo->findByType(Category::TYPE_RP),
             strtoupper(Category::TYPE_HRP) => $categoryRepo->findByType(Category::TYPE_HRP)

@@ -18,5 +18,4 @@ security:
             # https://symfony.com/doc/current/cookbook/security/form_login_setup.html
     encoders:
         Symfony\Component\Security\Core\User\User:
-            # algorithm: 'argon2i'
-            algorithm: 'bcrypt'
+             algorithm: 'argon2i'

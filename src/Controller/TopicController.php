@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Board;
 use App\Entity\Post;
 use App\Entity\Topic;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;

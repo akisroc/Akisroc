@@ -30,4 +30,17 @@ class BoardController extends Controller
             'topics' => $topics
         ]);
     }
+
+    /**
+     * @Route("/board/{id}/add-topic", name="board.add-topic", requirements={"id"="\d+"})
+     *
+     * @param Board $board
+     * @return Response
+     */
+    public function addTopic(Board $board): Response
+    {
+        $board->addTopic(new Topic());
+
+//        $form = $this->createForm()
+    }
 }

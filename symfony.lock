@@ -379,5 +379,17 @@
     },
     "symfony/validator": {
         "version": "v4.0.1"
+    },
+    "symfony/options-resolver": {
+        "version": "v4.0.1"
+    },
+    "symfony/intl": {
+        "version": "v4.0.1"
+    },
+    "symfony/polyfill-intl-icu": {
+        "version": "v1.6.0"
+    },
+    "symfony/form": {
+        "version": "v4.0.1"
     }
 }
