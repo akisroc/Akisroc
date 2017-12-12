@@ -44,10 +44,11 @@ class UserFixtures extends Fixture
                 $this->faker->imageUrl(180, 180, 'abstract')
             );
 
-            $encoder = Argon2iPasswordEncoder::isSupported()
-                ? new Argon2iPasswordEncoder()
-                : new BCryptPasswordEncoder(4)
-            ;
+//            $encoder = Argon2iPasswordEncoder::isSupported()
+//                ? new Argon2iPasswordEncoder()
+//                : new BCryptPasswordEncoder(4)
+//            ;
+            $encoder = new BCryptPasswordEncoder(4);
             $user->setPassword($encoder->encodePassword(
                 $this->faker->password(15, 70),
                 $this->faker->sha256

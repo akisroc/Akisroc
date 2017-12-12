@@ -17,16 +17,16 @@ addons:
   mariadb: '10.0'
 
 before_install:
+  - n=$(git log --oneline | grep "fixup!" | wc -l); if [[ $n == 0 ]]; then echo "OK\n"; else echo "Error - $n remaining fixup(s)\n" && exit 1; fi
   - mysql -e 'CREATE DATABASE akisroc;'
 
 install:
-  - composer install
   - composer require paragonie/sodium_compat
+  - composer install
   - npm install
   - ./node_modules/.bin/encore dev
 
 before_script:
-#  - docker-compose up -d
   - php bin/console doctrine:schema:create
   - php bin/console doctrine:fixtures:load --no-interaction
   - php bin/console server:start
