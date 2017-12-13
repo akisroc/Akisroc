@@ -28,8 +28,7 @@ class TopicController extends Controller
         $posts = $this->getDoctrine()->getRepository(Post::class)->findBy(
             ['topic' => $topic],
             ['id' => 'DESC'],
-            $limit,
-            $page
+            $limit
         );
 
         return $this->render('topic.html.twig', [

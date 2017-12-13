@@ -22,8 +22,8 @@ class HomepageController extends Controller
      */
     public function index(): Response
     {
-        $em = $this->getDoctrine();
-        $categoryRepo = $em->getRepository(Category::class);
+        $d = $this->getDoctrine();
+        $categoryRepo = $d->getRepository(Category::class);
         $groups = [
             strtoupper(Category::TYPE_RP) => $categoryRepo->findByType(Category::TYPE_RP),
             strtoupper(Category::TYPE_HRP) => $categoryRepo->findByType(Category::TYPE_HRP)

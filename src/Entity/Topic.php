@@ -5,7 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\PersistentCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\TopicRepository")
@@ -41,6 +41,7 @@ class Topic
      *     orphanRemoval=true,
      *     cascade={"persist", "remove"}
      * )
+     * @Assert\NotBlank()
      */
     private $posts;
 
@@ -159,6 +160,7 @@ class Topic
     public function addPost(?Post $post): self
     {
         if ($post && !$this->posts->contains($post)) {
+            $post->setTopic($this);
             $this->posts->add($post);
         }
 
