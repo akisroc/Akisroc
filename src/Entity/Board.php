@@ -37,6 +37,7 @@ class Board
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Topic", mappedBy="board", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=true)
+     * @ORM\OrderBy({"id"="ASC"})
      */
     private $topics;
 
@@ -154,6 +155,14 @@ class Board
     public function getTopics(): ?Collection
     {
         return $this->topics;
+    }
+
+    /**
+     * @return Topic|null
+     */
+    public function getLastTopic(): ?Topic
+    {
+        return $this->getTopics()->last();
     }
 
     /**

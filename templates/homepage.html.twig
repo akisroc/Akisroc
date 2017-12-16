@@ -6,7 +6,7 @@
               background-color: #c0a16b; box-shadow: 1px 1px 3px black;
               color: white; font-weight: bold;"
   >
-    Bêta Akisroc - {{ app_version() }}
+    Bêta Akisroc - <a href="https://github.com/Adrien-H/Akisroc/releases" target="_blank">{{ app_version() }}</a>
   </div>
   <input type="text" placeholder="Recherche...">
   {% for type, group in groups %}
@@ -21,11 +21,16 @@
                 <h4><span class="fa fa-book"></span>{{ board.title }}</h4>
                 <p>{{ board.description }}</p>
               </a>
-              <a href="#" class="last-post small-3 cell">
-                <h5>Lorem ipsum dolor.</h5>
-                <p>Par Ec'bêl</p>
-                <p>Le 3 décembre 2017 à 11h18</p>
-              </a>
+              {% set lastTopic = board.lastTopic %}
+              {% set lastPost = lastTopic ? lastTopic.lastPost : null %}
+              {% if lastPost %}
+                <a href="{{ path('topic', {'id': lastTopic.id, '_fragment': lastPost.id}) }}" class="last-post small-3 cell">
+                  <h5>{{ lastTopic.title }}</h5>
+                  <p>Dernier post par {{ lastPost.user }}</p>
+                  <p>{{ lastPost.content[:20] }}{% if lastPost.content | length > 20 %}...{% endif %}</p>
+                  <p>Le 3 décembre 2017 à 11h18</p>
+                </a>
+              {% endif %}
             </section>
           {% endfor %}
         </section>

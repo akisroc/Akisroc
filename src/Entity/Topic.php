@@ -41,6 +41,9 @@ class Topic
      *     orphanRemoval=true,
      *     cascade={"persist", "remove"}
      * )
+     * @ORM\OrderBy({
+     *     "id"="ASC"
+     * })
      * @Assert\NotBlank()
      */
     private $posts;
@@ -140,6 +143,14 @@ class Topic
     public function getPosts(): ?Collection
     {
         return $this->posts;
+    }
+
+    /**
+     * @return Post|null
+     */
+    public function getLastPost(): ?Post
+    {
+        return $this->getPosts()->last();
     }
 
     /**
