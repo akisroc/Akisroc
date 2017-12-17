@@ -5,12 +5,13 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
-class User
+class User implements UserInterface
 {
     /**
      * @ORM\Id
@@ -24,7 +25,7 @@ class User
      * @ORM\Column(type="string", length=63, nullable=false, unique=true)
      * @Assert\NotBlank()
      */
-    private $name;
+    private $username;
 
     /**
      * @var string
@@ -45,8 +46,19 @@ class User
      */
     private $password;
 
+    /**
+     * @var string
+     * @ORM\Column(type="string", length=511)
+     */
+    private $salt;
+
     /** @var string $plainPassword */
     private $plainPassword;
+
+    /**
+     * @var array
+     */
+    private $roles;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Post", mappedBy="user", cascade={"persist", "remove"})
@@ -65,6 +77,9 @@ class User
     {
         $this->posts = new ArrayCollection();
         $this->protagonists = new ArrayCollection();
+
+        $this->salt = base_convert(sha1(uniqid(mt_rand(), true)), 16, 34);
+        $this->roles = ['ROLE_USER'];
     }
 
     /**
@@ -72,22 +87,22 @@ class User
      */
     public function __toString()
     {
-        return $this->name;
+        return $this->username;
     }
 
     /**
-     * @param string $name
+     * @param string $username
      * @param string $email
      * @param string|null $avatar
      * @param iterable $posts
      * @param iterable $protagonists
      * @return User
      */
-    static public function create(string $name, string $email, string $avatar = null,
+    static public function create(string $username, string $email, string $avatar = null,
                                   iterable $posts = [], iterable $protagonists = []
     ): User {
         $user = new User();
-        $user->setName($name);
+        $user->setUsername($username);
         $user->setEmail($email);
         $user->setAvatar($avatar);
         $user->addPosts($posts);
@@ -116,20 +131,21 @@ class User
     }
 
     /**
+     * {@inheritdoc}
      * @return string|null
      */
-    public function getName(): ?string
+    public function getUsername(): ?string
     {
-        return $this->name;
+        return $this->username;
     }
 
     /**
-     * @param null|string $name
+     * @param null|string $username
      * @return self
      */
-    public function setName(?string $name): self
+    public function setUsername(?string $username): self
     {
-        $this->name = $name;
+        $this->username = $username;
 
         return $this;
     }
@@ -143,6 +159,7 @@ class User
     }
 
     /**
+     * {@inheritdoc}
      * @param null|string $email
      * @return self
      */
@@ -173,6 +190,7 @@ class User
     }
 
     /**
+     * {@inheritdoc}
      * @return string|null
      */
     public function getPassword(): ?string
@@ -187,6 +205,26 @@ class User
     public function setPassword(?string $password): self
     {
         $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     * @return null|string
+     */
+    public function getSalt(): ?string
+    {
+        return $this->salt;
+    }
+
+    /**
+     * @param null|string $salt
+     * @return self
+     */
+    public function setSalt(?string $salt): self
+    {
+        $this->salt = $salt;
 
         return $this;
     }
@@ -302,5 +340,23 @@ class User
         }
 
         return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     * @return array
+     */
+    public function getRoles(): array
+    {
+        return ['ROLE_USER'];
+    }
+
+    /**
+     * {@inheritdoc}
+     * @return void
+     */
+    public function eraseCredentials(): void
+    {
+        $this->plainPassword = null;
     }
 }

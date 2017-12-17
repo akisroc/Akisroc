@@ -9,15 +9,15 @@
           <header class="post-header grid-x">
             <div class="post-hrp-infos cell">
               <a id="{{ post.id }}" href="{{ path('topic', {'id': topic.id}) }}#{{ post.id }}">Écrit</a>
-              par <a href="#"><span class="post-author">{{ post.user.name }}</span></a>
+              par <a href="#"><span class="post-author">{{ post.user }}</span></a>
               le <span class="post-date">6 décembre 2017</span>
               à <span class="post-hour">22h16</span>
             </div>
             <div class="post-rp-infos cell">
               <div class="character-avatar">
-                <img src="{{ post.user.avatar }}" alt="Avatar : {{ post.user.name }}">
+                <img src="{{ post.user.avatar }}" alt="Avatar : {{ post.user }}">
               </div>
-              <div class="post-character">{{ post.user.name }}</div>
+              <div class="post-character">{{ post.user }}</div>
             </div>
           </header>
           <div class="post-content">

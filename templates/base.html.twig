@@ -15,12 +15,21 @@
     {# HEADER #}
     <header class="grid-x">
       <nav class="header-menu right cell grid-x">
-        <span class="small-offset-6 small-4 medium-offset-8 medium-2 large-offset-10 large-1 cell">
-          <a href="#">Se connecter</a>
-        </span>
-        <span class="small-4 medium-2 large-1 cell">
-          <a href="#">S'inscrire</a>
-        </span>
+        {% if app.user %}
+          <span class="small-offset-6 small-4 medium-offset-8 medium-2 large-offset-10 large-1 cell">
+            <a href="#">{{ app.user }}</a>
+          </span>
+          <span class="small-4 medium-2 large-1 cell">
+            <a href="{{ path('logout') }}">Se déconnecter</a>
+          </span>
+        {% else %}
+          <span class="small-offset-6 small-4 medium-offset-8 medium-2 large-offset-10 large-1 cell">
+            <a href="{{ path('login') }}">Se connecter</a>
+          </span>
+          <span class="small-4 medium-2 large-1 cell">
+            <a href="#">S'inscrire</a>
+          </span>
+        {% endif %}
       </nav>
       <div class="header-title">
         <a href="{{ path('homepage') }}">

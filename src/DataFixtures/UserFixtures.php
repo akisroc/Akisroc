@@ -37,25 +37,40 @@ class UserFixtures extends Fixture
      */
     public function load(ObjectManager $manager): void
     {
+        $encoder = Argon2iPasswordEncoder::isSupported()
+            ? new Argon2iPasswordEncoder()
+            : new BCryptPasswordEncoder(4)
+        ;
+        //            $encoder = new BCryptPasswordEncoder(4);
         for ($i = 0; $i < self::COUNT; ++$i) {
-            $user = User::create(
-                $this->faker->firstName . '_' . mt_rand(1, 999999999),
-                $this->faker->email,
-                $this->faker->imageUrl(180, 180, 'abstract')
-            );
+            if ($i === 0) {
+                $user = User::create(
+                    'admin',
+                    'admin@admin.dev',
+                    $this->faker->imageUrl(180, 180, 'abstract')
+                );
+                $user->setPassword($encoder->encodePassword('admin', $this->faker->sha256));
+            } else if ($i === 1) {
+                $user = User::create(
+                    'user',
+                    'user@user.dev',
+                    $this->faker->imageUrl(180, 180, 'abstract')
+                );
+                $user->setPassword($encoder->encodePassword('user', $this->faker->sha256));
+            }  else {
+                $user = User::create(
+                    $this->faker->firstName . '_' . mt_rand(1, 999999999),
+                    $this->faker->email,
+                    $this->faker->imageUrl(180, 180, 'abstract')
+                );
+                $user->setPassword($encoder->encodePassword(
+                    $this->faker->password(15, 70),
+                    $this->faker->sha256
+                ));
+            }
 
-//            $encoder = Argon2iPasswordEncoder::isSupported()
-//                ? new Argon2iPasswordEncoder()
-//                : new BCryptPasswordEncoder(4)
-//            ;
-            $encoder = new BCryptPasswordEncoder(4);
-            $user->setPassword($encoder->encodePassword(
-                $this->faker->password(15, 70),
-                $this->faker->sha256
-            ));
-
-            if (empty($manager->getRepository(User::class)->findBy(['name' => $user->getName()]))) {
-                $this->setReference("user_{$user->getName()}", $user);
+            if (empty($manager->getRepository(User::class)->findBy(['username' => $user->getUsername()]))) {
+                $this->setReference("user_{$user->getUsername()}", $user);
                 $manager->persist($user);
             }
         }

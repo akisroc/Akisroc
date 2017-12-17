@@ -46,7 +46,7 @@ class PostFixtures extends Fixture implements DependentFixtureInterface
             $post = Post::create($content, $topic, $user, $protagonist);
 
             $this->setReference("post_$i", $post);
-            if (empty($userRepo->findBy(['name' => $post->getUser()->getName()]))) {
+            if (empty($userRepo->findBy(['username' => $post->getUser()->getUsername()]))) {
                 $manager->persist($post);
             } else {
                 $manager->merge($post);
