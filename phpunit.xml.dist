@@ -8,6 +8,7 @@
         <env name="KERNEL_CLASS" value="App\Kernel" />
 
         <env name="APP_ENV" value="test"/>
+        <env name="APP_SECRET" value="0913c0c0e1e67c557b2023453baedd40"/>
 
         <!-- ###+ doctrine/doctrine-bundle ### -->
         <!-- Format described at http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/configuration.html#connecting-using-a-url -->

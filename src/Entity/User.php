@@ -5,13 +5,14 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
-class User implements UserInterface
+class User implements UserInterface, EquatableInterface
 {
     /**
      * @ORM\Id
@@ -31,29 +32,34 @@ class User implements UserInterface
      * @var string
      * @ORM\Column(type="string", length=63, nullable=false, unique=true)
      * @Assert\NotBlank()
+     * @Assert\Email()
      */
     private $email;
 
     /**
      * @var string
      * @ORM\Column(type="string", length=63, nullable=true)
+     * @Assert\Url()
      */
     private $avatar;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=8191)
+     * @ORM\Column(type="string", length=511, nullable=false)
      */
     private $password;
 
     /**
+     * @Assert\NotBlank()
+     * @Assert\Length(min=12, max=4096)
+     */
+    private $plainPassword;
+
+    /**
      * @var string
-     * @ORM\Column(type="string", length=511)
+     * @ORM\Column(type="string", length=123, nullable=false)
      */
     private $salt;
-
-    /** @var string $plainPassword */
-    private $plainPassword;
 
     /**
      * @var array
@@ -77,8 +83,6 @@ class User implements UserInterface
     {
         $this->posts = new ArrayCollection();
         $this->protagonists = new ArrayCollection();
-
-        $this->salt = base_convert(sha1(uniqid(mt_rand(), true)), 16, 34);
         $this->roles = ['ROLE_USER'];
     }
 
@@ -211,9 +215,9 @@ class User implements UserInterface
 
     /**
      * {@inheritdoc}
-     * @return null|string
+     * @return string
      */
-    public function getSalt(): ?string
+    public function getSalt(): string
     {
         return $this->salt;
     }
@@ -358,5 +362,31 @@ class User implements UserInterface
     public function eraseCredentials(): void
     {
         $this->plainPassword = null;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isEqualTo(UserInterface $user): bool
+    {
+        if ($this->username !== $user->getUsername()) {
+            return false;
+        }
+        if ($this->password !== $user->getPassword()) {
+            return false;
+        }
+        if ($this->salt !== $user->getSalt()) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * @return string
+     */
+    static public function generateSalt(): string
+    {
+        return substr(base64_encode(random_bytes(64)), 8, 72);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,10 +18,11 @@ class SecurityController extends Controller
     /**
      * @Route("/login", name="login")
      *
+     * @param Request $request
      * @param AuthenticationUtils $authUtils
      * @return Response
      */
-    public function login(AuthenticationUtils $authUtils): Response
+    public function login(Request $request, AuthenticationUtils $authUtils): Response
     {
         return $this->render('security/login.html.twig', [
             'last_username' => $authUtils->getLastUsername(),

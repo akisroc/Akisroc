@@ -8,6 +8,7 @@
     {% block stylesheets %}
       <link rel="stylesheet" href="{{ asset('build/css/app.css') }}">
     {% endblock %}
+    <link rel="icon" type="image/png" href="favicon.png" />
   </head>
 
   <body>
@@ -27,7 +28,7 @@
             <a href="{{ path('login') }}">Se connecter</a>
           </span>
           <span class="small-4 medium-2 large-1 cell">
-            <a href="#">S'inscrire</a>
+            <a href="{{ path('user.register') }}">S'inscrire</a>
           </span>
         {% endif %}
       </nav>

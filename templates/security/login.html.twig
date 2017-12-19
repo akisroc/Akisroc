@@ -7,7 +7,7 @@
 
   <form action="{{ path('login') }}" method="post">
     <label for="username">Nom d'utilisateur :</label>
-    <input type="text" id="username" name="_username" value="{{ last_username }}" />
+    <input type="text" id="username" name="_username" value="{{ last_username }}" autofocus />
 
     <label for="password">Mot de passe:</label>
     <input type="password" id="password" name="_password" />
@@ -17,7 +17,7 @@
       <label for="remember_me">Se souvenir de moi</label>
     </div>
 
-    <input type="hidden" name="_target_path" value="/" />
+    {#<input type="hidden" name="_target_path" value="/" />#}
 
     <button type="submit">Se connecter</button>
   </form>

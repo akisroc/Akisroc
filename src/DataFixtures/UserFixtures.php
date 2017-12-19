@@ -12,6 +12,8 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Faker\Factory;
 use Symfony\Component\Security\Core\Encoder\Argon2iPasswordEncoder;
 use Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder;
+use Symfony\Component\Security\Core\Encoder\EncoderFactory;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 
 /**
  * Class UserFixtures
@@ -41,7 +43,6 @@ class UserFixtures extends Fixture
             ? new Argon2iPasswordEncoder()
             : new BCryptPasswordEncoder(4)
         ;
-        //            $encoder = new BCryptPasswordEncoder(4);
         for ($i = 0; $i < self::COUNT; ++$i) {
             if ($i === 0) {
                 $user = User::create(
@@ -49,23 +50,26 @@ class UserFixtures extends Fixture
                     'admin@admin.dev',
                     $this->faker->imageUrl(180, 180, 'abstract')
                 );
-                $user->setPassword($encoder->encodePassword('admin', $this->faker->sha256));
+                $user->setSalt(User::generateSalt());
+                $user->setPassword($encoder->encodePassword('admin', $user->getSalt()));
             } else if ($i === 1) {
                 $user = User::create(
                     'user',
                     'user@user.dev',
                     $this->faker->imageUrl(180, 180, 'abstract')
                 );
-                $user->setPassword($encoder->encodePassword('user', $this->faker->sha256));
+                $user->setSalt(User::generateSalt());
+                $user->setPassword($encoder->encodePassword('user', $user->getSalt()));
             }  else {
                 $user = User::create(
                     $this->faker->firstName . '_' . mt_rand(1, 999999999),
                     $this->faker->email,
                     $this->faker->imageUrl(180, 180, 'abstract')
                 );
+                $user->setSalt(User::generateSalt());
                 $user->setPassword($encoder->encodePassword(
                     $this->faker->password(15, 70),
-                    $this->faker->sha256
+                    $user->getSalt()
                 ));
             }
 
