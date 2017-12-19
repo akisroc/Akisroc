@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Board;
+use App\Entity\Post;
 use App\Entity\Protagonist;
 use App\Entity\Topic;
 use App\Entity\User;
@@ -13,13 +14,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class BoardController
- * @package App\Controller
+ * @Route("/board")
  */
 class BoardController extends Controller
 {
     /**
-     * @Route("/board/{id}", name="board", requirements={"id"="\d+"})
+     * @Route("/{id}", name="board.index", requirements={"id"="\d+"})
      *
      * @param Board $board
      * @return Response
@@ -30,14 +30,14 @@ class BoardController extends Controller
         $topicRepo = $d->getRepository(Topic::class);
         $topics = $topicRepo->findBy(['board' => $board], ['id' => 'DESC']);
 
-        return $this->render('board.html.twig', [
+        return $this->render('board/index.html.twig', [
             'board' => $board,
             'topics' => $topics
         ]);
     }
 
     /**
-     * @Route("/board/{id}/add-topic", name="add-topic", requirements={"id"="\d+"})
+     * @Route("/{id}/add-topic", name="board.add-topic", requirements={"id"="\d+"})
      *
      * @param Board $board
      * @param Request $request
@@ -62,10 +62,10 @@ class BoardController extends Controller
             $em->persist($topic);
             $em->flush();
 
-            return $this->redirectToRoute('topic', ['id' => $topic->getId()]);
+            return $this->redirectToRoute('topic.index', ['id' => $topic->getId()]);
         }
 
-        return $this->render('add-topic.html.twig', [
+        return $this->render('board/add-topic.html.twig', [
             'form' => $form->createView()
         ]);
     }

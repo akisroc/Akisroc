@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+  <div>
+    <a href="{{ path('board.add-topic', {'id': board.id}) }}">Nouveau topic</a>
+  </div>
+  <hr/>
+  {% for topic in topics %}
+    <a href="{{ path('topic.index', {'id': topic.id}) }}"><p>{{ topic.title }}</p></a>
+  {% endfor %}
+{% endblock %}

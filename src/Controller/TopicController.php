@@ -5,18 +5,19 @@ namespace App\Controller;
 use App\Entity\Board;
 use App\Entity\Post;
 use App\Entity\Topic;
+use App\Form\PostType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class Topic
- * @package App\Controller
+ * @Route("/topic")
  */
 class TopicController extends Controller
 {
     /**
-     * @Route("/topic/{id}/{page}", name="topic", requirements={"id"="\d+", "page"="\d+"})
+     * @Route("/{id}/{page}", name="topic.index", requirements={"id"="\d+", "page"="\d+"})
      *
      * @param Topic $topic
      * @param int $page
@@ -24,16 +25,46 @@ class TopicController extends Controller
      */
     public function index(Topic $topic, int $page = 1): Response
     {
-        $limit = 15;
+        $limit = 40;
         $posts = $this->getDoctrine()->getRepository(Post::class)->findBy(
             ['topic' => $topic],
-            ['id' => 'DESC'],
+            ['id' => 'ASC'],
             $limit
         );
 
-        return $this->render('topic.html.twig', [
+        return $this->render('topic/index.html.twig', [
             'topic' => $topic,
             'posts' => $posts
+        ]);
+    }
+
+    /**
+     * @Route("/{id}/add-post", name="topic.add-post", requirements={"id"="\d+"})
+     *
+     * @param Topic $topic
+     * @param Request $request
+     * @return Response
+     */
+    public function addPost(Topic $topic, Request $request): Response
+    {
+        $post = new Post();
+        $post->setTopic($topic);
+        $form = $this->createForm(PostType::class, $post);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $post->setUser($this->getUser());
+            $topic->addPost($post);
+            $em->persist($topic);
+            $em->persist($post);
+            $em->flush();
+
+            return $this->redirectToRoute('topic.index', ['id' => $topic->getId(), '_fragment' => $post->getId()]);
+        }
+
+        return $this->render('topic/add-post.html.twig', [
+            'form' => $form->createView()
         ]);
     }
 }

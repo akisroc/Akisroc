@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Board;
+use App\Entity\Post;
 use App\Entity\Topic;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -47,6 +48,16 @@ class TopicType extends AbstractType
                 'label' => false,
                 'mapped' => false
             ])
+
+            // PRE_SET_DATA -> Removing board field if already set
+            ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+                /** @var Topic $topic */
+                $topic = $event->getData();
+                if ($topic->getBoard() instanceof Board) {
+                    $event->getForm()->remove('board');
+                }
+            })
+
         ;
     }
 

@@ -3,12 +3,13 @@
 {% block body %}
   <div class="topic">
     <h2>{{ topic.title }}</h2>
+    <p><a href="{{ path('topic.add-post', {'id': topic.id}) }}">Répondre</a></p>
     <section class="posts">
       {% for post in posts %}
         <article class="post">
           <header class="post-header grid-x">
             <div class="post-hrp-infos cell">
-              <a id="{{ post.id }}" href="{{ path('topic', {'id': topic.id}) }}#{{ post.id }}">Écrit</a>
+              <a id="{{ post.id }}" href="{{ path('topic.index', {'id': topic.id}) }}#{{ post.id }}">Écrit</a>
               par <a href="#"><span class="post-author">{{ post.user }}</span></a>
               le <span class="post-date">6 décembre 2017</span>
               à <span class="post-hour">22h16</span>
