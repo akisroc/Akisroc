@@ -1,15 +1,47 @@
 $header-padding: 0 10px 10px 10px;
+$menu-height: 45px;
 
-header {
+header.main-header {
   background-color: rgba($light-gray, 0.95);
   box-shadow: $black 2 2 3;
 
+  h1 {
+    color: saddlebrown;
+    font-family: Consolas, "Liberation Mono", Courier, monospace;
+    transition: all 0.1s ease;
+    &:hover {
+      color: rgba(#000, 0.9);
+    }
+  }
   .header-menu {
+    position: fixed;
+    top: 0;
+    height: $menu-height;
+    width: 100%;
     padding: 10px;
-    background-color: rgba($black, 0.2);
+    background-color: rgba($black, 0.4);
+
+    a {
+      display: inline-block;
+      color: rgba(#fff, 1);
+      font-weight: bold;
+      &:after {
+        content: '';
+        display: block;
+        margin: auto;
+        height: 3px;
+        width: 0px;
+        background-color: transparent;
+        transition: all 0.1s ease-out;
+      }
+      &:hover:after {
+        width: 100%;
+        background-color: rgba(#fff, 1);
+      }
+    }
   }
 
   .header-title {
-    padding: 10px;
+    padding: $menu-height 10px 10px 10px;
   }
 }
