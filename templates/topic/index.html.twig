@@ -7,14 +7,14 @@
     <section class="posts">
       {% for post in posts %}
         <article class="post">
-          <header class="post-header grid-x">
-            <div class="post-hrp-infos cell">
+          <header class="post-header flow">
+            <div class="post-hrp-infos a12">
               <a id="{{ post.id }}" href="{{ path('topic.index', {'id': topic.id}) }}#{{ post.id }}">Écrit</a>
               par <a href="#"><span class="post-author">{{ post.user }}</span></a>
               le <span class="post-date">6 décembre 2017</span>
               à <span class="post-hour">22h16</span>
             </div>
-            <div class="post-rp-infos cell">
+            <div class="post-rp-infos a12">
               <div class="character-avatar">
                 <img src="{{ post.user.avatar }}" alt="Avatar : {{ post.user }}">
               </div>

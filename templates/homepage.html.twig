@@ -16,15 +16,17 @@
         <section class="category">
           <h3>{{ category.title }}</h3>
           {% for board in category.boards %}
-            <section class="category grid-x">
-              <a href="{{ path('board.index', {'id': board.id}) }}" class="description small-9 cell">
+            <section class="category flow">
+              <a href="{{ path('board.index', {'id': board.id}) }}" class="description a9">
                 <h4><span class="fa fa-book"></span>{{ board.title }}</h4>
                 <p>{{ board.description }}</p>
               </a>
               {% set lastTopic = board.lastTopic %}
               {% set lastPost = lastTopic ? lastTopic.lastPost : null %}
               {% if lastPost %}
-                <a href="{{ path('topic.index', {'id': lastTopic.id, '_fragment': lastPost.id}) }}" class="last-post small-3 cell">
+                <a href="{{ path('topic.index', {'id': lastTopic.id, '_fragment': lastPost.id}) }}"
+                   class="last-post a3"
+                 >
                   <h5>{{ lastTopic.title }}</h5>
                   <p>Dernier post par {{ lastPost.user }}</p>
                   <p>{{ lastPost.content[:20] }}{% if lastPost.content | length > 20 %}...{% endif %}</p>

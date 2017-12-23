@@ -14,20 +14,20 @@
   <body>
 
     {# HEADER #}
-    <header class="main-header grid-x">
-      <nav class="header-menu right cell grid-x">
+    <header class="main-header flow">
+      <nav class="header-menu right flow">
         {% if app.user %}
-          <span class="small-offset-6 small-4 medium-offset-8 medium-2 large-offset-10 large-1 cell">
+          <span class="al6 a4 cl8 c2 dl10 d1">
             <a href="#">{{ app.user }}</a>
           </span>
-          <span class="small-4 medium-2 large-1 cell">
+          <span class="a4 c2 d1">
             <a href="{{ path('logout') }}">Se déconnecter</a>
           </span>
         {% else %}
-          <span class="small-offset-6 small-4 medium-offset-8 medium-2 large-offset-10 large-1 cell">
+          <span class="al6 a4 cl8 c2 dl10 d1">
             <a href="{{ path('login') }}">Se connecter</a>
           </span>
-          <span class="small-4 medium-2 large-1 cell">
+          <span class="a4 c2 d1">
             <a href="{{ path('user.register') }}">S'inscrire</a>
           </span>
         {% endif %}

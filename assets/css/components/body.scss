@@ -1,11 +1,12 @@
 body {
-  box-sizing: border-box;
-  img { max-width: 100%; }
-
   background-image: url("images/bg.jpg");
 
   .color-danger { color: $color-danger; }
   .color-warning { color: $color-warning; }
   .color-info { color: $color-info; }
   .color-success { color: $color-success; }
+
+  a {
+  	text-decoration: none;
+  }
 }
