@@ -1,0 +1,20 @@
+@mixin smooth-underline($color) {
+  & {
+    display: inline-block;
+    color: rgba($color, 1);
+    font-weight: bold;
+    &:after {
+      content: '';
+      display: block;
+      margin: auto;
+      height: 3px;
+      width: 0px;
+      background-color: transparent;
+      transition: all 0.1s ease-out;
+    }
+    &:hover:after {
+      width: 100%;
+      background-color: rgba($color, 1);
+    }
+  }
+}
