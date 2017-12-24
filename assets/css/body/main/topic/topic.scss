@@ -5,34 +5,34 @@
       margin: 0 0 20px 0;
       border-radius: 8px;
       background-color: rgba($light-gray, 1);
-      box-shadow: black 1px 1px 4px;
+      box-shadow: $black 1px 1px 4px;
       .post-header {
         .post-hrp-infos {
           padding: 2px 8px;
-          border-bottom: solid rgba(#000, 0.6) 2px;
-          background-color: rgba(#000, 0.7);
-          color: rgba(antiquewhite, 1);
+          border-bottom: solid rgba($black, 0.6) 2px;
+          background-color: rgba($black, 0.7);
+          color: rgba($white, 1);
           font-weight: bold;
           a {
-            color: rgba(antiquewhite, 0.8);
+            color: rgba($white, 0.8);
             transition: all 0.1s ease-out;
             &:hover {
-              color: rgba(antiquewhite, 1);
+              color: rgba($white, 1);
             }
           }
         }
         .post-rp-infos {
-          background-color: rgba(#000, 0.3);
+          background-color: rgba($black, 0.3);
           .character-avatar {
             display: inline-block;
             padding: 8px;
             border-radius: 4px;
-            border: solid rgba(#000, 0.6) 2px;
-            background-color: rgba(#000, 0.3);
+            border: solid rgba($black, 0.6) 2px;
+            background-color: rgba($black, 0.3);
             img {
               max-width: 8rem;
               border-radius: 8px;
-              border: 2px solid rgba(#000, 0.3);
+              border: 2px solid rgba($black, 0.3);
             }
           }
           .post-character {
@@ -45,7 +45,7 @@
         padding: 12px 18px;
         transition: all 0.6s ease;
         &:hover {
-          background-color: rgba(black, 0.8);
+          background-color: rgba($black, 0.8);
           color: $light-gray;
         }
       }

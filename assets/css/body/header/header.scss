@@ -10,7 +10,7 @@ header.main-header {
     font-family: Consolas, "Liberation Mono", Courier, monospace;
     transition: all 0.1s ease;
     &:hover {
-      color: rgba(#000, 0.9);
+      color: rgba($black, 0.9);
     }
   }
   .header-menu {
@@ -22,8 +22,8 @@ header.main-header {
     background-color: rgba($black, 0.4);
 
     a {
-      color: #fff;
-      @include smooth-underline(#fff);
+      color: $white;
+      @include smooth-underline($white);
     }
   }
 

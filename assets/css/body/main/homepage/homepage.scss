@@ -1,0 +1,47 @@
+// Big category (Ex: RP)
+.category {
+  max-width: 95%;
+  margin: 0 auto;
+  padding: 0 0 0 22px;
+  border-left: 2px solid rgba($black, 0.4);
+
+  // Sub category (Ex: Akisroc)
+  .category {
+    padding: 10px 5px 10px 16px;
+    transition: all 0.1s ease-out;
+    //border-bottom: 1px solid black;
+
+    // Sub sub category (Ex: Place Frozell)
+    .category {
+      padding: 0 0 0 8px;
+
+      a {
+        &:hover {
+          color: inherit;
+        }
+        padding: 0 8px;
+        color: inherit;
+      }
+      .description {
+        h4 {
+          .fa {
+            padding: 0 8px 0 0;
+          }
+        }
+      }
+      .last-post {
+        &:hover {
+          color: rgba($black, 0.7);
+        }
+        font-size: 0.8rem;
+
+        h5 {
+          font-size: 1.1rem;
+        }
+      }
+      &:hover {
+        background-color: rgba($light-gray, 0.2);
+      }
+    }
+  }
+}

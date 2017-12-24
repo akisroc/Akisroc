@@ -1,15 +1,10 @@
 // Vendors
 @import "../../submodules/paradoxe/paradoxe";
-// @import "~foundation-sites/scss/foundation";
-// @include foundation-everything;
-// @import "~font-awesome/scss/font-awesome";
 
 // Includes
-@import "includes/variables";
+@import "includes/colours";
+@import "includes/classes";
 @import "includes/mixins";
 
-// Components
-@import "components/body";
-@import "components/header/header";
-@import "components/main/main";
-@import "components/main/topic/topic";
+// Body
+@import "body/body";

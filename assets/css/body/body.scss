@@ -1,0 +1,17 @@
+body {
+  background-image: url("images/bg.jpg");
+
+  a {
+  	text-decoration: none;
+  	color: inherit;
+  }
+
+  section {
+  	padding: 8px;
+  }
+
+  @import "globals/forms";
+  @import "globals/titles";
+  @import "header/header";
+  @import "main/main";
+}

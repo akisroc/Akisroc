@@ -1,0 +1,41 @@
+input, textarea {
+  border-radius: 4px;
+  font-weight: bold;
+  transition: all 0.2s ease-out;
+  &:focus {
+    background-color: $gray;
+    color: $white;
+  }
+}
+select {
+  padding: 4px 0;
+  border: none;
+  border-radius: 4px;
+  box-shadow: none;
+  background-image: none;
+  background-color: rgba($black, 0);
+  appearance: none;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.1s ease-out;
+  &:hover {
+    background-color: rgba($black, 0.1);
+  }
+  &:focus {
+    background-color: rgba($black, 0.4);
+    color: $white;
+  }
+}
+button[type="submit"] {
+  padding: 8px;
+  border: none;
+  border-radius: 4px;
+  box-shadow: none;
+  background-color: rgba($black, 0.1);
+  font-weight: bold;
+  cursor: pointer;
+  &:hover {
+    background-color: rgba($black, 0.4);
+    color: $white;
+  }
+}

@@ -1,0 +1,13 @@
+main {
+  max-width: 70%;
+  margin: 2vh auto 20px auto;
+
+  border-radius: 4px;
+  box-shadow: 1px 1px 4px rgba($black, 0.7);
+
+  padding: 10px;
+  background-color: rgba($light-gray, 0.95);
+
+  @import "homepage/homepage";
+  @import "topic/topic";
+}
