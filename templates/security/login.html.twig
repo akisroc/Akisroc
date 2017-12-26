@@ -5,20 +5,27 @@
     <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
   {% endif %}
 
-  <form action="{{ path('login') }}" method="post">
-    <label for="username">Nom d'utilisateur :</label>
-    <input type="text" id="username" name="_username" value="{{ last_username }}" autofocus />
+  <form class="form-login" action="{{ path('login') }}" method="post">
 
-    <label for="password">Mot de passe:</label>
-    <input type="password" id="password" name="_password" />
+    <fieldset>
+      <legend class="al3">Connexion</legend>
+      <input type="text" name="_username" value="{{ last_username }}"
+        id="username" autocomplete="off" placeholder="Nom d'utilisateur"
+      />
 
-    <div class="grid-x">
-      <input type="checkbox" id="remember_me" name="_remember_me" value="false" />
-      <label for="remember_me">Se souvenir de moi</label>
-    </div>
+      <input type="password" id="password" name="_password"
+        autocomplete="new-password" autocorrect="off" autocapitalize="off"
+        placeholder="Mot de passe"
+      />
 
-    {#<input type="hidden" name="_target_path" value="/" />#}
+      {# <div class="flow">
+        <input type="checkbox" id="remember_me" name="_remember_me" value="false" />
+        <label for="remember_me">Se souvenir de moi</label>
+      </div> #}
 
-    <button type="submit">Se connecter</button>
+      <input type="hidden" name="_target_path" value="{{ path('homepage') }}" />
+    </fieldset>
+
+    <button type="submit" class="al6">Se connecter</button>
   </form>
 {% endblock %}

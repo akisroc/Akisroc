@@ -1,5 +1,7 @@
 body {
   background-image: url("images/bg.jpg");
+  background-attachment: fixed;
+  background-position: center;
 
   a {
   	text-decoration: none;
@@ -8,6 +10,11 @@ body {
 
   section {
   	padding: 8px;
+  }
+
+  ::-webkit-selection {
+    background-color: rgba($black, 0.9);
+    color: rgba($white, 0.9);
   }
 
   @import "globals/forms";

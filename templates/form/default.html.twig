@@ -3,9 +3,13 @@
   <input
     type="{{ type }}" {{ block('widget_attributes') }}
     {% if value is not empty %}value="{{ value }}"{% endif %}
+    autocomplete="off" autocorrect="off" autocapitalize="off"
   />
 {% endblock %}
 
 {% block textarea_widget %}
-  <textarea {{ block('widget_attributes') }} cols="50" rows="15"></textarea>
+  <textarea {{ block('widget_attributes') }}
+    cols="50" rows="15" autocomplete="off" autocorrect="off" autocapitalize="off"
+  >
+  </textarea>
 {% endblock %}

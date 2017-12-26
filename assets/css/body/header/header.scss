@@ -2,11 +2,12 @@ $header-padding: 0 10px 10px 10px;
 $menu-height: 45px;
 
 header.main-header {
-  background-color: rgba($light-gray, 0.95);
-  box-shadow: $black 2 2 3;
+  background-color: rgba($sand, 0.8);
+  // box-shadow: $black 2 2 3;
+  box-shadow: 1px 1px 4px rgba($black, 0.7);
 
   h1 {
-    color: saddlebrown;
+    color: $white;
     font-family: Consolas, "Liberation Mono", Courier, monospace;
     transition: all 0.1s ease;
     &:hover {
