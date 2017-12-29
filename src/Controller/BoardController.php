@@ -8,6 +8,7 @@ use App\Entity\Protagonist;
 use App\Entity\Topic;
 use App\Entity\User;
 use App\Form\TopicType;
+use App\Utils\BBPlus;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
