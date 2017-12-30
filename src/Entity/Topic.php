@@ -171,8 +171,8 @@ class Topic
     public function addPost(?Post $post): self
     {
         if ($post && !$this->posts->contains($post)) {
-            $post->setTopic($this);
             $this->posts->add($post);
+            $post->setTopic($this);
         }
 
         return $this;
@@ -191,5 +191,29 @@ class Topic
         }
 
         return $this;
+    }
+
+    /**
+     * @return Category|null
+     */
+    public function getCategory(): ?Category
+    {
+        if ($board = $this->getBoard()) {
+            return $board->getCategory();
+        }
+
+        return null;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getType(): ?string
+    {
+        if ($category = $this->getCategory()) {
+            return $category->getType();
+        }
+
+        return null;
     }
 }

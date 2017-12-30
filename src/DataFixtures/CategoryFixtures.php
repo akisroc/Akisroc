@@ -29,24 +29,20 @@ class CategoryFixtures extends Fixture
      */
     public function load(ObjectManager $manager): void
     {
-        $persistRecursive = function (array $nodes, Category $parentCategory = null) use (&$manager, &$persistRecursive): void {
-            foreach ($nodes as $node) {
-                $category = Category::create(
-                    $node['title'] ?: $this->faker->sentence(2, 3),
-                    $node['description'] ?: $this->faker->paragraph(mt_rand(1, 3)),
-                    $node['type'] ?: $this->faker->randomElement([Category::TYPE_RP, Category::TYPE_HRP]),
-                    $parentCategory
-                );
+        foreach ($this->provideCategories() as $node) {
+            $category = new Category();
+            $category->setTitle($node['title'] ?: $this->faker->sentence(2, 3));
+            $category->setDescription($node['description'] ?: $this->faker->paragraph(mt_rand(1, 3)));
+            $category->setType($node['type'] ?: $this->faker->randomElement([Category::TYPE_RP, Category::TYPE_HRP]));
+
+            if (!$manager->contains($category)) {
                 $manager->persist($category);
-                $this->setReference("category_{$category->getTitle()}", $category);
-
-                if (!empty($node['children'])) {
-                    $persistRecursive($node['children'], $category);
-                }
+            } else {
+                $manager->merge($category);
             }
-        };
 
-        $persistRecursive($this->provideCategories());
+            $this->setReference("category_{$category->getTitle()}", $category);
+        }
 
 //        $manager->flush();
     }

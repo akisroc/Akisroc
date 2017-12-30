@@ -36,17 +36,28 @@ class ProtagonistFixtures extends Fixture implements DependentFixtureInterface
     {
         $references = $this->referenceRepository->getReferences();
         for ($i = 0; $i < self::COUNT; ++$i) {
-            $protagonist = Protagonist::create(
-                $this->faker->lastName . '_' . mt_rand(1, 999999999),
-                $this->faker->imageUrl(180, 180, 'abstract'),
-                FixturesService::randEntity($references, User::class)
-            );
+            $user = FixturesService::randEntity($references, User::class);
+            $name = $this->faker->lastName . ' ' . ucfirst($this->faker->colorName)  .  ' ' . $this->faker->firstName;
+            $secretAuthor = $this->faker->randomElement([true, false]);
+            $avatar = $this->faker->imageUrl(180, 180, 'abstract');
+
+            $protagonist = (new Protagonist())
+                ->setName($name)
+                ->setSecretAuthor($secretAuthor)
+                ->setAvatar($avatar)
+                ->setUser($user)
+            ;
+            $user->addProtagonist($protagonist);
 
             $this->setReference("protagonist_{$protagonist->getName()}", $protagonist);
-            $manager->persist($protagonist);
+            if (!$manager->contains($protagonist)) {
+                $manager->persist($protagonist);
+            } else {
+                $manager->merge($protagonist);
+            }
         }
 
-        $manager->flush();
+//        $manager->flush();
     }
 
     /**

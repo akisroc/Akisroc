@@ -44,38 +44,44 @@ class UserFixtures extends Fixture
             : new BCryptPasswordEncoder(4)
         ;
         for ($i = 0; $i < self::COUNT; ++$i) {
+            $avatar = $this->faker->imageUrl(180, 180, 'abstract');
             if ($i === 0) {
-                $user = User::create(
-                    'admin',
-                    'admin@admin.dev',
-                    $this->faker->imageUrl(180, 180, 'abstract')
-                );
-                $user->setSalt(User::generateSalt());
+                $user = (new User())
+                    ->setUsername('admin')
+                    ->setEmail('admin@admin.dev')
+                    ->setAvatar($avatar)
+                    ->setSalt(User::generateSalt())
+                ;
                 $user->setPassword($encoder->encodePassword('admin', $user->getSalt()));
             } else if ($i === 1) {
-                $user = User::create(
-                    'user',
-                    'user@user.dev',
-                    $this->faker->imageUrl(180, 180, 'abstract')
-                );
-                $user->setSalt(User::generateSalt());
+                $user = (new User())
+                    ->setUsername('user')
+                    ->setEmail('user@user.dev')
+                    ->setAvatar($avatar)
+                    ->setSalt(User::generateSalt());
+                ;
                 $user->setPassword($encoder->encodePassword('user', $user->getSalt()));
-            }  else {
-                $user = User::create(
-                    $this->faker->firstName . '_' . mt_rand(1, 999999999),
-                    $this->faker->email,
-                    $this->faker->imageUrl(180, 180, 'abstract')
-                );
-                $user->setSalt(User::generateSalt());
+            } else {
+                $username = $this->faker->firstName() . ' ' . $this->faker->country . ' ' . $this->faker->city;
+                $user = (new User())
+                    ->setUsername($username)
+                    ->setEmail($this->faker->email)
+                    ->setAvatar($avatar)
+                    ->setSalt(User::generateSalt())
+                ;
                 $user->setPassword($encoder->encodePassword(
-                    $this->faker->password(15, 70),
+                    $this->faker->password(255, 511),
                     $user->getSalt()
                 ));
             }
 
             if (empty($manager->getRepository(User::class)->findBy(['username' => $user->getUsername()]))) {
                 $this->setReference("user_{$user->getUsername()}", $user);
-                $manager->persist($user);
+                if (!$manager->contains($user)) {
+                    $manager->persist($user);
+                } else {
+                    $manager->merge($user);
+                }
             }
         }
 

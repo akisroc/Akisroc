@@ -40,17 +40,6 @@ class Category
     private $type;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="children", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
-     */
-    private $parent;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Category", mappedBy="parent", cascade={"persist", "remove"})
-     */
-    private $children;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Board", mappedBy="category", cascade={"persist", "remove"})
      */
     private $boards;
@@ -60,7 +49,6 @@ class Category
      */
     public function __construct()
     {
-        $this->children = new ArrayCollection();
         $this->boards = new ArrayCollection();
     }
 
@@ -76,21 +64,16 @@ class Category
      * @param string $title
      * @param string|null $description
      * @param string $type
-     * @param Category|null $parent
-     * @param iterable|null $children
      * @param iterable $boards
      * @return Category
      */
     static public function create(string $title, string $description = null, string $type,
-                                  Category $parent = null, iterable $children = [],
                                   iterable $boards = []
     ): Category {
         $category = new Category();
         $category->setTitle($title);
         $category->setDescription($description);
         $category->setType($type);
-        $category->setParent($parent);
-        $category->addChildren($children);
         $category->addBoards($boards);
 
         return $category;
@@ -173,72 +156,6 @@ class Category
     }
 
     /**
-     * @return Category|null
-     */
-    public function getParent(): ?Category
-    {
-        return $this->parent;
-    }
-
-    /**
-     * @param Category|null $category
-     * @return self
-     */
-    public function setParent(?Category $category): self
-    {
-        $this->parent = $category;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|null
-     */
-    public function getChildren(): ?Collection
-    {
-        return $this->children;
-    }
-
-    /**
-     * @param Collection|null $categories
-     * @return self
-     */
-    public function setChildren(?Collection $categories): self
-    {
-        $this->children = $categories;
-
-        return $this;
-    }
-
-    /**
-     * @param Category|null $category
-     * @return self
-     */
-    public function addChild(?Category $category): self
-    {
-        if ($category && !$this->children->contains($category)) {
-            $this->children->add($category);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param iterable $categories
-     * @return self
-     */
-    public function addChildren(?iterable $categories): self
-    {
-        if ($categories) {
-            foreach ($categories as $category) {
-                $this->addChild($category);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection|null
      */
     public function getBoards(): ?Collection
@@ -265,6 +182,7 @@ class Category
     {
         if ($board && !$this->boards->contains($board)) {
             $this->boards->add($board);
+            $board->setCategory($this);
         }
 
         return $this;

@@ -32,7 +32,12 @@ class TopicController extends Controller
             $limit
         );
 
+        $board = $topic->getBoard();
+        $category = $board->getCategory();
+
         return $this->render('topic/index.html.twig', [
+            'category' => $category,
+            'board'=> $board,
             'topic' => $topic,
             'posts' => $posts
         ]);

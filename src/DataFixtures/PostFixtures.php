@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Category;
 use App\Entity\Post;
 use App\Entity\Protagonist;
 use App\Entity\Topic;
@@ -38,16 +39,32 @@ class PostFixtures extends Fixture implements DependentFixtureInterface
     {
         $references = $this->referenceRepository->getReferences();
         $userRepo = $manager->getRepository(User::class);
+        $protagonistRepo = $manager->getRepository(Protagonist::class);
+        $postRepo = $manager->getRepository(Post::class);
         for ($i = 0; $i < self::COUNT; ++$i) {
+
             $content = $this->faker->paragraphs(mt_rand(1, 5), true);
             $topic = FixturesService::randEntity($references, Topic::class);
             $user = FixturesService::randEntity($references, User::class);
-            $protagonist = FixturesService::randEntity($user->getProtagonists()->toArray(), Protagonist::class);
-            $post = Post::create($content, $topic, $user, $protagonist);
+            if ($topic->getType() === Category::TYPE_RP) {
+                $protagonist = $this->faker->randomElement($user->getProtagonists()->toArray());
+            } else {
+                $protagonist = null;
+            }
+
+            $post = (new Post())
+                ->setContent($content)
+                ->setTopic($topic)
+                ->setUser($user)
+                ->setProtagonist($protagonist)
+            ;
+            $topic->addPost($post);
 
             $this->setReference("post_$i", $post);
             if (empty($userRepo->findBy(['username' => $post->getUser()->getUsername()]))) {
-                $manager->persist($post);
+                if (!$manager->contains($post)) {
+                        $manager->persist($post);
+                }
             } else {
                 $manager->merge($post);
             }

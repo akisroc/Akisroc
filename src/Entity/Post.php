@@ -34,7 +34,7 @@ class Post
     private $user;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Protagonist", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\Protagonist", inversedBy="posts", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
      */
     private $protagonist;
@@ -159,5 +159,41 @@ class Post
         $this->protagonist = $protagonist;
 
         return $this;
+    }
+
+    /**
+     * @return Board|null
+     */
+    public function getBoard(): ?Board
+    {
+        if ($topic = $this->getTopic()) {
+            return $topic->getBoard();
+        }
+
+        return null;
+    }
+
+    /**
+     * @return Category|null
+     */
+    public function getCategory(): ?Category
+    {
+        if ($board = $this->getBoard()) {
+            return $board->getCategory();
+        }
+
+        return null;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getType(): ?string
+    {
+        if ($category = $this->getCategory()) {
+            return $category->getType();
+        }
+
+        return null;
     }
 }

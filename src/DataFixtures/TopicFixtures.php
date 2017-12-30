@@ -38,9 +38,19 @@ class TopicFixtures extends Fixture implements DependentFixtureInterface
         $boards = FixturesService::filterReferences($this->referenceRepository->getReferences(), Board::class);
         $randBoard = function () use (&$boards): Board { return $boards[array_rand($boards)]; };
         for ($i = 0; $i < self::COUNT; ++$i) {
-            $topic = Topic::create($this->faker->sentence(mt_rand(2,3)), $randBoard());
+            $board = $randBoard();
+            $title = $this->faker->sentence(mt_rand(2, 4));
+            $topic = (new Topic())
+                ->setTitle($title)
+                ->setBoard($board)
+            ;
             $this->setReference("topic_$i", $topic);
-            $manager->persist($topic);
+
+            if (!$manager->contains($topic)) {
+                $manager->persist($topic);
+            } else {
+                $manager->merge($topic);
+            }
         }
 
 //        $manager->flush();

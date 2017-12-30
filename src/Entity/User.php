@@ -279,6 +279,7 @@ class User implements UserInterface, EquatableInterface
     {
         if ($post && !$this->posts->contains($post)) {
             $this->posts->add($post);
+            $post->setUser($this);
         }
 
         return $this;
@@ -319,13 +320,14 @@ class User implements UserInterface, EquatableInterface
     }
 
     /**
-     * @param Post $protagonist
+     * @param Protagonist $protagonist
      * @return self
      */
-    public function addProtagonist(?Post $protagonist): self
+    public function addProtagonist(?Protagonist $protagonist): self
     {
         if ($protagonist && !$this->protagonists->contains($protagonist)) {
             $this->protagonists->add($protagonist);
+            $protagonist->setUser($this);
         }
 
         return $this;
@@ -339,7 +341,7 @@ class User implements UserInterface, EquatableInterface
     {
         if ($protagonists) {
             foreach ($protagonists as $protagonist) {
-                $this->addPost($protagonist);
+                $this->addProtagonist($protagonist);
             }
         }
 

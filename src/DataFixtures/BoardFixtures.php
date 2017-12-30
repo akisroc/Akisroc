@@ -31,8 +31,17 @@ class BoardFixtures extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager): void
     {
         foreach ($this->provideBoards() as $node) {
-            $board = Board::create($node['title'], $node['description'], $node['category']);
-            $manager->persist($board);
+            $board = (new Board())
+                ->setTitle($node['title'])
+                ->setDescription($node['description'])
+                ->setCategory($node['category'])
+            ;
+            $node['category']->addBoard($board);
+            if (!$manager->contains($board)) {
+                $manager->persist($board);
+            } else {
+                $manager->merge($board);
+            }
             $this->setReference("board_{$board->getTitle()}", $board);
         }
 
