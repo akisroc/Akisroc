@@ -38,9 +38,15 @@ class UserType extends AbstractType
                 'type' => PasswordType::class,
                 'first_options' => [
                     'label' => false,
+                    'attr' => [
+                        'placeholder' => 'Mot de passe'
+                    ]
                 ],
                 'second_options' => [
                     'label' => false,
+                    'attr' => [
+                        'placeholder' => 'Répétition'
+                    ]
                 ]
             ])
 
