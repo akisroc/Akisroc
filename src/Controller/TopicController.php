@@ -6,6 +6,7 @@ use App\Entity\Board;
 use App\Entity\Post;
 use App\Entity\Topic;
 use App\Form\PostType;
+use App\Security\Voter\TopicVoter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,6 +26,8 @@ class TopicController extends Controller
      */
     public function index(Topic $topic, int $page = 1): Response
     {
+        $this->denyAccessUnlessGranted(TopicVoter::SEE, $topic);
+
         $limit = 40;
         $posts = $this->getDoctrine()->getRepository(Post::class)->findBy(
             ['topic' => $topic],
@@ -52,6 +55,8 @@ class TopicController extends Controller
      */
     public function addPost(Topic $topic, Request $request): Response
     {
+        $this->denyAccessUnlessGranted(TopicVoter::ADD_POST, $topic);
+
         $post = new Post();
         $post->setTopic($topic);
         $form = $this->createForm(PostType::class, $post);
