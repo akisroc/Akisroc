@@ -101,7 +101,9 @@ class PostType extends AbstractType
             ->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
                 /** @var Post $post */
                 $post = $event->getForm()->getData();
-                $post->setUser($this->currentUser);
+                if ($post) {
+                    $post->setUser($this->currentUser);
+                }
             })
 
         ;

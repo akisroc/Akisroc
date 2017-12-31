@@ -2,7 +2,7 @@
 
 {% block body %}
   <div>
-    <a href="{{ path('board.add-topic', {'id': board.id}) }}">Nouveau topic</a>
+    <a class="button-new" href="{{ path('board.add-topic', {'id': board.id}) }}">Nouveau topic</a>
   </div>
   <hr/>
   {% for topic in topics %}

@@ -18,3 +18,9 @@
     }
   }
 }
+
+@mixin racial-bg($color) {
+  & {
+    background-color: $color;
+  }
+}

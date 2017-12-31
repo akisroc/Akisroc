@@ -5,10 +5,12 @@
 
 {% set ADD_POST = constant('App\\Security\\Voter\\TopicVoter::ADD_POST') %}
 
+{% block title %}{{ topic.title }} - Akisroc{% endblock %}
+
 {% block answer_button %}
   {% if is_granted(ADD_POST, topic) %}
     <div>
-      <a class="smooth-underline-black" href="{{ path('topic.add-post', {'id': topic.id}) }}">Répondre</a>
+      <a class="button-new" href="{{ path('topic.add-post', {'id': topic.id}) }}">Répondre</a>
     </div>
   {% endif %}
 {% endblock %}
@@ -16,6 +18,7 @@
 {% block body %}
   <div class="topic">
     <h2>{{ topic.title }}</h2>
+    <hr/>
     {{ block('answer_button') }}
     <section class="posts">
       {% for post in posts %}
