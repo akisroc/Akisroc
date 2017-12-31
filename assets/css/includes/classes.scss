@@ -5,7 +5,12 @@
 
 .color-doomed { color: $color-doomed; }
 
-.racial-bg-doomed { @include racial-bg($color-doomed); }
+.bg-danger { background-color: $color-danger; }
+.bg-warning { background-color: $color-warning; }
+.bg-info { background-color: $color-info; }
+.bg-success{ background-color: $color-success; }
+
+.bg-doomed { @include racial-bg($color-doomed); }
 
 .smooth-underline-white { @include smooth-underline($white); }
 .smooth-underline-black { @include smooth-underline($black); }
