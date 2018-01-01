@@ -39,24 +39,29 @@ class PostFixtures extends Fixture implements DependentFixtureInterface
     {
         $references = $this->referenceRepository->getReferences();
         $userRepo = $manager->getRepository(User::class);
-        $protagonistRepo = $manager->getRepository(Protagonist::class);
-        $postRepo = $manager->getRepository(Post::class);
         for ($i = 0; $i < self::COUNT; ++$i) {
 
             $content = $this->faker->paragraphs(mt_rand(1, 5), true);
             $topic = FixturesService::randEntity($references, Topic::class);
-            $user = FixturesService::randEntity($references, User::class);
+            $protagonist = null;
             if ($topic->getType() === Category::TYPE_RP) {
-                $protagonist = $this->faker->randomElement($user->getProtagonists()->toArray());
+                do {
+                    $user = FixturesService::randEntity($references, User::class);
+                    $protagonist = $this->faker->randomElement($user->getProtagonists()->toArray());
+                } while ($protagonist === null);
             } else {
-                $protagonist = null;
+                $user = FixturesService::randEntity($references, User::class);
             }
 
+            // @Todo Behaviour
+            $now = new \DateTime();
             $post = (new Post())
                 ->setContent($content)
                 ->setTopic($topic)
                 ->setUser($user)
                 ->setProtagonist($protagonist)
+                ->setCreatedAt($now)
+                ->setUpdatedAt($now)
             ;
             $topic->addPost($post);
 

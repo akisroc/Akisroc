@@ -29,8 +29,9 @@
               {% if not post.protagonist or (post.protagonist and not post.protagonist.secretAuthor) %}
                 par <a href="#"><span class="post-author">{{ post.user }}</span></a>
               {% endif %}
-              le <span class="post-date">6 décembre 2017</span>
-              à <span class="post-hour">22h16</span>
+              le {{ post.createdAt | date_format }}
+              {#le <span class="post-date">6 décembre 2017</span>#}
+              {#à <span class="post-hour">22h16</span>#}
             </div>
             {% if category.type == TYPE_RP %}
               <div class="post-rp-infos a12">

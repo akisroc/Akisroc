@@ -65,6 +65,12 @@ class TopicController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $post->setUser($this->getUser());
+
+            // @Todo Behaviour
+            $now = new \DateTime();
+            $post->setCreatedAt($now);
+            $post->setUpdatedAt($now);
+
             $topic->addPost($post);
             $em->persist($topic);
             $em->persist($post);

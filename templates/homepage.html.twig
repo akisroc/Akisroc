@@ -40,7 +40,7 @@
                   <h5>{{ lastTopic.title }}</h5>
                   <p>Dernier post par {{ lastPost.user }}</p>
                   <p>{{ lastPost.content[:20] }}{% if lastPost.content | length > 20 %}...{% endif %}</p>
-                  <p>Le 3 décembre 2017 à 11h18</p>
+                  <p>Le {{ lastPost.createdAt | date_format }}</p>
                 </a>
               {% endif %}
             </section>
