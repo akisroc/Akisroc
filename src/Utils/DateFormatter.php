@@ -19,10 +19,15 @@ class DateFormatter
 
     /**
      * @param \DateTime $date
+     * @param string|null $format
      * @return string
      */
-    static public function format(\DateTime $date): string
+    static public function format(\DateTime $date, string $format = null): string
     {
+        if ($format) {
+            return $date->format($format);
+        }
+
         $fragments = explode('_', $date->format('N_j_n_Y_H_i_s'));
         $formattedDate = sprintf('%s %s %s %s à %s:%s:%s',
             self::DAYS_OF_WEEK[$fragments[0]],              // Day of week

@@ -1,7 +1,8 @@
 <?php
 
-namespace App\DataFixtures;
+namespace App\DataFixtures\Dev;
 
+use App\DataFixtures\BoardFixtures;
 use App\Entity\Board;
 use App\Entity\Topic;
 use App\Utils\FixturesService;
@@ -12,7 +13,7 @@ use Faker\Factory;
 
 /**
  * Class TopicFixtures
- * @package App\DataFixtures
+ * @package App\DataFixtures\Dev
  */
 class TopicFixtures extends Fixture implements DependentFixtureInterface
 {

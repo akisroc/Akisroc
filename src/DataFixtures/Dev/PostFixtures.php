@@ -1,10 +1,9 @@
 <?php
 
-namespace App\DataFixtures;
+namespace App\DataFixtures\Dev;
 
 use App\Entity\Category;
 use App\Entity\Post;
-use App\Entity\Protagonist;
 use App\Entity\Topic;
 use App\Entity\User;
 use App\Utils\FixturesService;
@@ -14,7 +13,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Faker\Factory;
 
 /**
- * Class PostFixtures
+ * Class PostFixtures\Dev
  * @package App\DataFixtures
  */
 class PostFixtures extends Fixture implements DependentFixtureInterface

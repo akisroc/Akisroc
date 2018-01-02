@@ -38,7 +38,7 @@ class User implements UserInterface, EquatableInterface
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=63, nullable=true)
+     * @ORM\Column(type="string", length=511, nullable=true)
      * @Assert\Url()
      */
     private $avatar;

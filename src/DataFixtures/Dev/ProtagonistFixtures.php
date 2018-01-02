@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DataFixtures;
+namespace App\DataFixtures\Dev;
 
 use App\Entity\Protagonist;
 use App\Entity\User;
@@ -12,7 +12,7 @@ use Faker\Factory;
 
 /**
  * Class ProtagonistFixtures
- * @package App\DataFixtures
+ * @package App\DataFixtures\Dev
  */
 class ProtagonistFixtures extends Fixture implements DependentFixtureInterface
 {

@@ -1,23 +1,18 @@
 <?php
 
-namespace App\DataFixtures;
+namespace App\DataFixtures\Dev;
 
-use App\Entity\Board;
-use App\Entity\Topic;
+use App\DataFixtures\Prod\ProdUserFixtures;
 use App\Entity\User;
-use App\Utils\FixturesService;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Faker\Factory;
 use Symfony\Component\Security\Core\Encoder\Argon2iPasswordEncoder;
 use Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder;
-use Symfony\Component\Security\Core\Encoder\EncoderFactory;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 
 /**
  * Class UserFixtures
- * @package App\DataFixtures
+ * @package App\DataFixtures\Dev
  */
 class UserFixtures extends Fixture
 {
@@ -86,5 +81,15 @@ class UserFixtures extends Fixture
         }
 
 //        $manager->flush();
+    }
+
+    /**
+     * @return array
+     */
+    public function getDependencies(): array
+    {
+        return [
+            ProdUserFixtures::class
+        ];
     }
 }
