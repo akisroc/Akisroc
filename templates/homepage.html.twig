@@ -1,5 +1,52 @@
 {% extends 'base.html.twig' %}
 
+{% block beta_header %}
+  <div style="margin: 3px 0; padding: 3px; border-radius: 4px;
+              background-color: #9d8e76; box-shadow: 1px 1px 3px black;
+              color: white; font-weight: bold;"
+  >
+    Bienvenue sur la bêta d'<a class="smooth-underline-danger" href="{{ path('homepage') }}">Akisroc JdR</a>
+    <br/>
+    Version :
+    <a class="smooth-underline-danger" href="https://github.com/Adrien-H/Akisroc/releases" target="_blank">
+      {{ app_version() }}
+    </a>
+    <hr/>
+    <span class="fa fa-warning fa-2x color-danger"></span> Des resets réguliers de la base de données sont à prévoir. (:
+  </div>
+{% endblock %}
+
 {% block body %}
-    <h1>Salut</h1>
+  {{ block('beta_header') }}  {#@Todo Remove it#}
+  <input type="text" placeholder="Recherche...">
+  {% for type, group in groups %}
+    <section class="category">
+      <h2>{{ type }}</h2>
+      {% for category in group %}
+        <section class="category">
+          <h3>{{ category.title }}</h3>
+          {% for board in category.boards %}
+            <section class="category flow">
+              <a href="{{ path('board.index', {'id': board.id}) }}" class="description a9">
+                <h4><span class="fa fa-book"></span>{{ board.title }}</h4>
+                <p>{{ board.description }}</p>
+              </a>
+              {% set lastTopic = board.lastTopic %}
+              {% set lastPost = lastTopic ? lastTopic.lastPost : null %}
+              {% if lastPost %}
+                <a href="{{ path('topic.index', {'id': lastTopic.id, '_fragment': lastPost.id}) }}"
+                   class="last-post a3"
+                 >
+                  <h5>{{ lastTopic.title }}</h5>
+                  <p>Dernier post par {{ lastPost.user }}</p>
+                  <p>{{ lastPost.content[:20] }}{% if lastPost.content | length > 20 %}...{% endif %}</p>
+                  <p>Le {{ lastPost.createdAt | date_format }}</p>
+                </a>
+              {% endif %}
+            </section>
+          {% endfor %}
+        </section>
+      {% endfor %}
+    </section>
+  {% endfor %}
 {% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+  {% if error %}
+    <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+  {% endif %}
+
+  <form class="form-login" action="{{ path('login') }}" method="post">
+
+    <fieldset>
+      <legend class="al3">Connexion</legend>
+      <input type="text" name="_username" value="{{ last_username }}"
+        id="username" autocomplete="off" placeholder="Nom d'utilisateur"
+      />
+
+      <input type="password" id="password" name="_password"
+        autocomplete="new-password" autocorrect="off" autocapitalize="off"
+        placeholder="Mot de passe"
+      />
+
+      {# <div class="flow">
+        <input type="checkbox" id="remember_me" name="_remember_me" value="false" />
+        <label for="remember_me">Se souvenir de moi</label>
+      </div> #}
+
+      <input type="hidden" name="_target_path" value="{{ path('homepage') }}" />
+    </fieldset>
+
+    <button type="submit" class="al6">Se connecter</button>
+  </form>
+{% endblock %}

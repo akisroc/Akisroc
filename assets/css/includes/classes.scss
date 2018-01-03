@@ -1,0 +1,32 @@
+.color-danger { color: $color-danger; }
+.color-warning { color: $color-warning; }
+.color-info { color: $color-info; }
+.color-success { color: $color-success; }
+
+.color-doomed { color: $color-doomed; }
+
+.bg-danger { background-color: $color-danger; }
+.bg-warning { background-color: $color-warning; }
+.bg-info { background-color: $color-info; }
+.bg-success{ background-color: $color-success; }
+
+.bg-doomed { @include racial-bg($color-doomed); }
+
+.smooth-underline-white { @include smooth-underline($white); }
+.smooth-underline-black { @include smooth-underline($black); }
+.smooth-underline-danger { @include smooth-underline($color-danger); }
+.smooth-underline-warning { @include smooth-underline($color-warning); }
+.smooth-underline-info { @include smooth-underline($color-info); }
+.smooth-underline-success { @include smooth-underline($color-success); }
+
+.button-new {
+  padding: 8px 12px 6px 12px;
+  border-radius: 8px;
+  background-color: rgba($black, 0.2);
+  font-size: 1.2em;
+  transition: all 0.2s ease-out;
+  &:hover {
+    background-color: rgba($black, 0);
+  }
+  @include smooth-underline($black);
+}

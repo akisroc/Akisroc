@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+  <div>
+    <a class="button-new" href="{{ path('board.add-topic', {'id': board.id}) }}">Nouveau topic</a>
+  </div>
+  <hr/>
+  <ul class="list">
+    {% for topic in topics %}
+      {% set lastPost = topic.lastPost %}
+      <li class="flow">
+        <h4 class="a12 d8">
+          <a href="{{ path('topic.index', {'id': topic.id}) }}">{{ topic.title }}</a>
+        </h4>
+        <aside class="a12 d4">
+          <p>
+            <a href="{{ path('topic.index', {'id': topic.id, '_fragment': topic.lastPost.id }) }}">
+              "{{ lastPost.content[:20] }}{% if lastPost.content | length > 20 %}...{% endif %}"
+            </a>
+            le {{ lastPost.createdAt | date_format('d/m/y à H:i') }}
+          </p>
+          <p>
+            par <a href="#">{{ topic.type == 'rp' ? lastPost.protagonist : lastPost.user }}</a>
+          </p>
+        </aside>
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}

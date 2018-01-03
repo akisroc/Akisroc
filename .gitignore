@@ -2,6 +2,10 @@
 ###> symfony/framework-bundle ###
 .env
 /public/bundles/
+/public/build/css/
+/public/build/fonts/
+/public/build/images/
+/public/build/js/
 /var/
 /vendor/
 ###< symfony/framework-bundle ###
@@ -10,6 +14,18 @@
 .web-server-pid
 ###< symfony/web-server-bundle ###
 
-###< local ###
-/.idea/
+###> app ###
+/node_modules/
+/submodules/
+###< app ###
+
 ###> local ###
+/.idea/
+###< local ###
+###> symfony/webpack-encore-pack ###
+/node_modules/
+###< symfony/webpack-encore-pack ###
+
+###> phpunit/phpunit ###
+/phpunit.xml
+###< phpunit/phpunit ###

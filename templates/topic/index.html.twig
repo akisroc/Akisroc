@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% set TYPE_RP = constant('App\\Entity\\Category::TYPE_RP') %}
+{% set TYPE_HRP = constant('App\\Entity\\Category::TYPE_HRP') %}
+
+{% set ADD_POST = constant('App\\Security\\Voter\\TopicVoter::ADD_POST') %}
+
+{% block title %}{{ topic.title }} - Akisroc{% endblock %}
+
+{% block answer_button %}
+  {% if is_granted(ADD_POST, topic) %}
+    <div>
+      <a class="button-new" href="{{ path('topic.add-post', {'id': topic.id}) }}">Répondre</a>
+    </div>
+  {% endif %}
+{% endblock %}
+
+{% block body %}
+  <div class="topic">
+    <h2>{{ topic.title }}</h2>
+    <hr/>
+    {{ block('answer_button') }}
+    <section class="posts">
+      {% for post in posts %}
+        <article class="post">
+          <header class="post-header flow">
+            <div class="post-hrp-infos a12">
+              <a id="{{ post.id }}" href="{{ path('topic.index', {'id': topic.id}) }}#{{ post.id }}">Publié</a>
+              {% if not post.protagonist or (post.protagonist and not post.protagonist.secretAuthor) %}
+                par <a href="#"><span class="post-author">{{ post.user }}</span></a>
+              {% endif %}
+              le {{ post.createdAt | date_format }}
+              {#le <span class="post-date">6 décembre 2017</span>#}
+              {#à <span class="post-hour">22h16</span>#}
+            </div>
+            {% if category.type == TYPE_RP %}
+              <div class="post-rp-infos a12">
+                <div class="character-avatar">
+                  <img src="{{ post.protagonist.avatar }}" alt="Avatar : {{ post.protagonist }}">
+                </div>
+                <div class="character-infos flow">
+                  <div class="character-name a12">{{ post.protagonist }}</div>
+                </div>
+              </div>
+            {% elseif category.type == TYPE_HRP %}
+              <div class="post-rp-infos a12">
+                <div class="character-avatar">
+                  <img src="{{ post.user.avatar }}" alt="Avatar : {{ post.user }}">
+                </div>
+                <div class="character-infos flow">
+                  <div class="character-name a12">{{ post.user }}</div>
+                </div>
+              </div>
+            {% endif %}
+          </header>
+          <div class="post-content">
+            {{ post.content |nl2br }}
+          </div>
+        </article>
+      {% endfor %}
+    </section>
+    {{ block('answer_button') }}
+  </div>
+{% endblock %}

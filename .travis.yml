@@ -1,0 +1,39 @@
+branches:
+  only:
+    - master
+    - /^[0-9]+\.[0-9]+$/
+
+env:
+  - APP_ENV="dev" APP_SECRET="6044a41cfb95fb92a92c293a84e1601d27740171" DATABASE_URL="mysql://travis@127.0.0.1/akisroc"
+
+language: php
+php:
+  - '7.2'
+
+services:
+  - mysql
+
+addons:
+  mariadb: '10.0'
+
+before_install:
+  - n=$(git log --oneline | grep "fixup!" | wc -l); if [[ $n == 0 ]]; then echo "OK\n"; else echo "Error - $n remaining fixup(s)\n" && exit 1; fi
+  - mysql -e 'CREATE DATABASE akisroc;'
+  - git clone -b stable https://github.com/jedisct1/libsodium.git
+  - cd libsodium && sudo ./configure && sudo make check && sudo make install && cd ..
+  - '[[ "$TRAVIS_PHP_VERSION" == "nightly" ]] || phpenv config-rm xdebug.ini'
+  - composer self-update
+
+install:
+  - pecl install libsodium
+  - echo "extension=sodium.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+  - composer install
+  - npm install
+  - ./node_modules/.bin/encore dev
+
+before_script:
+  - php bin/console doctrine:schema:create
+  - php bin/console doctrine:fixtures:load --no-interaction
+  - php bin/console server:start
+
+script: ./vendor/bin/phpunit tests/
