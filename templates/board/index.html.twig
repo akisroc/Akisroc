@@ -1,10 +1,18 @@
 {% extends 'base.html.twig' %}
 
+{% set ADD_TOPIC = constant('App\\Security\\Voter\\BoardVoter::ADD_TOPIC') %}
+
+{% block new_topic_button %}
+  {% if is_granted(ADD_TOPIC, board) %}
+    <div>
+      <a class="button-new" href="{{ path('board.add-topic', {'id': board.id}) }}">Nouveau topic</a>
+    </div>
+    <hr/>
+  {% endif %}
+{% endblock %}
+
 {% block body %}
-  <div>
-    <a class="button-new" href="{{ path('board.add-topic', {'id': board.id}) }}">Nouveau topic</a>
-  </div>
-  <hr/>
+  {{ block('new_topic_button') }}
   <ul class="list">
     {% for topic in topics %}
       {% set lastPost = topic.lastPost %}

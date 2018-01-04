@@ -203,4 +203,16 @@ class Board
 
         return $this;
     }
+
+    /**
+     * @return null|string
+     */
+    public function getType(): ?string
+    {
+        if ($category = $this->getCategory()) {
+            return $category->getType();
+        }
+
+        return null;
+    }
 }
