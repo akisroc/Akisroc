@@ -3,6 +3,8 @@
 ## [v0.2.0] - Unreleased
 
 ### Added
+- SSL certificate
+- Domain name
 - Changelog file
 
 ---
