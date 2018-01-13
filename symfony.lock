@@ -71,6 +71,9 @@
     "doctrine/orm": {
         "version": "v2.5.13"
     },
+    "erusev/parsedown": {
+        "version": "1.6.4"
+    },
     "fzaninotto/faker": {
         "version": "v1.7.1"
     },

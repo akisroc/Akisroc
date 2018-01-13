@@ -1,8 +1,9 @@
 # CHANGELOG
 
-## [v0.2.0] - Unreleased
+## v0.2.0 - Unreleased
 
 ### Added
+- Changelog page
 - Custom pagination service
 - SSL certificate
 - Domain name
@@ -10,7 +11,7 @@
 
 ---
 
-## [v0.1.1] - 2017.01.04
+## [v0.1.1](https://github.com/Adrien-H/Akisroc/releases/tag/v0.1.1) - 2017.01.04
 
 ### Fixed
 - Git Service correctly displaying current tag
@@ -18,7 +19,7 @@
 
 ----
 
-## [v0.1.0] - 2017.01.03
+## [v0.1.0](https://github.com/Adrien-H/Akisroc/releases/tag/v0.1.0) - 2017.01.03
 
 ### Added
 - Protagonists
