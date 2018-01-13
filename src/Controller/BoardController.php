@@ -8,8 +8,10 @@ use App\Entity\Protagonist;
 use App\Entity\Topic;
 use App\Entity\User;
 use App\Form\TopicType;
+use App\Repository\TopicRepository;
 use App\Security\Voter\BoardVoter;
 use App\Utils\BBPlus;
+use App\Utils\Paginator;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,20 +23,23 @@ use Symfony\Component\Routing\Annotation\Route;
 class BoardController extends Controller
 {
     /**
-     * @Route("/{id}", name="board.index", requirements={"id"="\d+"})
+     * @Route("/{id}/{page}", name="board.index", requirements={"id"="\d+", "page"="\d+"})
      *
      * @param Board $board
+     * @param int $page
      * @return Response
      */
-    public function index(Board $board): Response
+    public function index(Board $board, int $page = 1): Response
     {
         $d = $this->getDoctrine();
+        /** @var TopicRepository $topicRepo */
         $topicRepo = $d->getRepository(Topic::class);
-        $topics = $topicRepo->findBy(['board' => $board], ['id' => 'DESC']);
+        $paginator = new Paginator($page, 30);
+        $pagination = $paginator->paginate($topicRepo->getBoardIndex($board, true));
 
         return $this->render('board/index.html.twig', [
             'board' => $board,
-            'topics' => $topics
+            'pagination' => $pagination
         ]);
     }
 
