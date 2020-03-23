@@ -1,6 +1,6 @@
 # Mises à jour
 
-## v0.2.0 - À venir
+## [v0.2.0](https://github.com/Adrien-H/Akisroc/releases/tag/v0.2.0) - 2020.03.23
 
 ### Nouveautés
 - Page des notes de mises à jour
