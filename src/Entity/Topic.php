@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -17,12 +19,12 @@ class Topic
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id = null;
 
     /**
      * @ORM\Column(type="string", length=63, nullable=false)
      */
-    private $title;
+    private ?string $title = null;
 
     /**
      * @ORM\ManyToOne(
@@ -32,7 +34,7 @@ class Topic
      * )
      * @ORM\JoinColumn(nullable=false)
      */
-    private $board;
+    private ?Board $board = null;
 
     /**
      * @ORM\OneToMany(
@@ -46,7 +48,7 @@ class Topic
      * })
      * @Assert\NotBlank()
      */
-    private $posts;
+    private ?Collection $posts = null;
 
     /**
      * Topic constructor.
@@ -62,22 +64,6 @@ class Topic
     public function __toString()
     {
         return $this->title;
-    }
-
-    /**
-     * @param string $title
-     * @param Board|null $board
-     * @param iterable $posts
-     * @return Topic
-     */
-    static public function create(string $title, Board $board = null, iterable $posts = []): Topic
-    {
-        $topic = new Topic();
-        $topic->setTitle($title);
-        $topic->setBoard($board);
-        $topic->addPosts($posts);
-
-        return $topic;
     }
 
     /**
@@ -154,23 +140,12 @@ class Topic
     }
 
     /**
-     * @param Collection|null $posts
-     * @return self
-     */
-    public function setPosts(?Collection $posts): self
-    {
-        $this->posts = $posts;
-
-        return $this;
-    }
-
-    /**
      * @param Post $post
      * @return self
      */
-    public function addPost(?Post $post): self
+    public function addPost(Post $post): self
     {
-        if ($post && !$this->posts->contains($post)) {
+        if (!$this->posts->contains($post)) {
             $this->posts->add($post);
             $post->setTopic($this);
         }
@@ -179,14 +154,15 @@ class Topic
     }
 
     /**
-     * @param iterable $posts
+     * @param Post $post
      * @return self
      */
-    public function addPosts(?iterable $posts): self
+    public function removePost(Post $post): self
     {
-        if ($posts) {
-            foreach ($posts as $post) {
-                $this->addPost($post);
+        if ($this->posts->contains($post)) {
+            $this->posts->removeElement($post);
+            if ($post->getTopic() === $this) {
+                $post->setTopic(null);
             }
         }
 

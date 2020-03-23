@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -17,27 +19,27 @@ class Protagonist
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id = null;
 
     /**
      * @var string
      * @ORM\Column(type="string", length=63, nullable=false, unique=true)
      * @Assert\NotBlank()
      */
-    private $name;
+    private ?string $name = null;
 
     /**
      * @var bool
      * @ORM\Column(type="boolean", nullable=false)
      */
-    private $secretAuthor;
+    private bool $secretAuthor = true;
 
 
     /**
      * @var string
      * @ORM\Column(type="string", length=511, nullable=true)
      */
-    private $avatar;
+    private ?string $avatar = null;
 
     /**
      * @ORM\ManyToOne(
@@ -47,12 +49,12 @@ class Protagonist
      * )
      * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
      */
-    private $user;
+    private ?User $user = null;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Post", mappedBy="protagonist", cascade={"persist", "remove"})
      */
-    private $posts;
+    private ?Collection $posts = null;
 
     /**
      * @return string
@@ -71,40 +73,11 @@ class Protagonist
     }
 
     /**
-     * @param string $name
-     * @param bool $secretAuthor
-     * @param string|null $avatar
-     * @param User|null $user
-     * @return Protagonist
-     */
-    static public function create(string $name, bool $secretAuthor, string $avatar = null, User $user = null): Protagonist
-    {
-        $protagonist = new Protagonist();
-        $protagonist->setName($name);
-        $protagonist->setSecretAuthor($secretAuthor);
-        $protagonist->setAvatar($avatar);
-        $protagonist->setUser($user);
-
-        return $protagonist;
-    }
-
-    /**
      * @return int|null
      */
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    /**
-     * @param int|null $id
-     * @return self
-     */
-    public function setId(?int $id): self
-    {
-        $this->id = $id;
-
-        return $this;
     }
 
     /**
@@ -127,18 +100,18 @@ class Protagonist
     }
 
     /**
-     * @return bool|null
+     * @return bool
      */
-    public function getSecretAuthor(): ?bool
+    public function isSecretAuthor(): bool
     {
         return $this->secretAuthor;
     }
 
     /**
-     * @param bool|null $secretAuthor
+     * @param bool $secretAuthor
      * @return self
      */
-    public function setSecretAuthor(?bool $secretAuthor): self
+    public function setSecretAuthor(bool $secretAuthor): self
     {
         $this->secretAuthor = $secretAuthor;
 
@@ -192,23 +165,12 @@ class Protagonist
     }
 
     /**
-     * @param Collection|null $posts
-     * @return self
-     */
-    public function setPosts(?Collection $posts): self
-    {
-        $this->posts = $posts;
-
-        return $this;
-    }
-
-    /**
      * @param Post $post
      * @return self
      */
-    public function addPost(?Post $post): self
+    public function addPost(Post $post): self
     {
-        if ($post && !$this->posts->contains($post)) {
+        if (!$this->posts->contains($post)) {
             $this->posts->add($post);
             $post->setProtagonist($this);
         }
@@ -217,17 +179,16 @@ class Protagonist
     }
 
     /**
-     * @param iterable $posts
+     * @param Post $post
      * @return self
      */
-    public function addPosts(?iterable $posts): self
+    public function removePost(Post $post): self
     {
-        if ($posts) {
-            foreach ($posts as $post) {
-                $this->addPost($post);
+        if ($this->posts->contains($post)) {
+            $this->posts->removeElement($post);
+            if ($post->getProtagonist() === $this) {
+                $post->setProtagonist(null);
             }
         }
-
-        return $this;
     }
 }

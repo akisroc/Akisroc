@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -19,14 +21,14 @@ class User implements UserInterface, EquatableInterface
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id = null;
 
     /**
      * @var string
      * @ORM\Column(type="string", length=63, nullable=false, unique=true)
      * @Assert\NotBlank()
      */
-    private $username;
+    private ?string $username = null;
 
     /**
      * @var string
@@ -34,47 +36,47 @@ class User implements UserInterface, EquatableInterface
      * @Assert\NotBlank()
      * @Assert\Email()
      */
-    private $email;
+    private ?string $email = null;
 
     /**
      * @var string
      * @ORM\Column(type="string", length=511, nullable=true)
      * @Assert\Url()
      */
-    private $avatar;
+    private ?string $avatar = null;
 
     /**
      * @var string
      * @ORM\Column(type="string", length=511, nullable=false)
      */
-    private $password;
+    private ?string $password = null;
 
     /**
      * @Assert\NotBlank()
      * @Assert\Length(min=12, max=4096)
      */
-    private $plainPassword;
+    private ?string $plainPassword = null;
 
     /**
      * @var string
      * @ORM\Column(type="string", length=123, nullable=false)
      */
-    private $salt;
+    private ?string $salt = null;
 
     /**
-     * @var array
+     * @var string[]
      */
-    private $roles;
+    private array $roles = ['ROLE_USER'];
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Post", mappedBy="user", cascade={"persist", "remove"})
      */
-    private $posts;
+    private Collection $posts;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Protagonist", mappedBy="user", cascade={"persist", "remove"})
      */
-    private $protagonists;
+    private Collection $protagonists;
 
     /**
      * User constructor.
@@ -95,43 +97,11 @@ class User implements UserInterface, EquatableInterface
     }
 
     /**
-     * @param string $username
-     * @param string $email
-     * @param string|null $avatar
-     * @param iterable $posts
-     * @param iterable $protagonists
-     * @return User
-     */
-    static public function create(string $username, string $email, string $avatar = null,
-                                  iterable $posts = [], iterable $protagonists = []
-    ): User {
-        $user = new User();
-        $user->setUsername($username);
-        $user->setEmail($email);
-        $user->setAvatar($avatar);
-        $user->addPosts($posts);
-        $user->addProtagonists($protagonists);
-
-        return $user;
-    }
-
-    /**
      * @return int|null
      */
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    /**
-     * @param int|null $id
-     * @return self
-     */
-    public function setId(?int $id): self
-    {
-        $this->id = $id;
-
-        return $this;
     }
 
     /**
@@ -261,23 +231,12 @@ class User implements UserInterface, EquatableInterface
     }
 
     /**
-     * @param Collection|null $posts
-     * @return self
-     */
-    public function setPosts(?Collection $posts): self
-    {
-        $this->posts = $posts;
-
-        return $this;
-    }
-
-    /**
      * @param Post $post
      * @return self
      */
-    public function addPost(?Post $post): self
+    public function addPost(Post $post): self
     {
-        if ($post && !$this->posts->contains($post)) {
+        if (!$this->posts->contains($post)) {
             $this->posts->add($post);
             $post->setUser($this);
         }
@@ -286,18 +245,17 @@ class User implements UserInterface, EquatableInterface
     }
 
     /**
-     * @param iterable $posts
+     * @param Post $post
      * @return self
      */
-    public function addPosts(?iterable $posts): self
+    public function removePost(Post $post): self
     {
-        if ($posts) {
-            foreach ($posts as $post) {
-                $this->addPost($post);
+        if ($this->posts->contains($post)) {
+            $this->posts->removeElement($post);
+            if ($post->getUser() === $this) {
+                $post->setUser(null);
             }
         }
-
-        return $this;
     }
 
     /**
@@ -309,23 +267,12 @@ class User implements UserInterface, EquatableInterface
     }
 
     /**
-     * @param Collection|null $protagonists
-     * @return self
-     */
-    public function setProtagonists(?Collection $protagonists): self
-    {
-        $this->protagonists = $protagonists;
-
-        return $this;
-    }
-
-    /**
      * @param Protagonist $protagonist
      * @return self
      */
-    public function addProtagonist(?Protagonist $protagonist): self
+    public function addProtagonist(Protagonist $protagonist): self
     {
-        if ($protagonist && !$this->protagonists->contains($protagonist)) {
+        if (!$this->protagonists->contains($protagonist)) {
             $this->protagonists->add($protagonist);
             $protagonist->setUser($this);
         }
@@ -334,23 +281,22 @@ class User implements UserInterface, EquatableInterface
     }
 
     /**
-     * @param iterable $protagonists
+     * @param Protagonist $protagonist
      * @return self
      */
-    public function addProtagonists(?iterable $protagonists): self
+    public function removeProtagonist(Protagonist $protagonist): self
     {
-        if ($protagonists) {
-            foreach ($protagonists as $protagonist) {
-                $this->addProtagonist($protagonist);
+        if ($this->protagonists->contains($protagonist)) {
+            $this->protagonists->removeElement($protagonist);
+            if ($protagonist->getUser() === $this) {
+                $protagonist->setUser(null);
             }
         }
-
-        return $this;
     }
 
     /**
      * {@inheritdoc}
-     * @return array
+     * @return string[]
      */
     public function getRoles(): array
     {
@@ -386,6 +332,8 @@ class User implements UserInterface, EquatableInterface
 
     /**
      * @return string
+     *
+     * @throws \Exception
      */
     static public function generateSalt(): string
     {

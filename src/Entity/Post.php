@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -17,30 +19,30 @@ class Post
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id = null;
 
     /**
      * @ORM\Column(type="string", length=8191, nullable=false)
      */
-    private $content;
+    private ?string $content = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Topic", inversedBy="posts", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
-    private $topic;
+    private ?Topic $topic = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="posts", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
      */
-    private $user;
+    private ?User $user = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Protagonist", inversedBy="posts", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
      */
-    private $protagonist;
+    private ?Protagonist $protagonist = null;
 
     /**
      * @return string
@@ -51,41 +53,11 @@ class Post
     }
 
     /**
-     * @param string $content
-     * @param Topic|null $topic
-     * @param User|null $user
-     * @param Protagonist|null $protagonist
-     * @return Post
-     */
-    static public function create(string $content, Topic $topic = null,
-                                  User $user = null, Protagonist $protagonist = null
-    ): Post {
-        $post = new Post();
-        $post->setContent($content);
-        $post->setTopic($topic);
-        $post->setUser($user);
-        $post->setProtagonist($protagonist);
-
-        return $post;
-    }
-
-    /**
      * @return int|null
      */
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    /**
-     * @param int|null $id
-     * @return self
-     */
-    public function setId(?int $id): self
-    {
-        $this->id = $id;
-
-        return $this;
     }
 
     /**

@@ -1,11 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\PersistentCollection;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
@@ -14,35 +15,35 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  */
 class Category
 {
-    const TYPE_RP = 'rp';
-    const TYPE_HRP = 'hrp';
+    public const TYPE_RP = 'rp';
+    public const TYPE_HRP = 'hrp';
 
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id = null;
 
     /**
      * @ORM\Column(type="string", length=63, nullable=false)
      */
-    private $title;
+    private ?string $title = null;
 
     /**
      * @ORM\Column(type="string", length=511, nullable=true)
      */
-    private $description;
+    private ?string $description = null;
 
     /**
      * @ORM\Column(type="string", length=15, nullable=false)
      */
-    private $type;
+    private ?string $type = null;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Board", mappedBy="category", cascade={"persist", "remove"})
      */
-    private $boards;
+    private ?Collection $boards = null;
 
     /**
      * Category constructor.
@@ -61,41 +62,11 @@ class Category
     }
 
     /**
-     * @param string $title
-     * @param string|null $description
-     * @param string $type
-     * @param iterable $boards
-     * @return Category
-     */
-    static public function create(string $title, string $description = null, string $type,
-                                  iterable $boards = []
-    ): Category {
-        $category = new Category();
-        $category->setTitle($title);
-        $category->setDescription($description);
-        $category->setType($type);
-        $category->addBoards($boards);
-
-        return $category;
-    }
-
-    /**
      * @return int|null
      */
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    /**
-     * @param int|null $id
-     * @return self
-     */
-    public function setId(?int $id): self
-    {
-        $this->id = $id;
-
-        return $this;
     }
 
     /**
@@ -164,23 +135,12 @@ class Category
     }
 
     /**
-     * @param Collection|null $boards
+     * @param Board $board
      * @return self
      */
-    public function setBoards(?Collection $boards): self
+    public function addBoard(Board $board): self
     {
-        $this->boards = $boards;
-
-        return $this;
-    }
-
-    /**
-     * @param Board|null $board
-     * @return self
-     */
-    public function addBoard(?Board $board): self
-    {
-        if ($board && !$this->boards->contains($board)) {
+        if (!$this->boards->contains($board)) {
             $this->boards->add($board);
             $board->setCategory($this);
         }
@@ -189,14 +149,15 @@ class Category
     }
 
     /**
-     * @param iterable $boards
+     * @param Board $board
      * @return self
      */
-    public function addBoards(?iterable $boards): self
+    public function removeBoard(Board $board): self
     {
-        if ($boards) {
-            foreach ($boards as $board) {
-                $this->addBoard($board);
+        if ($this->boards->contains($board)) {
+            $this->boards->removeElement($board);
+            if ($board->getCategory() === $this) {
+                $board->setCategory(null);
             }
         }
 

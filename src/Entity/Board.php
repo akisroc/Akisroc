@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -16,30 +18,30 @@ class Board
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id = null;
 
     /**
      * @ORM\Column(type="string", length=63, nullable=false)
      */
-    private $title;
+    private ?string $title = null;
 
     /**
      * @ORM\Column(type="string", length=511, nullable=true)
      */
-    private $description;
+    private ?string $description = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="boards", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
      */
-    private $category;
+    private ?Category $category = null;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Topic", mappedBy="board", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=true)
      * @ORM\OrderBy({"id"="ASC"})
      */
-    private $topics;
+    private ?Collection $topics = null;
 
     public function __construct()
     {
@@ -55,41 +57,11 @@ class Board
     }
 
     /**
-     * @param string $title
-     * @param string|null $description
-     * @param Category|null $category
-     * @param iterable|null $topics
-     * @return Board
-     */
-    static public function create(string $title, string $description = null,
-                                  Category $category = null, iterable $topics = []
-    ): Board {
-        $board = new Board();
-        $board->setTitle($title);
-        $board->setDescription($description);
-        $board->setCategory($category);
-        $board->addTopics($topics);
-
-        return $board;
-    }
-
-    /**
      * @return int|null
      */
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    /**
-     * @param int|null $id
-     * @return self
-     */
-    public function setId(?int $id): self
-    {
-        $this->id = $id;
-
-        return $this;
     }
 
     /**
@@ -166,46 +138,35 @@ class Board
     }
 
     /**
-     * @param Collection|null $topics
+     * @param Topic $topic
      * @return self
      */
-    public function setTopics(?Collection $topics): self
+    public function addTopic(Topic $topic): self
     {
-        $this->topics = $topics;
-
-        return $this;
-    }
-
-    /**
-     * @param Topic|null $topic
-     * @return self
-     */
-    public function addTopic(?Topic $topic): self
-    {
-        if ($topic && !$this->topics->contains($topic)) {
+        if (!$this->topics->contains($topic)) {
             $this->topics->add($topic);
+            $topic->setBoard($this);
         }
 
         return $this;
     }
 
     /**
-     * @param iterable $topics
+     * @param Topic $topic
      * @return self
      */
-    public function addTopics(?iterable $topics): self
+    public function removeTopic(Topic $topic): self
     {
-        if ($topics) {
-            foreach ($topics as $topic) {
-                $this->addTopic($topic);
+        if ($this->topics->contains($topic)) {
+            $this->topics->removeElement($topic);
+            if ($topic->getBoard() === $this) {
+                $topic->setBoard(null);
             }
         }
-
-        return $this;
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getType(): ?string
     {
