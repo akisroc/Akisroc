@@ -31,4 +31,10 @@ git submodule update --init
 # Install and build NPM dependencies
 npm install
 npm run dev
+
+# Copy local phpunit file then configure it to your needs
+cp phpunit.xml.dist phpunit.xml
+
+# Everything should work fine now. Test the application. (:
+php bin/phpunit tests/
 ```
