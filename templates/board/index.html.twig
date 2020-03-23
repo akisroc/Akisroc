@@ -14,7 +14,7 @@
 {% block body %}
   {{ block('new_topic_button') }}
   <ul class="list">
-    {% for topic in topics %}
+    {% for topic in pagination %}
       {% set lastPost = topic.lastPost %}
       <li class="flow">
         <h4 class="a12 d8">

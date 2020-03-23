@@ -4,6 +4,7 @@ namespace App\Tests\Controller;
 
 use App\Entity\Board;
 use App\Entity\Topic;
+use App\Tests\MockData;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -50,13 +51,12 @@ class BoardControllerTest extends WebTestCase
         /** @var Board $board */
         $board = $this->em->getRepository(Board::class)->findOneBy([]);
 
-        $client = static::createClient();
+        $client = static::createClient([], MockData::USER_CREDENTIALS);
         $crawler = $client->request('GET', "{$url}/{$board->getId()}/add-topic");
 
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         $form = $crawler->selectButton('Valider')->form();
-        $form['topic[board]'] = $board->getId();
         $form['topic[title]'] = 'Dummy Topic';
         $form['topic[post][content]'] = 'Dummy Content';
         $client->submit($form);

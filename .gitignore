@@ -17,6 +17,7 @@
 ###> app ###
 /node_modules/
 /submodules/
+/tests/coverage/
 ###< app ###
 
 ###> local ###
@@ -29,3 +30,8 @@
 ###> phpunit/phpunit ###
 /phpunit.xml
 ###< phpunit/phpunit ###
+
+###> symfony/phpunit-bridge ###
+.phpunit
+/phpunit.xml
+###< symfony/phpunit-bridge ###

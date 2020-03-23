@@ -2,7 +2,16 @@
 <phpunit
         colors="true"
         bootstrap="vendor/autoload.php"
+        failOnRisky="true"
+        failOnWarning="true"
 >
+
+    <testsuites>
+        <testsuite name="All">
+            <directory>./tests</directory>
+        </testsuite>
+    </testsuites>
+
     <php>
         <!-- the value is the FQCN of the application kernel -->
         <env name="KERNEL_CLASS" value="App\Kernel" />
@@ -17,5 +26,15 @@
         <env name="DATABASE_URL" value="mysql://root@127.0.0.1/akisroc"/>
         <!-- ###- doctrine/doctrine-bundle ### -->
     </php>
+
+    <listeners>
+        <listener class="Symfony\Bridge\PhpUnit\CoverageListener" />
+    </listeners>
+
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">./src</directory>
+        </whitelist>
+    </filter>
     <!-- ... -->
 </phpunit>
