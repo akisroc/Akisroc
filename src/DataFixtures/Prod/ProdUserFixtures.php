@@ -5,7 +5,7 @@ namespace App\DataFixtures\Prod;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
-use Symfony\Component\Security\Core\Encoder\Argon2iPasswordEncoder;
+use Symfony\Component\Security\Core\Encoder\SodiumPasswordEncoder;
 
 /**
  * Class ProdUserFixtures
@@ -20,7 +20,7 @@ class ProdUserFixtures extends Fixture
     {
         $cr = $this->getACredentials();
 
-        $encoder = new Argon2iPasswordEncoder();
+        $encoder = new SodiumPasswordEncoder();
         $user = (new User())
             ->setUsername($cr[0])
             ->setEmail($cr[1])

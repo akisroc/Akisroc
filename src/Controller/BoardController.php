@@ -12,7 +12,7 @@ use App\Repository\TopicRepository;
 use App\Security\Voter\BoardVoter;
 use App\Utils\BBPlus;
 use App\Utils\Paginator;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -20,7 +20,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/board")
  */
-class BoardController extends Controller
+class BoardController extends AbstractController
 {
     /**
      * @Route("/{id}/{page}", name="board.index", requirements={"id"="\d+", "page"="\d+"})

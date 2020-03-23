@@ -3,26 +3,15 @@
 namespace App\Repository;
 
 use App\Entity\Board;
-use App\Entity\Topic;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
-use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
  * Class TopicRepository
  * @package App\Repository
  */
-class TopicRepository extends ServiceEntityRepository
+class TopicRepository extends EntityRepository
 {
-    /**
-     * TopicRepository constructor.
-     * @param RegistryInterface $registry
-     */
-    public function __construct(RegistryInterface $registry)
-    {
-        parent::__construct($registry, Topic::class);
-    }
-
     /**
      * @param Board $board
      * @param bool $returnBuilder

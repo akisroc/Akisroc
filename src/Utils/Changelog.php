@@ -50,15 +50,15 @@ class Changelog
         }
 
         $filePath = (function() use (&$langCode): string {
-            $dir = $this->kernel->getRootDir();
+            $dir = $this->kernel->getProjectDir();
             $s = DIRECTORY_SEPARATOR;
             if (!$langCode) {
                 return realpath(
-                    $dir . $s . '..' . $s . self::FILE_NAME . '.' . self::FILE_EXTENSION
+                    $dir . $s . '.' . $s . self::FILE_NAME . '.' . self::FILE_EXTENSION
                 );
             }
             return realpath(
-                $dir . $s . '..' . $s . self::FILE_NAME . '.' . $langCode . '.' . self::FILE_EXTENSION
+                $dir . $s . self::FILE_NAME . '.' . $langCode . '.' . self::FILE_EXTENSION
             );
         })();
 

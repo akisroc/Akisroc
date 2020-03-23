@@ -2,17 +2,14 @@
 
 namespace App\Repository;
 
-use App\Entity\Category;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\ORM\EntityRepository;
 
-class CategoryRepository extends ServiceEntityRepository
+/**
+ * Class CategoryRepository
+ * @package App\Repository
+ */
+class CategoryRepository extends EntityRepository
 {
-    public function __construct(RegistryInterface $registry)
-    {
-        parent::__construct($registry, Category::class);
-    }
-
     /**
      * @param array|null $orderBy
      * @param int|null $limit

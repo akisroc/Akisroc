@@ -4,16 +4,16 @@ namespace App\Controller;
 
 use App\Entity\Category;
 use App\Utils\Git;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class HomepageController
  * @package App\Controller
  */
-class HomepageController extends Controller
+class HomepageController extends AbstractController
 {
     /**
      * @Route("/", name="homepage")

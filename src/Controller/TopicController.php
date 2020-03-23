@@ -7,7 +7,7 @@ use App\Entity\Post;
 use App\Entity\Topic;
 use App\Form\PostType;
 use App\Security\Voter\TopicVoter;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/topic")
  */
-class TopicController extends Controller
+class TopicController extends AbstractController
 {
     /**
      * @Route("/{id}/{page}", name="topic.index", requirements={"id"="\d+", "page"="\d+"})

@@ -7,8 +7,7 @@ use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Faker\Factory;
-use Symfony\Component\Security\Core\Encoder\Argon2iPasswordEncoder;
-use Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder;
+use Symfony\Component\Security\Core\Encoder\SodiumPasswordEncoder;
 
 /**
  * Class UserFixtures
@@ -34,10 +33,7 @@ class UserFixtures extends Fixture
      */
     public function load(ObjectManager $manager): void
     {
-        $encoder = Argon2iPasswordEncoder::isSupported()
-            ? new Argon2iPasswordEncoder()
-            : new BCryptPasswordEncoder(4)
-        ;
+        $encoder = new SodiumPasswordEncoder();
         for ($i = 0; $i < self::COUNT; ++$i) {
             $avatar = $this->faker->imageUrl(180, 180, 'abstract');
             if ($i === 0) {

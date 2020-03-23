@@ -1,7 +1,9 @@
 security:
     encoders:
         App\Entity\User:
-             algorithm: argon2i
+             algorithm: sodium
+             memory_cost: 4096
+             time_cost: 4
     providers:
 #        in_memory: { memory: ~ }
         main:

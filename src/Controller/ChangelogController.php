@@ -3,12 +3,12 @@
 namespace App\Controller;
 
 use App\Utils\Changelog;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class ChangelogController extends Controller
+class ChangelogController extends AbstractController
 {
     /**
      * @Route("/changelog", name="changelog")
