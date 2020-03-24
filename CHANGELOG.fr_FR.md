@@ -2,6 +2,9 @@
 
 ## v0.3.0
 
+### Changements
+- Amélioration du menu principal
+
 ### Sécurité
 - Plusieurs dépendances ont été mises à jour, corrigeant ainsi
 quelques sérieuses vulnérabilités

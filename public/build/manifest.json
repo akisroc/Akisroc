@@ -1,5 +1,4 @@
 {
-  "build/css/app.css": "/build/css/app.css",
   "build/fonts/fa-brands-400.eot": "/build/fonts/fa-brands-400.c1868c95.eot",
   "build/fonts/fa-brands-400.ttf": "/build/fonts/fa-brands-400.13685372.ttf",
   "build/fonts/fa-brands-400.woff": "/build/fonts/fa-brands-400.ec3cfdde.woff",
@@ -17,6 +16,7 @@
   "build/images/fa-brands-400.svg": "/build/images/fa-brands-400.0cb5a5c0.svg",
   "build/images/fa-regular-400.svg": "/build/images/fa-regular-400.89ffa3ab.svg",
   "build/images/fa-solid-900.svg": "/build/images/fa-solid-900.ec763292.svg",
-  "build/js/app.css": "/build/js/app.css",
-  "build/js/app.js": "/build/js/app.js"
+  "build/js/app.js": "/build/js/app.js",
+  "build/css/app.css": "/build/css/app.css",
+  "build/js/app.css": "/build/js/app.css"
 }

@@ -1,0 +1,52 @@
+#navigation {
+  $toggle-color: $black;
+  $toggle-active-color: rgba($white, 0.4);
+
+  label[for="menu-toggle"] {
+    z-index: 100;
+    position: fixed;
+    top: 0;
+    right: 0;
+    color: $black;
+    font-size: 4rem;
+    cursor: pointer;
+    &:hover {
+      color: rgba($white, 0.4);
+    }
+  }
+  nav {
+    z-index: 99;
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 100%;
+    background-color: rgba($black, 0.8);
+    transition: all 0.1s ease-out;
+    a {
+      display: block;
+      padding: 60px 0;
+      height: 40px;
+      font-size: 3rem;
+      text-align: center;
+      color: transparent;
+      transition: all 0.05s ease-in;
+      &:last-child {
+        margin-bottom: 40px;
+      }
+    }
+  }
+  #menu-toggle {
+    display: none;
+
+  }
+  #menu-toggle:checked ~ nav, #menu-toggle:hover ~ nav, nav:hover {
+    right: 0;
+    a {
+      color: rgba($white, 0.7);
+      &:hover {
+        color: rgba($white, 1);
+        transform: scale(1.1);
+      }
+    }
+  }
+}

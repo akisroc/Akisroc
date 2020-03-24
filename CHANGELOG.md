@@ -2,6 +2,9 @@
 
 ## v0.3.0
 
+### Changed
+- Nicer main menu
+
 ### Security
 - Multiple dependencies have been updated, fixing some
 serious vulnerabilities
