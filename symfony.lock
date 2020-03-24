@@ -164,6 +164,9 @@
     "psr/simple-cache": {
         "version": "1.0.0"
     },
+    "roave/security-advisories": {
+        "version": "dev-master"
+    },
     "sebastian/code-unit-reverse-lookup": {
         "version": "1.0.1"
     },
