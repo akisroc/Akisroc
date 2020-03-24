@@ -24,8 +24,6 @@ before_install:
   - '[[ "$TRAVIS_PHP_VERSION" == "nightly" ]] || phpenv config-rm xdebug.ini'
   - composer self-update
   - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
-  - sudo apt-get update -qq
-  - sudo apt-get install g++-5 -y
 
 install:
   - pecl install libsodium
@@ -34,7 +32,6 @@ install:
   - npm install
   - ./node_modules/.bin/encore dev
   - git submodule update --init
-  - cd submodules/bbplus/ && g++ --std=c++11 main.cpp -o bbplus -W -Wall -Werror -Wextra -pedantic -g -O3 -Os && cd ../..
 
 before_script:
   - printf "adminus\nadminus@adminus.test\nadminus\nhttp://nsa39.casimages.com/img/2018/01/02/180102012113625901.jpg" > ./src/DataFixtures/Prod/.apwd

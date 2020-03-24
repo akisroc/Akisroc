@@ -10,7 +10,6 @@ use App\Entity\User;
 use App\Form\TopicType;
 use App\Repository\TopicRepository;
 use App\Security\Voter\BoardVoter;
-use App\Utils\BBPlus;
 use App\Utils\Paginator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

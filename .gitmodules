@@ -1,6 +1,3 @@
 [submodule "submodules/paradoxe"]
 	path = submodules/paradoxe
 	url = https://github.com/Adrien-H/paradoxe.git
-[submodule "submodules/bbplus"]
-	path = submodules/bbplus
-	url = https://github.com/Adrien-H/BBPlus.git
