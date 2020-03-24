@@ -1,5 +1,11 @@
 # Mises à jour
 
+## v0.3.0
+
+### Sécurité
+- Plusieurs dépendances ont été mises à jour, corrigeant ainsi
+quelques sérieuses vulnérabilités
+
 ## [v0.2.0](https://github.com/Adrien-H/Akisroc/releases/tag/v0.2.0) - 2020.03.23
 
 ### Nouveautés

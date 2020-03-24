@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v0.3.0
+
+### Security
+- Multiple dependencies have been updated, fixing some
+serious vulnerabilities
+
 ## [v0.2.0](https://github.com/Adrien-H/Akisroc/releases/tag/v0.2.0) - 2020.03.23
 
 ### Added
