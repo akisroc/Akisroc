@@ -4,17 +4,18 @@ branches:
     - /^[0-9]+\.[0-9]+$/
 
 env:
-  - APP_ENV="dev" APP_SECRET="6044a41cfb95fb92a92c293a84e1601d27740171" DATABASE_URL="mysql://travis@127.0.0.1/akisroc"
+  - APP_ENV="test" APP_SECRET="6044a41cfb95fb92a92c293a84e1601d27740171" DATABASE_URL="mysql://travis@127.0.0.1/akisroc"
 
+dist: trusty
 language: php
 php:
-  - '7.2'
+  - '7.4'
 
 services:
   - mysql
 
 addons:
-  mariadb: '10.0'
+  mariadb: '10.4.12'
 
 before_install:
   - n=$(git log --oneline | grep "fixup!" | wc -l); if [[ $n == 0 ]]; then echo "OK\n"; else echo "Error - $n remaining fixup(s)\n" && exit 1; fi
@@ -29,14 +30,14 @@ install:
   - pecl install libsodium
   - echo "extension=sodium.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - composer install
-  - npm install
-  - ./node_modules/.bin/encore dev
   - git submodule update --init
+  - npm install
+  - npm run dev
 
 before_script:
   - printf "adminus\nadminus@adminus.test\nadminus\nhttp://nsa39.casimages.com/img/2018/01/02/180102012113625901.jpg" > ./src/DataFixtures/Prod/.apwd
   - php bin/console doctrine:schema:create
   - php bin/console doctrine:fixtures:load --no-interaction
-  - php bin/console server:start
+  - php -S 127.0.0.1:8000 -t public/ &
 
 script: php bin/phpunit tests/
