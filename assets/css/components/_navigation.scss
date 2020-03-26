@@ -1,17 +1,17 @@
 #navigation {
-  $toggle-color: $black;
-  $toggle-active-color: rgba($white, 0.4);
+  $toggle-color: $color-black;
+  $toggle-active-color: rgba($color-white, 0.4);
 
   label[for="menu-toggle"] {
     z-index: 100;
     position: fixed;
     top: 0;
     right: 0;
-    color: $black;
+    color: $color-black;
     font-size: 4rem;
     cursor: pointer;
     &:hover {
-      color: rgba($white, 0.4);
+      color: rgba($color-white, 0.4);
     }
   }
   nav {
@@ -20,7 +20,7 @@
     top: 0;
     right: -100%;
     width: 100%;
-    background-color: rgba($black, 0.8);
+    background-color: rgba($color-black, 0.8);
     transition: all 0.1s ease-out;
     a {
       display: block;
@@ -42,9 +42,9 @@
   #menu-toggle:checked ~ nav, #menu-toggle:hover ~ nav, nav:hover {
     right: 0;
     a {
-      color: rgba($white, 0.7);
+      color: rgba($color-white, 0.7);
       &:hover {
-        color: rgba($white, 1);
+        color: rgba($color-white, 1);
         transform: scale(1.1);
       }
     }

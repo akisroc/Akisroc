@@ -6,6 +6,7 @@
 - Accurate error messages on forms
 
 ### Changed
+- Styles
 - Nicer main menu
 
 ### Security

@@ -1,0 +1,10 @@
+main {
+  padding: 2%;
+}
+
+@media screen and (min-width: $breakpoint-tablet-landscape) {
+  main {
+    width: 80%;
+    margin: $content-margin-top auto 0 auto;
+  }
+}

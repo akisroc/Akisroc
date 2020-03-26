@@ -1,0 +1,38 @@
+// Colors
+$color-primary: #8ED4B0;
+$color-dark-primary: #3C594A;
+$color-light-primary: #51DB94;
+$color-secondary: #6CA185;
+
+$color-black: #150E0E;
+$color-white: #f7f0f0;
+$color-cream: #F5F3EB;
+$color-red: #C20000;
+$color-sand: #bba992;
+$color-gray: #484848;
+$color-light-gray: #B4A7A6;
+$color-dark-green: #133322;
+
+$color-danger: #5D1110;
+$color-warning: #B07c30;
+$color-info: #3D3BCB;
+$color-success: #289220;
+
+$color-doomed: #FF4D46;
+
+$color-navigation-background: rgba($color-black, 0.8);
+$color-navigation-link: rgba($color-cream, 0.8);
+$color-navigation-link-hover: rgba($color-cream, 1);
+// ________
+
+// Breakpoints
+$breakpoint-mobile: 0px;
+$breakpoint-tablet-portrait: 600px;
+$breakpoint-tablet-landscape: 900px;
+$breakpoint-desktop: 1200px;
+$breakpoint-desktop-large: 1800px;
+// ________
+
+// Layout
+$content-margin-top: 24px;
+// ________

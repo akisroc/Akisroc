@@ -1,0 +1,10 @@
+header {
+  display: flex;
+  justify-content: space-between;
+}
+
+@media all and (min-width: $breakpoint-tablet-landscape) {
+  header {
+    padding-top: $content-margin-top * 3;
+  }
+}

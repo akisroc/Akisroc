@@ -1,12 +1,8 @@
+@import "includes/main";
+@import "globals/main";
+@import "layout/main";
+@import "components/main";
+
+
 // Vendors
-@import "../../submodules/paradoxe/paradoxe";
 @import "~@fortawesome/fontawesome-free/css/all.min.css";
-
-// Includes
-@import "includes/colours";
-@import "includes/mixins";
-@import "includes/classes";
-@import "includes/navigation";
-
-// Body
-@import "body/body";

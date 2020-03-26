@@ -1,0 +1,28 @@
+.post {
+  border-bottom: 1px solid $color-black;
+  line-height: 1.4;
+  font-family: "Libertinus Serif", "Helvetica", "serif";
+  font-size: 1.8rem;
+  color: $color-black;
+  transition: all 0.1s ease-in-out;
+  &:not(:last-child) {
+    margin-bottom: 12px;
+  }
+  .post-content {
+    padding: 1%;
+    text-indent: 1.2rem;
+    &:first-letter {
+      font-size: 2rem;
+      font-weight: bold;
+    }
+    //&:not(:last-child) {
+    //  margin-bottom: 2.4%;
+    //}
+  }
+}
+
+@media all and (min-width: $breakpoint-tablet-portrait) {
+  .post {
+    text-align: justify;
+  }
+}

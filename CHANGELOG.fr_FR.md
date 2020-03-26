@@ -6,6 +6,7 @@
 - Messages d'erreurs précis sur les formulaires
 
 ### Changements
+- Styles
 - Amélioration du menu principal
 
 ### Sécurité
