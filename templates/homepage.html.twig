@@ -21,35 +21,31 @@
 
 {% block body %}
   {{ block('beta_header') }}  {#@Todo Remove it#}
-{#  <input type="text" placeholder="Recherche...">#}
-{#  {% for type, group in groups %}#}
-{#    <section class="category">#}
-{#      <h2>{{ type }}</h2>#}
-{#      {% for category in group %}#}
-{#        <section class="category">#}
-{#          <h3>{{ category.title }}</h3>#}
-{#          {% for board in category.boards %}#}
-{#            <section class="category flow">#}
-{#              <a href="{{ path('board.index', {'id': board.id}) }}" class="description a9">#}
-{#                <h4><span class="fa fa-book"></span>{{ board.title }}</h4>#}
-{#                <p>{{ board.description }}</p>#}
-{#              </a>#}
-{#              {% set lastTopic = board.lastTopic %}#}
-{#              {% set lastPost = lastTopic ? lastTopic.lastPost : null %}#}
-{#              {% if lastPost %}#}
-{#                <a href="{{ path('topic.index', {'id': lastTopic.id, '_fragment': lastPost.id}) }}"#}
-{#                   class="last-post a3"#}
-{#                 >#}
-{#                  <h5>{{ lastTopic.title }}</h5>#}
-{#                  <p>Dernier post par {{ lastPost.user }}</p>#}
-{#                  <p>{{ lastPost.content[:20] }}{% if lastPost.content | length > 20 %}...{% endif %}</p>#}
-{#                  <p>Le {{ lastPost.createdAt | date_format }}</p>#}
-{#                </a>#}
-{#              {% endif %}#}
-{#            </section>#}
-{#          {% endfor %}#}
-{#        </section>#}
-{#      {% endfor %}#}
-{#    </section>#}
-{#  {% endfor %}#}
+  <nav class="places">
+    <header>
+      <h2>RP</h2>
+    </header>
+    <div>
+      {% for place in places %}
+        <a class="place" href="{{ path('place.index', { slug: place.slug }) }}">
+          <h3>{{ place.title }}</h3>
+          <p>{{ place.description }}</p>
+        </a>
+      {% endfor %}
+    </div>
+  </nav>
+
+  <nav class="categories">
+    <header>
+      <h2>HRP</h2>
+    </header>
+    <div>
+      {% for board in boards %}
+        <a class="board" href="#{{ board.slug }}">
+          <h3>{{ board.title }}</h3>
+          <p>{{ board.description }}</p>
+        </a>
+      {% endfor %}
+    </div>
+  </nav>
 {% endblock %}

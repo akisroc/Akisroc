@@ -1,0 +1,61 @@
+{% macro paginate(currentPage, nbPages, routeParams = {}) %}
+  {% if nbPages > 0 %}
+    {% set route = app.request.get('_route') %}
+    <nav class="pagination is-centered" role="navigation" aria-label="pagination">
+
+      {# => Previous page #}
+      <a class="pagination-previous"
+         href="{{ currentPage > 1 ? path(route, routeParams | merge({page: currentPage - 1})) : '#' }}"
+      >
+        {% trans %}pagination.previous{% endtrans %}
+      </a>
+
+      {# => Next page #}
+      <a class="pagination-next"
+         href="{{ currentPage < nbPages ? path(route, routeParams | merge({page: currentPage + 1})) : '#' }}"
+      >
+        {% trans %}pagination.next{% endtrans %}
+      </a>
+
+      <ul class="pagination-list">
+
+        {# => First page #}
+        <li>
+          <a class="pagination-link" aria-label="Goto page 1"
+             href="{{ path(route, routeParams | merge({page: 1})) }}"
+          >
+            1
+          </a>
+        </li>
+
+        {# => ... #}
+        <li><span class="pagination-ellipsis">&hellip;</span></li>
+
+        {# => Pages #}
+        {% for p in range(max(currentPage - 4, 1), min(currentPage + 4, nbPages)) %}
+          <li>
+            <a class="pagination-link"{% if currentPage == p %} aria-current="page" {% endif %}
+               href="{{ path(route, routeParams | merge({page: p})) }}"
+            >
+              {{ p }}
+            </a>
+          </li>
+        {% endfor %}
+
+        {# => ... #}
+        <li><span class="pagination-ellipsis">&hellip;</span></li>
+
+        {# => Last page #}
+        <li>
+          <a class="pagination-link"
+             href="{{ path(route, routeParams | merge({page: nbPages})) }}"
+          >
+            {{ nbPages }}
+          </a>
+        </li>
+
+      </ul>
+
+    </nav>
+  {% endif %}
+{% endmacro %}

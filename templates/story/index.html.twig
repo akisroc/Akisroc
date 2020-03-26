@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+  <section class="thread story">
+    <h2>{{ story.title }}</h2>
+    {% for episode in episodes %}
+      <article id="{{ episode.id }}" class="post episode">
+        <header class="post-header episode-header">
+          <p>
+            <time datetime="{{ episode.createdAt | date('Y-m-d H:i:s') }}">
+              {% trans with { publication_date: episode.createdAt } %}
+                thread.post.created_at
+              {% endtrans %}
+            </time>
+          </p>
+          <p>
+            {{ episode.protagonist.name }}
+          </p>
+        </header>
+        <div class="post-content episode-content">
+          {{ episode.content | markdown_to_html }}
+        </div>
+      </article>
+    {% endfor %}
+  </section>
+{% endblock %}
