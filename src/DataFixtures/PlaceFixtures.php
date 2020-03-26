@@ -4,29 +4,29 @@ declare(strict_types=1);
 
 namespace App\DataFixtures;
 
-use App\Entity\Board;
+use App\Entity\Place;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Faker\Factory;
 
 /**
- * Class BoardFixtures
+ * Class PlaceFixtures
  * @package App\DataFixtures
  */
-class BoardFixtures extends Fixture
+class PlaceFixtures extends Fixture
 {
     /**
      * @param ObjectManager $manager
      */
     public function load(ObjectManager $manager): void
     {
-        $boards = self::provideBoards();
-        for ($i = 0, $c = count($boards); $i < $c; ++$i) {
-            $board = new Board();
-            $board->setTitle($boards[$i]['title']);
-            $board->setDescription($boards[$i]['description']);
-            $manager->persist($board);
-            $this->setReference("board_$i", $board);
+        $places = self::providePlaces();
+        for ($i = 0, $c = count($places); $i < $c; ++$i) {
+            $place = new Place();
+            $place->setTitle($places[$i]['title']);
+            $place->setDescription($places[$i]['description']);
+            $manager->persist($place);
+            $this->setReference("place_$i", $place);
         }
 
         $manager->flush();
@@ -35,7 +35,7 @@ class BoardFixtures extends Fixture
     /**
      * @return array
      */
-    public static function provideBoards(): array
+    public static function providePlaces(): array
     {
         $faker = Factory::create('fr_FR');
         $fakeDescription = fn() => $faker->paragraph(mt_rand(1, 3));
@@ -43,27 +43,23 @@ class BoardFixtures extends Fixture
         /** Todo: Translations */
         return [
             [
-                'title' => 'En vrac',
+                'title' => 'Place Frozell',
                 'description' => $fakeDescription()
             ],
             [
-                'title' => 'IRL',
+                'title' => 'Quartier Merkin',
                 'description' => $fakeDescription()
             ],
             [
-                'title' => 'Bugs',
+                'title' => 'Ville basse',
                 'description' => $fakeDescription()
             ],
             [
-                'title' => 'Idées',
+                'title' => 'Grande bibliothèque',
                 'description' => $fakeDescription()
             ],
             [
-                'title' => 'Autour du RP',
-                'description' => $fakeDescription()
-            ],
-            [
-                'title' => 'Propositions de scénarii',
+                'title' => 'Vie en Dragostina',
                 'description' => $fakeDescription()
             ]
         ];

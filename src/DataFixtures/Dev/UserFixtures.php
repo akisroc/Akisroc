@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\DataFixtures\Dev;
 
-use App\DataFixtures\Prod\ProdUserFixtures;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -15,77 +16,48 @@ use Symfony\Component\Security\Core\Encoder\SodiumPasswordEncoder;
  */
 class UserFixtures extends Fixture
 {
-    protected const COUNT = 30;
-
-    /** @var \Faker\Generator $faker */
-    protected $faker;
-
-    /**
-     * TopicFixtures constructor.
-     */
-    public function __construct()
-    {
-        $this->faker = Factory::create();
-    }
+    public const COUNT = 30;
 
     /**
      * @param ObjectManager $manager
      */
     public function load(ObjectManager $manager): void
     {
-        $encoder = new SodiumPasswordEncoder();
-        for ($i = 0; $i < self::COUNT; ++$i) {
-            $avatar = $this->faker->imageUrl(180, 180, 'abstract');
-            if ($i === 0) {
-                $user = (new User())
-                    ->setUsername('admin')
-                    ->setEmail('admin@admin.dev')
-                    ->setAvatar($avatar)
-                    ->setSalt(User::generateSalt())
-                ;
-                $user->setPassword($encoder->encodePassword('admin', $user->getSalt()));
-            } else if ($i === 1) {
-                $user = (new User())
-                    ->setUsername('user')
-                    ->setEmail('user@user.dev')
-                    ->setAvatar($avatar)
-                    ->setSalt(User::generateSalt());
-                ;
-                $user->setPassword($encoder->encodePassword('user', $user->getSalt()));
-            } else {
-                $username = $this->faker->firstName() . ' ' . $this->faker->country . ' ' . $this->faker->city;
-                $user = (new User())
-                    ->setUsername($username)
-                    ->setEmail($this->faker->email)
-                    ->setAvatar($avatar)
-                    ->setSalt(User::generateSalt())
-                ;
-                $user->setPassword($encoder->encodePassword(
-                    $this->faker->password(255, 511),
-                    $user->getSalt()
-                ));
-            }
+        $faker = Factory::create('fr_FR');
 
-            if (empty($manager->getRepository(User::class)->findBy(['username' => $user->getUsername()]))) {
-                $this->setReference("user_{$user->getUsername()}", $user);
-                if (!$manager->contains($user)) {
-                    $manager->persist($user);
-                } else {
-                    $manager->merge($user);
-                }
-            }
+        $encoder = new SodiumPasswordEncoder();
+
+
+        $users = [
+            ['username' => 'admin', 'email' => 'admin@akisroc-jdr.fr', 'password' => 'admin', 'roles' => ['ROLE_USER', 'ROLE_ADMIN']],
+            ['username' => 'user', 'email' => 'user@akisroc-jdr.fr', 'password' => 'user', 'roles' => ['ROLE_USER']],
+        ];
+        for ($i = 0; $i < self::COUNT; ++$i) {
+            $users[] = [
+                'username' => $faker->unique()->firstName,
+                'email' => $faker->unique()->safeEmail,
+                'password' => $faker->password(8, 100),
+                'roles' => ['ROLE_USER']
+            ];
         }
 
-//        $manager->flush();
-    }
+        for ($i = 0, $c = count($users); $i < $c; ++$i) {
+            $user = new User();
 
-    /**
-     * @return array
-     */
-    public function getDependencies(): array
-    {
-        return [
-            ProdUserFixtures::class
-        ];
+            $user->setUsername($users[$i]['username']);
+            $user->setEmail($users[$i]['email']);
+            $user->setSalt($user->generateSalt());
+            $user->setPassword(
+                $encoder->encodePassword($users[$i]['password'], $user->getSalt())
+            );
+            $user->addRoles($users[$i]['roles']);
+            $user->setEnabled($faker->boolean(92));
+            $user->setAvatar($faker->imageUrl());
+
+            $this->setReference("user_$i", $user);
+            $manager->persist($user);
+        }
+
+        $manager->flush();
     }
 }

@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Repository;
 
 /**
- * Class BoardRepository
+ * Class PlaceRepository
  * @package App\Repository
  */
-class BoardRepository extends AbstractRepository
+class PlaceRepository extends AbstractRepository
 {
 }

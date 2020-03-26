@@ -1,16 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repository;
 
 use App\Entity\Board;
-use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 
 /**
  * Class TopicRepository
  * @package App\Repository
  */
-class TopicRepository extends EntityRepository
+class TopicRepository extends AbstractRepository
 {
     /**
      * @param Board $board

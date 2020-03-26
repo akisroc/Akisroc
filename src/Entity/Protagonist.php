@@ -7,54 +7,74 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ProtagonistRepository")
+ * @UniqueEntity("name", message="violation.name.not_unique")
+ * @UniqueEntity("slug", message="violation.slug.not_unique")
  */
-class Protagonist
+class Protagonist extends AbstractEntity
 {
     /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private ?int $id = null;
-
-    /**
-     * @var string
-     * @ORM\Column(type="string", length=63, nullable=false, unique=true)
-     * @Assert\NotBlank()
+     * @ORM\Column(type="string", length=31, nullable=false, unique=true)
+     *
+     * @Assert\NotBlank(message="violation.username.blank")
+     * @Assert\Regex(
+     *     pattern="/^[ a-zA-Z0-9éÉèÈêÊëËäÄâÂàÀïÏöÖôÔüÜûÛçÇ']+$/",
+     *     message="violation.name.invalid_characters"
+     * )
+     * @Assert\Length(
+     *     min=1,
+     *     max=30,
+     *     minMessage="violation.name.too_short",
+     *     maxMessage="violation.name.too_long"
+     * )
+     *
+     * @var string|null
      */
     private ?string $name = null;
 
     /**
+     * @ORM\Column(type="boolean")
+     *
      * @var bool
-     * @ORM\Column(type="boolean", nullable=false)
      */
-    private bool $secretAuthor = true;
-
+    private bool $anonymous = true;
 
     /**
-     * @var string
      * @ORM\Column(type="string", length=511, nullable=true)
+     *
+     * @Assert\Url(message="violation.uri.wrong_format")
+     * @Assert\Length(
+     *     min=1,
+     *     max=500,
+     *     minMessage="violation.uri.too_short",
+     *     maxMessage="violation.uri.too_long"
+     * )
+     *
+     * @var string|null
      */
     private ?string $avatar = null;
 
     /**
-     * @ORM\ManyToOne(
-     *     targetEntity="App\Entity\User",
-     *     inversedBy="protagonists",
-     *     cascade={"persist", "remove"}
-     * )
-     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="protagonists")
+     * @ORM\JoinColumn(nullable=false)
+     *
+     * @Gedmo\Blameable(on="create")
+     *
+     * @var User|null
      */
     private ?User $user = null;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Post", mappedBy="protagonist", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="Episode", mappedBy="protagonist")
+     *
+     * @var Collection|null
      */
-    private ?Collection $posts = null;
+    private ?Collection $episodes = null;
 
     /**
      * @return string
@@ -69,15 +89,7 @@ class Protagonist
      */
     public function __construct()
     {
-        $this->posts = new ArrayCollection();
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getId(): ?int
-    {
-        return $this->id;
+        $this->episodes = new ArrayCollection();
     }
 
     /**
@@ -90,32 +102,28 @@ class Protagonist
 
     /**
      * @param null|string $name
-     * @return self
+     * @return void
      */
-    public function setName(?string $name): self
+    public function setName(?string $name): void
     {
         $this->name = $name;
-
-        return $this;
     }
 
     /**
      * @return bool
      */
-    public function isSecretAuthor(): bool
+    public function isAnonymous(): bool
     {
-        return $this->secretAuthor;
+        return $this->anonymous;
     }
 
     /**
-     * @param bool $secretAuthor
-     * @return self
+     * @param bool $anonymous
+     * @return void
      */
-    public function setSecretAuthor(bool $secretAuthor): self
+    public function setAnonymous(bool $anonymous): void
     {
-        $this->secretAuthor = $secretAuthor;
-
-        return $this;
+        $this->anonymous = $anonymous;
     }
 
     /**
@@ -128,13 +136,11 @@ class Protagonist
 
     /**
      * @param null|string $avatar
-     * @return self
+     * @return void
      */
-    public function setAvatar(?string $avatar): self
+    public function setAvatar(?string $avatar): void
     {
         $this->avatar = $avatar;
-
-        return $this;
     }
 
     /**
@@ -147,47 +153,43 @@ class Protagonist
 
     /**
      * @param User|null $user
-     * @return self
+     * @return void
      */
-    public function setUser(?User $user): self
+    public function setUser(?User $user): void
     {
         $this->user = $user;
-
-        return $this;
     }
 
     /**
-     * @return Collection|null
+     * @return Collection
      */
-    public function getPosts(): ?Collection
+    public function getEpisodes(): Collection
     {
-        return $this->posts;
+        return $this->episodes;
     }
 
     /**
-     * @param Post $post
-     * @return self
+     * @param Episode $episode
+     * @return void
      */
-    public function addPost(Post $post): self
+    public function addEpisode(Episode $episode): void
     {
-        if (!$this->posts->contains($post)) {
-            $this->posts->add($post);
-            $post->setProtagonist($this);
+        if (!$this->episodes->contains($episode)) {
+            $this->episodes[] = $episode;
+            $episode->setProtagonist($this);
         }
-
-        return $this;
     }
 
     /**
-     * @param Post $post
-     * @return self
+     * @param Episode $episode
+     * @return void
      */
-    public function removePost(Post $post): self
+    public function removeEpisode(Episode $episode): void
     {
-        if ($this->posts->contains($post)) {
-            $this->posts->removeElement($post);
-            if ($post->getProtagonist() === $this) {
-                $post->setProtagonist(null);
+        if ($this->episodes->contains($episode)) {
+            $this->episodes->removeElement($episode);
+            if ($episode->getProtagonist() === $this) {
+                $episode->setProtagonist(null);
             }
         }
     }

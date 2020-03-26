@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Repository;
+declare(strict_types=1);
 
-use Doctrine\ORM\EntityRepository;
+namespace App\Repository;
 
 /**
  * Class ProtagonistRepository
  * @package App\Repository
  */
-class ProtagonistRepository extends EntityRepository
+class ProtagonistRepository extends AbstractRepository
 {
 }

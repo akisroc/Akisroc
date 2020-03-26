@@ -1,12 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
 use App\Entity\Board;
-use App\Entity\Post;
-use App\Entity\Protagonist;
 use App\Entity\Topic;
-use App\Entity\User;
 use App\Form\TopicType;
 use App\Repository\TopicRepository;
 use App\Security\Voter\BoardVoter;
@@ -64,11 +63,6 @@ class BoardController extends AbstractController
             $topic = $form->getData();
             $post = $form->get('post')->getData();
             $post->setUser($this->getUser());
-
-            // @Todo Behaviour
-            $now = new \DateTime();
-            $post->setCreatedAt($now);
-            $post->setUpdatedAt($now);
 
             $topic->addPost($post);
             $em->persist($post);

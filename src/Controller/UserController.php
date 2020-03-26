@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
 use App\Entity\User;
@@ -21,14 +23,19 @@ class UserController extends AbstractController
      * @param Request $request
      * @param UserPasswordEncoderInterface $encoder
      * @return Response
+     * @throws \Exception
      */
     public function register(Request $request, UserPasswordEncoderInterface $encoder): Response
     {
+        if ($this->isGranted('ROLE_USER')) {
+            return $this->redirectToRoute('homepage');
+        }
+
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $user->setSalt(User::generateSalt());
+            $user->setSalt($user->generateSalt());
             $password = $encoder->encodePassword($user, $user->getPlainPassword());
             $user->setPassword($password);
             $user->eraseCredentials();

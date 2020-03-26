@@ -7,32 +7,45 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\TopicRepository")
  */
-class Topic
+class Topic extends AbstractEntity
 {
     /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private ?int $id = null;
-
-    /**
-     * @ORM\Column(type="string", length=63, nullable=false)
+     * @ORM\Column(type="string", length=63, nullable=false, unique=true)
+     *
+     * @Assert\NotBlank(message="violation.description.blank")
+     * @Assert\Length(
+     *     min=1,
+     *     max=60,
+     *     minMessage="violation.title.too_short",
+     *     maxMessage="violation.title.too_long"
+     * )
+     *
+     * @var string|null
      */
     private ?string $title = null;
 
     /**
-     * @ORM\ManyToOne(
-     *     targetEntity="App\Entity\Board",
-     *     inversedBy="topics",
-     *     cascade={"persist", "remove"}
-     * )
+     * @ORM\Column(type="string", length=63, nullable=false, unique=true)
+     *
+     * @Gedmo\Slug(fields={"title"})
+     *
+     * @var string|null
+     */
+    private ?string $slug = null;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Board", inversedBy="topics")
      * @ORM\JoinColumn(nullable=false)
+     *
+     * @Assert\NotBlank(message="violation.board.blank")
+     *
+     * @var Board|null
      */
     private ?Board $board = null;
 
@@ -67,14 +80,6 @@ class Topic
     }
 
     /**
-     * @return int|null
-     */
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
-    /**
      * @return null|string
      */
     public function getTitle(): ?string
@@ -84,13 +89,27 @@ class Topic
 
     /**
      * @param null|string $title
-     * @return self
+     * @return void
      */
-    public function setTitle(?string $title): self
+    public function setTitle(?string $title): void
     {
         $this->title = $title;
+    }
 
-        return $this;
+    /**
+     * @return string|null
+     */
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    /**
+     * @param string|null $slug
+     */
+    public function setSlug(?string $slug): void
+    {
+        $this->slug = $slug;
     }
 
     /**
@@ -103,24 +122,11 @@ class Topic
 
     /**
      * @param Board|null $board
-     * @return self
+     * @return void
      */
-    public function setBoard(?Board $board): self
+    public function setBoard(?Board $board): void
     {
         $this->board = $board;
-
-        return $this;
-    }
-
-    /**
-     * @param int|null $id
-     * @return self
-     */
-    public function setId(?int $id): self
-    {
-        $this->id = $id;
-
-        return $this;
     }
 
     /**
@@ -141,23 +147,21 @@ class Topic
 
     /**
      * @param Post $post
-     * @return self
+     * @return void
      */
-    public function addPost(Post $post): self
+    public function addPost(Post $post): void
     {
         if (!$this->posts->contains($post)) {
             $this->posts->add($post);
             $post->setTopic($this);
         }
-
-        return $this;
     }
 
     /**
      * @param Post $post
-     * @return self
+     * @return void
      */
-    public function removePost(Post $post): self
+    public function removePost(Post $post): void
     {
         if ($this->posts->contains($post)) {
             $this->posts->removeElement($post);
@@ -165,8 +169,6 @@ class Topic
                 $post->setTopic(null);
             }
         }
-
-        return $this;
     }
 
     /**

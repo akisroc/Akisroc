@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\DataFixtures\Prod;
 
 use App\Entity\User;
@@ -21,11 +23,12 @@ class ProdUserFixtures extends Fixture
         $cr = $this->getACredentials();
 
         $encoder = new SodiumPasswordEncoder();
-        $user = (new User())
-            ->setUsername($cr[0])
-            ->setEmail($cr[1])
-            ->setSalt(User::generateSalt())
-        ;
+
+        $user = new User();
+
+        $user->setUsername($cr[0]);
+        $user->setEmail($cr[1]);
+        $user->setSalt($user->generateSalt());
         $user->setAvatar(filter_var($cr[3], FILTER_VALIDATE_URL) ? $cr[3] : null);
         $user->setPassword($encoder->encodePassword($cr[2], $user->getSalt()));
 

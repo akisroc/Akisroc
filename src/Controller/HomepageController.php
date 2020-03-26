@@ -1,12 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
-use App\Entity\Category;
-use App\Utils\Git;
+use App\ViewDataGatherer\HomepageDataGatherer;
+use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -18,19 +19,13 @@ class HomepageController extends AbstractController
     /**
      * @Route("/", name="homepage")
      *
+     * @param HomepageDataGatherer $dataGatherer
+     *
      * @return Response
+     * @throws NonUniqueResultException
      */
-    public function index(): Response
+    public function index(HomepageDataGatherer $dataGatherer): Response
     {
-        $d = $this->getDoctrine();
-        $categoryRepo = $d->getRepository(Category::class);
-        $groups = [
-            strtoupper(Category::TYPE_RP) => $categoryRepo->findByType(Category::TYPE_RP),
-            strtoupper(Category::TYPE_HRP) => $categoryRepo->findByType(Category::TYPE_HRP)
-        ];
-
-        return $this->render('homepage.html.twig', [
-            'groups' => $groups
-        ]);
+        return $this->render('homepage.html.twig', $dataGatherer->gatherData());
     }
 }

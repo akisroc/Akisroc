@@ -1,0 +1,50 @@
+violation:
+  username:
+    blank: "Username must not be blank"
+    too_short: "Username's length cannot be less than {{ limit }}."
+    too_long: "Username's length cannot be greater than {{ limit }}."
+    not_unique: "Username already exists."
+  email:
+    blank: "Email address must not be blank."
+    too_long: "Email's length cannot be greater than {{ limit }}."
+    wrong_format: "Wrong email address format."
+    not_unique: "Email address already exists."
+  password:
+    blank: "Password must not be blank."
+    too_short: "Password's length cannot be less than {{ limit }}."
+    too_long: "Password's length cannot be greater than {{ limit }}."
+  board:
+    blank: "Board must not be blank."
+  place:
+    blank: "Place must not be blank."
+  slug:
+    blank: "Slug must not be blank."
+    too_short: "Slug's length cannot be less than {{ limit }}."
+    too_long: "Slug's length cannot be greater than {{ limit }}."
+    not_unique: "Slug already exists."
+  title:
+    blank: "Title must not be blank."
+    too_short: "Title's length cannot be less than {{ limit }}."
+    too_long: "Title's length cannot be greater than {{ limit }}."
+    not_unique: "Title already exists."
+  content:
+    blank: "Content must not be blank."
+    too_short: "Content's length cannot be less than {{ limit }}."
+    too_long: "Content's length cannot be greater than {{ limit }}."
+  name:
+    blank: "Name must not be blank."
+    invalid_characters: "Invalid characters."
+    too_short: "Name's length cannot be less than {{ limit }}."
+    too_long: "Name's length cannot be greater than {{ limit }}."
+    not_unique: "Name already exists."
+  date:
+    wrong_format: "Wrong date format."
+  uri:
+    wrong_format: "Wrong URI format."
+  thread:
+    no_post: "Thread must contain at least one post."
+  story:
+    no_episode: "Story must contain at least one episode."
+  roles:
+    wrong_format: "Wrong role format."
+    missing_user_role: "Each user must at least have role ROLE_USER."

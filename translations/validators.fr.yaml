@@ -1,0 +1,50 @@
+violation:
+  username:
+    blank: "Le nom d'utilisateur ne peut pas être vide."
+    too_short: "La taille du nom d'utilisateur ne peut pas être inférieure à {{ limit }}."
+    too_long: "La taille du nom d'utilisateur ne peut pas être supérieure à {{ limit }}."
+    not_unique: "Le nom d'utilisateur existe déjà."
+  email:
+    blank: "L'adresse email ne pas pas être vide"
+    too_long: "La taille de l'adresse email ne peut pas être supérieure à {{ limit }}."
+    wrong_format: "Mauvais format d'adresse email."
+    not_unique: "L'adresse email existe déjà."
+  password:
+    blank: "Le mot de passe ne peut pas être vide."
+    too_short: "La taille du mot de passe ne peut pas être inférieure à {{ limit }}."
+    too_long: "La taille du mot de passe ne peut pas être supérieure à {{ limit }}."
+  board:
+    blank: "Le sous-forum ne peut pas être vide."
+  place:
+    blank: "Le lieu ne peut pas être vide."
+  slug:
+    blank: "Le slug ne peut pas être vide."
+    too_short: "La taille du slug ne peut pas être inférieure à {{ limit }}."
+    too_long: "La taille du slug ne peut pas être supérieure à {{ limit }}."
+    not_unique: "Le slug existe déjà."
+  title:
+    blank: "Le titre ne peut pas être vide."
+    too_short: "La taille du titre ne peut pas être inférieure à {{ limit }}."
+    too_long: "La taille du titre ne peut pas être supérieure à {{ limit }}."
+    not_unique: "Le titre existe déjà."
+  content:
+    blank: "Le contenu ne peut pas être vide."
+    too_short: "La taille du contenu ne peut pas être inférieure à {{ limit }}."
+    too_long: "La taille du contenu ne peut pas être supérieure à {{ limit }}."
+  name:
+    blank: "Le nom ne peut pas être vide."
+    invalid_characters: "Caractères invalides"
+    too_short: "La taille du nom ne peut pas être inférieure à {{ limit }}."
+    too_long: "La taille du nom ne peut pas être supérieure à {{ limit }}."
+    not_unique: "Name already exists."
+  date:
+    wrong_format: "Mauvais format de date."
+  uri:
+    wrong_format: "Mauvais format d'URI."
+  thread:
+    no_post: "Le fil de discussion doit contenir au moins un message."
+  story:
+    no_episode: "Le récit doit contenir au moins un épisode."
+  roles:
+    wrong_format: "Mauvais format de rôle."
+    missing_user_role: "Chaque utilisateur doit au moins posséder le rôle ROLE_USER."

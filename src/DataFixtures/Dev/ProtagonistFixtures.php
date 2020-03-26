@@ -1,10 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\DataFixtures\Dev;
 
 use App\Entity\Protagonist;
 use App\Entity\User;
-use App\Utils\FixturesService;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -16,48 +17,31 @@ use Faker\Factory;
  */
 class ProtagonistFixtures extends Fixture implements DependentFixtureInterface
 {
-    protected const COUNT = 100;
-
-    /** @var \Faker\Generator $faker */
-    protected $faker;
-
-    /**
-     * ProtagonistFixtures constructor.
-     */
-    public function __construct()
-    {
-        $this->faker = Factory::create();
-    }
+    public const COUNT = 100;
 
     /**
      * @param ObjectManager $manager
      */
     public function load(ObjectManager $manager): void
     {
-        $references = $this->referenceRepository->getReferences();
+        $faker = Factory::create('fr_FR');
         for ($i = 0; $i < self::COUNT; ++$i) {
-            $user = FixturesService::randEntity($references, User::class);
-            $name = $this->faker->lastName . ' ' . ucfirst($this->faker->colorName)  .  ' ' . $this->faker->firstName;
-            $secretAuthor = $this->faker->randomElement([true, false]);
-            $avatar = $this->faker->imageUrl(180, 180, 'abstract');
+            $protagonist = new Protagonist();
 
-            $protagonist = (new Protagonist())
-                ->setName($name)
-                ->setSecretAuthor($secretAuthor)
-                ->setAvatar($avatar)
-                ->setUser($user)
-            ;
+            /** @var User $user */
+            $user = $this->getReference('user_' . rand(0, UserFixtures::COUNT - 1));
             $user->addProtagonist($protagonist);
 
-            $this->setReference("protagonist_{$protagonist->getName()}", $protagonist);
-            if (!$manager->contains($protagonist)) {
-                $manager->persist($protagonist);
-            } else {
-                $manager->merge($protagonist);
-            }
+            $name = $faker->firstName . ' ' . $faker->lastName . ' ' . $faker->randomNumber(6);
+            $protagonist->setName($name);
+            $protagonist->setAvatar($faker->imageUrl());
+            $protagonist->setAnonymous($faker->boolean);
+
+            $this->setReference("protagonist_$i", $protagonist);
+            $manager->persist($protagonist);
         }
 
-//        $manager->flush();
+        $manager->flush();
     }
 
     /**

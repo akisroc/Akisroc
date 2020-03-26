@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
-use App\Entity\Board;
 use App\Entity\Post;
 use App\Entity\Topic;
 use App\Form\PostType;
@@ -65,12 +66,6 @@ class TopicController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $post->setUser($this->getUser());
-
-            // @Todo Behaviour
-            $now = new \DateTime();
-            $post->setCreatedAt($now);
-            $post->setUpdatedAt($now);
-
             $topic->addPost($post);
             $em->persist($topic);
             $em->persist($post);

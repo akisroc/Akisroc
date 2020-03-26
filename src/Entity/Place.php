@@ -12,11 +12,11 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\BoardRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\PlaceRepository")
  * @UniqueEntity("title", message="violation.title.not_unique")
  * @UniqueEntity("slug", message="violation.slug.not_unique")
  */
-class Board extends AbstractEntity
+class Place extends AbstractEntity
 {
     /**
      * @ORM\Column(type="string", length=63, nullable=false, unique=true)
@@ -73,27 +73,31 @@ class Board extends AbstractEntity
     private ?string $slug = null;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Topic", mappedBy="board", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="Story", mappedBy="place", cascade={"remove"})
      * @ORM\JoinColumn(nullable=true)
-     * @ORM\OrderBy({"id"="ASC"})
+     *
+     * @var Collection|null
      */
-    private ?Collection $topics = null;
+    private ?Collection $stories = null;
 
+    /**
+     * Place constructor.
+     */
     public function __construct()
     {
-        $this->topics = new ArrayCollection();
+        $this->stories = new ArrayCollection();
     }
 
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
-        return $this->title;
+        return $this->title ?: '';
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getTitle(): ?string
     {
@@ -101,8 +105,7 @@ class Board extends AbstractEntity
     }
 
     /**
-     * @param null|string $title
-     * @return void
+     * @param string|null $title
      */
     public function setTitle(?string $title): void
     {
@@ -110,7 +113,7 @@ class Board extends AbstractEntity
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getDescription(): ?string
     {
@@ -118,8 +121,7 @@ class Board extends AbstractEntity
     }
 
     /**
-     * @param null|string $description
-     * @return void
+     * @param string|null $description
      */
     public function setDescription(?string $description): void
     {
@@ -136,7 +138,6 @@ class Board extends AbstractEntity
 
     /**
      * @param string|null $image
-     * @return void
      */
     public function setImage(?string $image): void
     {
@@ -153,7 +154,6 @@ class Board extends AbstractEntity
 
     /**
      * @param string|null $slug
-     * @return void
      */
     public function setSlug(?string $slug): void
     {
@@ -161,35 +161,35 @@ class Board extends AbstractEntity
     }
 
     /**
-     * @return Collection|null
+     * @return Collection
      */
-    public function getTopics(): ?Collection
+    public function getStories(): Collection
     {
-        return $this->topics;
+        return $this->stories;
     }
 
     /**
-     * @param Topic $topic
+     * @param Story $story
      * @return void
      */
-    public function addTopic(Topic $topic): void
+    public function addStory(Story $story): void
     {
-        if (!$this->topics->contains($topic)) {
-            $this->topics->add($topic);
-            $topic->setBoard($this);
+        if (!$this->stories->contains($story)) {
+            $this->stories[] = $story;
+            $story->setPlace($this);
         }
     }
 
     /**
-     * @param Topic $topic
+     * @param Story $story
      * @return void
      */
-    public function removeTopic(Topic $topic): void
+    public function removeStory(Story $story): void
     {
-        if ($this->topics->contains($topic)) {
-            $this->topics->removeElement($topic);
-            if ($topic->getBoard() === $this) {
-                $topic->setBoard(null);
+        if ($this->stories->contains($story)) {
+            $this->stories->removeElement($story);
+            if ($story->getPlace() === $this) {
+                $story->setPlace(null);
             }
         }
     }

@@ -7,66 +7,114 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @UniqueEntity("username", message="violation.username.not_unique")
+ * @UniqueEntity("email", message="violation.email.not_unique")
+ * @UniqueEntity("slug", message="violation.slug.not_unique")
  */
-class User implements UserInterface, EquatableInterface
+class User extends AbstractEntity implements UserInterface, EquatableInterface
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private ?int $id = null;
-
     /**
      * @var string
      * @ORM\Column(type="string", length=63, nullable=false, unique=true)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message="violation.name.blank")
+     * @Assert\Regex(
+     *     pattern="/^[ a-zA-Z0-9éÉèÈêÊëËäÄâÂàÀïÏöÖôÔüÜûÛçÇ']+$/",
+     *     message="violation.name.invalid_characters"
+     * )
+     * @Assert\Length(
+     *     min=1,
+     *     max=30,
+     *     minMessage="violation.name.too_short",
+     *     maxMessage="violation.name.too_long"
+     * )
      */
     private ?string $username = null;
 
     /**
-     * @var string
-     * @ORM\Column(type="string", length=63, nullable=false, unique=true)
-     * @Assert\NotBlank()
-     * @Assert\Email()
+     * @ORM\Column(type="string", length=255, nullable=false, unique=true)
+     *
+     * @Assert\NotBlank(message="violation.email.blank")
+     * @Assert\Email(message="violation.email.wrong_format")
+     *
+     * @var string|null
      */
     private ?string $email = null;
 
     /**
-     * @var string
      * @ORM\Column(type="string", length=511, nullable=true)
-     * @Assert\Url()
+     *
+     * @Assert\Url(message="violation.uri.wrong_format")
+     * @Assert\Length(
+     *     min=1,
+     *     max=500,
+     *     minMessage="violation.uri.too_short",
+     *     maxMessage="violation.uri.too_long"
+     * )
+     *
+     * @var string|null
      */
     private ?string $avatar = null;
 
     /**
-     * @var string
      * @ORM\Column(type="string", length=511, nullable=false)
+     *
+     * @var string|null
      */
     private ?string $password = null;
 
     /**
-     * @Assert\NotBlank()
-     * @Assert\Length(min=12, max=4096)
+     * @Assert\NotBlank(message="violation.password.blank")
+     * @Assert\Length(
+     *     min=8,
+     *     max=4000,
+     *     minMessage="violation.password.too_short",
+     *     maxMessage="violation.password.too_long"
+     * )
+     *
+     * @var string|null
      */
     private ?string $plainPassword = null;
 
     /**
-     * @var string
-     * @ORM\Column(type="string", length=123, nullable=false)
+     * @ORM\Column(type="string", length=127, nullable=false)
+     *
+     * @var string|null
      */
     private ?string $salt = null;
 
     /**
+     * @ORM\Column(type="json", length=31, nullable=false)
+     *
+     * @Assert\NotBlank()
+     *
      * @var string[]
      */
     private array $roles = ['ROLE_USER'];
+
+    /**
+     * @ORM\Column(type="string", length=63, nullable=false, unique=true)
+     *
+     * @Gedmo\Slug(fields={"username"})
+     *
+     * @var string|null
+     */
+    public ?string $slug = null;
+
+    /**
+     * @ORM\Column(type="boolean")
+     *
+     * @var bool
+     */
+    public bool $enabled = true;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Post", mappedBy="user", cascade={"persist", "remove"})
@@ -85,7 +133,7 @@ class User implements UserInterface, EquatableInterface
     {
         $this->posts = new ArrayCollection();
         $this->protagonists = new ArrayCollection();
-        $this->roles = ['ROLE_USER'];
+        $this->salt = $this->generateSalt();
     }
 
     /**
@@ -94,14 +142,6 @@ class User implements UserInterface, EquatableInterface
     public function __toString()
     {
         return $this->username;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 
     /**
@@ -115,13 +155,11 @@ class User implements UserInterface, EquatableInterface
 
     /**
      * @param null|string $username
-     * @return self
+     * @return void
      */
-    public function setUsername(?string $username): self
+    public function setUsername(?string $username): void
     {
         $this->username = $username;
-
-        return $this;
     }
 
     /**
@@ -135,13 +173,11 @@ class User implements UserInterface, EquatableInterface
     /**
      * {@inheritdoc}
      * @param null|string $email
-     * @return self
+     * @return void
      */
-    public function setEmail(?string $email): self
+    public function setEmail(?string $email): void
     {
         $this->email = $email;
-
-        return $this;
     }
 
     /**
@@ -154,13 +190,11 @@ class User implements UserInterface, EquatableInterface
 
     /**
      * @param null|string $avatar
-     * @return self
+     * @return void
      */
-    public function setAvatar(?string $avatar): self
+    public function setAvatar(?string $avatar): void
     {
         $this->avatar = $avatar;
-
-        return $this;
     }
 
     /**
@@ -174,13 +208,11 @@ class User implements UserInterface, EquatableInterface
 
     /**
      * @param null|string $password
-     * @return self
+     * @return void
      */
-    public function setPassword(?string $password): self
+    public function setPassword(?string $password): void
     {
         $this->password = $password;
-
-        return $this;
     }
 
     /**
@@ -194,13 +226,11 @@ class User implements UserInterface, EquatableInterface
 
     /**
      * @param null|string $salt
-     * @return self
+     * @return void
      */
-    public function setSalt(?string $salt): self
+    public function setSalt(?string $salt): void
     {
         $this->salt = $salt;
-
-        return $this;
     }
 
     /**
@@ -213,13 +243,43 @@ class User implements UserInterface, EquatableInterface
 
     /**
      * @param null|string $plainPassword
-     * @return self
+     * @return void
      */
-    public function setPlainPassword(?string $plainPassword): self
+    public function setPlainPassword(?string $plainPassword): void
     {
         $this->plainPassword = $plainPassword;
+    }
 
-        return $this;
+    /**
+     * @return string|null
+     */
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    /**
+     * @param string|null $slug
+     */
+    public function setSlug(?string $slug): void
+    {
+        $this->slug = $slug;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isEnabled(): bool
+    {
+        return $this->enabled;
+    }
+
+    /**
+     * @param bool $enabled
+     */
+    public function setEnabled(bool $enabled): void
+    {
+        $this->enabled = $enabled;
     }
 
     /**
@@ -232,23 +292,21 @@ class User implements UserInterface, EquatableInterface
 
     /**
      * @param Post $post
-     * @return self
+     * @return void
      */
-    public function addPost(Post $post): self
+    public function addPost(Post $post): void
     {
         if (!$this->posts->contains($post)) {
             $this->posts->add($post);
             $post->setUser($this);
         }
-
-        return $this;
     }
 
     /**
      * @param Post $post
-     * @return self
+     * @return void
      */
-    public function removePost(Post $post): self
+    public function removePost(Post $post): void
     {
         if ($this->posts->contains($post)) {
             $this->posts->removeElement($post);
@@ -268,23 +326,21 @@ class User implements UserInterface, EquatableInterface
 
     /**
      * @param Protagonist $protagonist
-     * @return self
+     * @return void
      */
-    public function addProtagonist(Protagonist $protagonist): self
+    public function addProtagonist(Protagonist $protagonist): void
     {
         if (!$this->protagonists->contains($protagonist)) {
             $this->protagonists->add($protagonist);
             $protagonist->setUser($this);
         }
-
-        return $this;
     }
 
     /**
      * @param Protagonist $protagonist
-     * @return self
+     * @return void
      */
-    public function removeProtagonist(Protagonist $protagonist): self
+    public function removeProtagonist(Protagonist $protagonist): void
     {
         if ($this->protagonists->contains($protagonist)) {
             $this->protagonists->removeElement($protagonist);
@@ -301,6 +357,45 @@ class User implements UserInterface, EquatableInterface
     public function getRoles(): array
     {
         return ['ROLE_USER'];
+    }
+
+    /**
+     * @param string $role
+     * @return bool
+     */
+    public function hasRole(string $role): bool
+    {
+        return in_array($role, $this->roles, true);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAdmin(): bool
+    {
+        return $this->hasRole('ROLE_ADMIN');
+    }
+
+    /**
+     * @param string[] $roles
+     * @return void
+     */
+    public function addRoles(iterable $roles): void
+    {
+        foreach ($roles as $role) {
+            $this->addRole($role);
+        }
+    }
+
+    /**
+     * @param string $role
+     * @return void
+     */
+    public function addRole(string $role): void
+    {
+        if (!in_array($role, $this->roles, true)) {
+            $this->roles[] = $role;
+        }
     }
 
     /**
@@ -335,8 +430,35 @@ class User implements UserInterface, EquatableInterface
      *
      * @throws \Exception
      */
-    static public function generateSalt(): string
+    public function generateSalt(): string
     {
         return substr(base64_encode(random_bytes(64)), 8, 72);
+    }
+
+    /**
+     * @Assert\Callback()
+     *
+     * @param ExecutionContextInterface $context
+     * @param array|null $payload
+     *
+     * @return void
+     */
+    public function validateRoles(ExecutionContextInterface $context, array $payload = null): void
+    {
+        foreach ($this->roles as $role) {
+            if (strpos($role, 'ROLE_') !== 0) {
+                $context
+                    ->buildViolation('violation.roles.wrong_format')
+                    ->atPath('roles')
+                    ->addViolation();
+            }
+        }
+
+        if (false === in_array('ROLE_USER', $this->roles, true)) {
+            $context
+                ->buildViolation('violation.roles.missing_user_role')
+                ->atPath('roles')
+                ->addViolation();
+        }
     }
 }

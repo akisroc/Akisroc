@@ -2,6 +2,9 @@
 
 ## v0.3.0
 
+### Added
+- Accurate error messages on forms
+
 ### Changed
 - Nicer main menu
 

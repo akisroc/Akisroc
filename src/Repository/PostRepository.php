@@ -1,16 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repository;
 
 use App\Entity\Post;
 use App\Entity\Topic;
-use Doctrine\ORM\EntityRepository;
 
 /**
  * Class PostRepository
  * @package App\Repository
  */
-class PostRepository extends EntityRepository
+class PostRepository extends AbstractRepository
 {
     /**
      * @param Topic $topic
@@ -18,6 +19,6 @@ class PostRepository extends EntityRepository
      */
     public function findLastByTopic(Topic $topic): ?Post
     {
-        return $this->findOneBy(['topic', $topic], ['id', 'DESC']);
+        return $this->findLastBy(['topic' => $topic]);
     }
 }

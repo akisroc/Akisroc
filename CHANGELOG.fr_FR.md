@@ -2,6 +2,9 @@
 
 ## v0.3.0
 
+### Nouveautés
+- Messages d'erreurs précis sur les formulaires
+
 ### Changements
 - Amélioration du menu principal
 
