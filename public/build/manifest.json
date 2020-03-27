@@ -1,11 +1,11 @@
 {
   "build/css/app.css": "/build/css/app.css",
-  "build/fonts/LibertinusSans-Bold.otf": "/build/fonts/LibertinusSans-Bold.2f84097a.otf",
-  "build/fonts/LibertinusSans-Regular.otf": "/build/fonts/LibertinusSans-Regular.f7e4cea9.otf",
-  "build/fonts/LibertinusSerif-Bold.otf": "/build/fonts/LibertinusSerif-Bold.f2ba3942.otf",
-  "build/fonts/LibertinusSerif-BoldItalic.otf": "/build/fonts/LibertinusSerif-BoldItalic.26d9ddbd.otf",
-  "build/fonts/LibertinusSerif-Italic.otf": "/build/fonts/LibertinusSerif-Italic.4e67d73b.otf",
-  "build/fonts/LibertinusSerif-Regular.otf": "/build/fonts/LibertinusSerif-Regular.da3f4ca0.otf",
+  "build/fonts/LibertinusSans-Bold.woff2": "/build/fonts/LibertinusSans-Bold.ad5f43b7.woff2",
+  "build/fonts/LibertinusSans-Regular.woff2": "/build/fonts/LibertinusSans-Regular.47d6ea45.woff2",
+  "build/fonts/LibertinusSerif-Bold.woff2": "/build/fonts/LibertinusSerif-Bold.8bf11798.woff2",
+  "build/fonts/LibertinusSerif-BoldItalic.woff2": "/build/fonts/LibertinusSerif-BoldItalic.a7cd4920.woff2",
+  "build/fonts/LibertinusSerif-Italic.woff2": "/build/fonts/LibertinusSerif-Italic.95458d3c.woff2",
+  "build/fonts/LibertinusSerif-Regular.woff2": "/build/fonts/LibertinusSerif-Regular.33262668.woff2",
   "build/fonts/fa-brands-400.eot": "/build/fonts/fa-brands-400.c1868c95.eot",
   "build/fonts/fa-brands-400.ttf": "/build/fonts/fa-brands-400.13685372.ttf",
   "build/fonts/fa-brands-400.woff": "/build/fonts/fa-brands-400.ec3cfdde.woff",
@@ -24,11 +24,5 @@
   "build/images/fa-regular-400.svg": "/build/images/fa-regular-400.89ffa3ab.svg",
   "build/images/fa-solid-900.svg": "/build/images/fa-solid-900.ec763292.svg",
   "build/js/app.css": "/build/js/app.css",
-  "build/js/app.js": "/build/js/app.js",
-  "build/fonts/LibertinusSans-Bold.woff2": "/build/fonts/LibertinusSans-Bold.ad5f43b7.woff2",
-  "build/fonts/LibertinusSans-Regular.woff2": "/build/fonts/LibertinusSans-Regular.47d6ea45.woff2",
-  "build/fonts/LibertinusSerif-Bold.woff2": "/build/fonts/LibertinusSerif-Bold.8bf11798.woff2",
-  "build/fonts/LibertinusSerif-BoldItalic.woff2": "/build/fonts/LibertinusSerif-BoldItalic.a7cd4920.woff2",
-  "build/fonts/LibertinusSerif-Italic.woff2": "/build/fonts/LibertinusSerif-Italic.95458d3c.woff2",
-  "build/fonts/LibertinusSerif-Regular.woff2": "/build/fonts/LibertinusSerif-Regular.33262668.woff2"
+  "build/js/app.js": "/build/js/app.js"
 }
