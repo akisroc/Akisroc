@@ -40,4 +40,6 @@ before_script:
   - php bin/console doctrine:fixtures:load --no-interaction
   - php -S 127.0.0.1:8000 -t public/ &
 
-script: php bin/phpunit tests/
+scripts:
+  - php bin/phpunit tests/
+  - ./vendor/bin/phpstan analyse src/ --level max
