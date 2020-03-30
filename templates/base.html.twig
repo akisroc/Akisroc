@@ -14,42 +14,7 @@
   <body>
 
     {# HEADER #}
-    <header class="main-header flow">
-{#      <nav class="header-menu flow">#}
-{#        {% if app.user %}#}
-{#          <span class="al6 a4 cl8 c2 dl10 d1">#}
-{#            <a href="#">{{ app.user }}</a>#}
-{#          </span>#}
-{#          <span class="a4 c2 d1">#}
-{#            <a href="{{ path('logout') }}">Se déconnecter</a>#}
-{#          </span>#}
-{#        {% else %}#}
-{#          <span class="al6 a4 cl8 c2 dl10 d1">#}
-{#            <a href="{{ path('login') }}">Se connecter</a>#}
-{#          </span>#}
-{#          <span class="a4 c2 d1">#}
-{#            <a href="{{ path('user.register') }}">S'inscrire</a>#}
-{#          </span>#}
-{#        {% endif %}#}
-{#      </nav>#}
-      <div class="header-title">
-        <a href="{{ path('homepage') }}">
-          <h1 class="cell">
-            Akisroc
-          </h1>
-        </a>
-      </div>
-    </header>
-    {# END HEADER #}
-
-    {# CONTENT #}
-    <main>
-      {% block body %}{% endblock %}
-    </main>
-    {# END CONTENT #}
-
-    {# FOOTER #}
-    <footer>
+    <header>
       <div id="navigation">
         <label for="menu-toggle" role="button">
           <span class="fas fa-compass"></span>
@@ -65,6 +30,24 @@
           {% endif %}
         </nav>
       </div>
+{#      <div class="header-title">#}
+{#        <a href="{{ path('homepage') }}">#}
+{#          <h1 class="cell">#}
+{#            Akisroc#}
+{#          </h1>#}
+{#        </a>#}
+{#      </div>#}
+    </header>
+    {# END HEADER #}
+
+    {# CONTENT #}
+    <main>
+      {% block body %}{% endblock %}
+    </main>
+    {# END CONTENT #}
+
+    {# FOOTER #}
+    <footer>
     </footer>
     {# END FOOTER #}
 

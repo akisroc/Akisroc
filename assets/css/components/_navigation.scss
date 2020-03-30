@@ -39,13 +39,34 @@
     display: none;
 
   }
-  #menu-toggle:checked ~ nav, #menu-toggle:hover ~ nav, nav:hover {
+  /*#menu-toggle:checked ~ nav, */#menu-toggle:hover ~ nav, nav:hover {
     right: 0;
     a {
       color: rgba($color-white, 0.7);
       &:hover {
         color: rgba($color-white, 1);
         transform: scale(1.1);
+      }
+    }
+  }
+}
+
+@media all and (min-width: $breakpoint-tablet-landscape) {
+  #navigation {
+    label[for="menu-toggle"] {
+      display: none;
+    }
+    nav {
+      display: flex;
+      justify-content: flex-end;
+      height: 40px;
+      left: 0;
+      a {
+        height: auto;
+        margin: 0;
+        padding: 4px 8px;
+        font-size: 2rem;
+        color: $color-white;
       }
     }
   }
