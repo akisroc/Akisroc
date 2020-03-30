@@ -170,28 +170,4 @@ class Topic extends AbstractEntity
             }
         }
     }
-
-    /**
-     * @return Category|null
-     */
-    public function getCategory(): ?Category
-    {
-        if ($board = $this->getBoard()) {
-            return $board->getCategory();
-        }
-
-        return null;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getType(): ?string
-    {
-        if ($category = $this->getCategory()) {
-            return $category->getType();
-        }
-
-        return null;
-    }
 }
