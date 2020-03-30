@@ -1,5 +1,8 @@
 framework:
     default_locale: '%locale%'
+    # todo: On Symfony 5.1
+    # translation:
+        # enabled_locales: ['fr', 'en']
     translator:
         paths:
             - '%kernel.project_dir%/translations'
