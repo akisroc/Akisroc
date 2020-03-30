@@ -1,6 +1,15 @@
 # Mises à jour
 
-## v0.3.0
+## v0.3.0 - À venir
+
+Cette version n'apporte pas de grosses nouvelles fonctionnalités.
+Le projet ayant été à l'abandon plus de deux ans, il a surtout fait l'objet
+de profondes refontes et de mises à jour techniques.
+
+Akisroc est notamment passé sous PHP 7.4 et Symfony 5, ce qui a nécessité
+pas mal de travail. En outre, le cadre de tests automatisés a été réparé
+et amélioré, avec entre autres l'ajout d'outils d'analyse statique tels
+que PHPStan et PHPInsights.
 
 ### Nouveautés
 - Messages d'erreurs précis sur les formulaires
