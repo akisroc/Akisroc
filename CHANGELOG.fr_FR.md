@@ -12,6 +12,7 @@ et amélioré, avec entre autres l'ajout d'outils d'analyse statique tels
 que PHPStan et PHPInsights.
 
 ### Nouveautés
+- Licence (GPL-3.0)
 - Messages d'erreurs précis sur les formulaires
 
 ### Changements

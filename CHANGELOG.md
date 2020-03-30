@@ -12,6 +12,7 @@ among other things, the addition of static analysis tools like PHPStan
 and PHPInsights.
 
 ### Added
+- Licence (GPL-3.0)
 - Accurate error messages on forms
 
 ### Changed
