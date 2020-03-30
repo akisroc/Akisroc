@@ -36,5 +36,5 @@ cp phpunit.xml.dist phpunit.xml
 php bin/phpunit tests/
 
 # Here we go
-php bin/console server:run
+symfony serve
 ```
