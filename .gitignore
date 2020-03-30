@@ -18,6 +18,8 @@
 /node_modules/
 /submodules/
 /tests/coverage/
+/.phpdoc/
+/.doc/
 ###< app ###
 
 ###> local ###
@@ -45,3 +47,4 @@ yarn-error.log
 /.php_cs
 /.php_cs.cache
 ###< friendsofphp/php-cs-fixer ###
+
