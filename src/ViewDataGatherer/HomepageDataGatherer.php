@@ -15,7 +15,7 @@ use App\Entity\Place;
 final class HomepageDataGatherer extends AbstractViewDataGatherer
 {
     /**
-     * @return array
+     * @return array<string, mixed>
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function gatherData(): array

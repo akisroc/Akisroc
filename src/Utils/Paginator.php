@@ -1,6 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Utils;
+
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination as ORM;
@@ -12,13 +15,13 @@ use Doctrine\ORM\Tools\Pagination as ORM;
 class Paginator
 {
     /** @var int $page */
-    protected $page;
+    protected int $page;
 
     /** @var int $itemsPerPage */
-    protected $itemsPerPage;
+    protected int $itemsPerPage;
 
     /** @var int $count */
-    protected $count;
+    protected int $count;
 
     /**
      * Paginator constructor.
@@ -33,6 +36,7 @@ class Paginator
 
     /**
      * @param QueryBuilder|Query $query
+     *
      * @return ORM\Paginator
      */
     public function paginate($query): ORM\Paginator

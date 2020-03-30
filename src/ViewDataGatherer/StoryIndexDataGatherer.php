@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * This file is part of the Akisroc package.
+ *
+ * @author Adrien H <adrien.h@tuta.io>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 declare(strict_types=1);
 
 namespace App\ViewDataGatherer;
@@ -33,6 +42,12 @@ final class StoryIndexDataGatherer extends AbstractViewDataGatherer
         $this->paginationHelper = $paginationHelper;
     }
 
+    /**
+     * @param string $slug
+     * @param int $page
+     * @param int|null $maxResults
+     * @return array<string, mixed>
+     */
     public function gatherData(string $slug, int $page, ?int $maxResults): array
     {
         $story = $this->em

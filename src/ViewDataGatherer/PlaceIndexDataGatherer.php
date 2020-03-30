@@ -41,7 +41,7 @@ final class PlaceIndexDataGatherer extends AbstractViewDataGatherer
      * @param int $page
      * @param int|null $maxResults
      *
-     * @return array<string, Place|Paginator|array<string, int>>
+     * @return array<string, mixed>
      *
      * @throws NotFoundHttpException If no Place is found for given slug
      */

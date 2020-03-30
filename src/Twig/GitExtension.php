@@ -13,7 +13,7 @@ use Twig\TwigFunction;
 class GitExtension extends AbstractExtension
 {
     /**
-     * @return array
+     * @return TwigFunction[]
      */
     public function getFunctions(): array
     {

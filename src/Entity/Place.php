@@ -76,7 +76,7 @@ class Place extends AbstractEntity
      * @ORM\OneToMany(targetEntity="Story", mappedBy="place", cascade={"remove"})
      * @ORM\JoinColumn(nullable=true)
      *
-     * @var Collection|null
+     * @var Collection<Story>|null
      */
     private ?Collection $stories = null;
 

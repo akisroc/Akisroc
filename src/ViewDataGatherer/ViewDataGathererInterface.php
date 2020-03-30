@@ -35,7 +35,7 @@ interface ViewDataGathererInterface
      *         'user' => [UserObject]
      *     ]
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function gatherData(): array;
 }

@@ -24,7 +24,7 @@ abstract class AbstractRepository extends EntityRepository
      * @param int|null $offset
      * @param array $criteria
      *
-     * @return array
+     * @return EntityInterface[]
      */
     public function getList(string $order = 'DESC',
                             int $limit = null,
