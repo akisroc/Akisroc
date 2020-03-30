@@ -17,16 +17,13 @@ cp .env.dist .env
 php bin/console doctrine:schema:create
 
 # Create local file for admin crendentials (adapt to your needs)
-echo $'Admin\nadmin@admin.fr\nAdmin' >src/DataFixtures/Prod/.apwd
+echo $'Root\nroot@root.fr\nRoot' >src/DataFixtures/Prod/.apwd
 
 # Load fixtures
 php bin/console doctrine:fixtures:load --no-interaction
 
 # In prod environment, you might not want to leave this here
 rm src/DataFixtures/Prod/.apwd
-
-# Init and update submodules
-git submodule update --init
 
 # Install and build NPM dependencies
 npm install
@@ -37,4 +34,7 @@ cp phpunit.xml.dist phpunit.xml
 
 # Everything should work fine now. Test the application. (:
 php bin/phpunit tests/
+
+# Here we go
+php bin/console server:run
 ```
