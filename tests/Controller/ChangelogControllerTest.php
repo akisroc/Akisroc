@@ -10,6 +10,10 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  */
 class ChangelogControllerTest extends WebTestCase
 {
+    /**
+     * @group functional
+     * @return void
+     */
     public function testPageIsSuccessful(): void
     {
         $client = static::createClient();

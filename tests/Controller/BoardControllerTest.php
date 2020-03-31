@@ -12,8 +12,12 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 class BoardControllerTest extends WebTestCase
 {
     /**
+     * @group functional
      * @dataProvider urlProvider
+     *
      * @param string $url
+     *
+     * @return void
      */
     public function testPageIsSuccessful(string $url): void
     {
@@ -28,8 +32,12 @@ class BoardControllerTest extends WebTestCase
     }
 
     /**
+     * @group functional
      * @dataProvider urlProvider
+     *
      * @param string $url
+     *
+     * @return void
      */
     public function testAddTopic(string $url): void
     {

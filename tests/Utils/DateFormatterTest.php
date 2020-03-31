@@ -13,10 +13,17 @@ class DateFormatterTest extends TestCase
 {
     /**
      * Must correctly format date
+     *
+     * @group unit
      * @dataProvider parseCaseProvider
+     *
      * @param string $input
      * @param string $expected
      * @param string|null $format
+     *
+     * @return void
+     *
+     * @throws \Exception
      */
     public function testFormat(string $input, string $expected, string $format = null): void
     {
@@ -26,6 +33,8 @@ class DateFormatterTest extends TestCase
     }
 
     /**
+     * @group unit
+     *
      * @return \Generator
      */
     public function parseCaseProvider(): \Generator

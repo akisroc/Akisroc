@@ -13,6 +13,10 @@ class GitTest extends TestCase
 {
     /**
      * Must be a valid commit short hash or a valid tag vX.x.x
+     *
+     * @group unit
+     *
+     * @return void
      */
     public function testGetVersion(): void
     {

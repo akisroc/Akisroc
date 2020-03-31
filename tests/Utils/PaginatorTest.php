@@ -31,6 +31,10 @@ class PaginatorTest extends WebTestCase
 
     /**
      * Must paginate query
+     *
+     * @group unit
+     *
+     * @return void
      */
     public function testPaginate(): void
     {

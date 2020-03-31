@@ -18,6 +18,10 @@ class FixturesServiceTest extends TestCase
 {
     /**
      * References must be filtered by class name.
+     *
+     * @group unit
+     *
+     * @return void
      */
     public function testFilterReferences(): void
     {
@@ -43,6 +47,10 @@ class FixturesServiceTest extends TestCase
 
     /**
      * Random entity must match with given class.
+     *
+     * @group unit
+     *
+     * @retun void
      */
     public function testRandEntity(): void
     {
