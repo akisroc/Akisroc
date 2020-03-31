@@ -6,6 +6,7 @@
         "antishov/doctrine-extensions-bundle": "^1.4",
         "doctrine/annotations": "1.8.*",
         "doctrine/doctrine-bundle": "2.0.*",
+        "doctrine/doctrine-migrations-bundle": "^2.1",
         "doctrine/orm": "2.7.*",
         "erusev/parsedown": "1.7.*",
         "sensio/framework-extra-bundle": "5.5.*",
