@@ -8,12 +8,12 @@
 /var/
 /vendor/
 ###< symfony/framework-bundle ###
+
 ###> app ###
-/node_modules/
-/submodules/
 /tests/coverage/
 /.phpdoc/
 /.doc/
+/database/
 ###< app ###
 
 ###> local ###

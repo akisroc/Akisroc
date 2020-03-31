@@ -1,40 +1,31 @@
 # Akisroc
 
 ## Setup
+
+### Development environment
+
+Building and serving locally dev project requires:
+- [gosu](https://github.com/tianon/gosu)
+- [docker-compose](https://docs.docker.com/compose)
+
 ```bash
-# Project root
+# Build the project
+make dev
 
-# Install Composer dependencies
-composer install
+# Start the application
+make start
 
-# Run Docker images
-docker-compose run
+# Test the application
+make test
+```
 
-# Copy local .env file then configure it to your needs
-cp .env.dist .env
+### Production build
 
-# Generate database
-php bin/console doctrine:schema:create
+The production build requires:
+- [php7.4](https://www.php.net)
+- [composer](https://getcomposer.org)
+- [npm](https://www.npmjs.com)
 
-# Create local file for admin crendentials (adapt to your needs)
-echo $'Root\nroot@root.fr\nRoot' >src/DataFixtures/Prod/.apwd
-
-# Load fixtures
-php bin/console doctrine:fixtures:load --no-interaction
-
-# In prod environment, you might not want to leave this here
-rm src/DataFixtures/Prod/.apwd
-
-# Install and build NPM dependencies
-npm install
-npm run dev
-
-# Copy local phpunit file then configure it to your needs
-cp phpunit.xml.dist phpunit.xml
-
-# Everything should work fine now. Test the application. (:
-php bin/phpunit tests/
-
-# Here we go
-symfony serve
+```bash
+make prod
 ```
