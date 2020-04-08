@@ -51,7 +51,7 @@ class TopicFixtures extends Fixture implements DependentFixtureInterface
 
                 $post = new Post();
                 /** @var User $user */
-                $user = $this->getReference('user_' . rand(0, UserFixtures::COUNT));
+                $user = $this->getReference('user_' . rand(0, UserFixtures::COUNT - 1));
                 $user->addPost($post);
                 $topic->addPost($post);
 

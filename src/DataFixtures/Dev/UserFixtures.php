@@ -27,11 +27,7 @@ class UserFixtures extends Fixture
 
         $encoder = new SodiumPasswordEncoder();
 
-
-        $users = [
-            ['username' => 'admin', 'email' => 'admin@akisroc-jdr.fr', 'password' => 'admin', 'roles' => ['ROLE_USER', 'ROLE_ADMIN']],
-            ['username' => 'user', 'email' => 'user@akisroc-jdr.fr', 'password' => 'user', 'roles' => ['ROLE_USER']],
-        ];
+        $users = [];
         for ($i = 0; $i < self::COUNT; ++$i) {
             $users[] = [
                 'username' => $faker->unique()->firstName,

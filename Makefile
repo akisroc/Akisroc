@@ -1,4 +1,4 @@
-.PHONY         =  help prod install test build start kill reset clean confirm watch assets database migration
+.PHONY         =  help prod prod-deps prod-admin install test build start kill reset clean confirm watch assets database migration
 .DEFAULT_GOAL  =  help
 
 DOCKER_COMPOSE = docker-compose
@@ -59,9 +59,9 @@ database: vendor .env ## Create database from Doctrine schema
 	-$(CONSOLE) doctrine:database:create --if-not-exists
 	$(CONSOLE) doctrine:schema:create
 	#Todo: $(CONSOLE) doctrine:migrations:migrate --no-interaction --allow-no-migration
-	echo -en 'Root\nroot@root.fr\nRoot' > src/DataFixtures/Prod/.apwd
 	$(CONSOLE) doctrine:fixtures:load --no-interaction
-	rm src/DataFixtures/Prod/.apwd
+	$(CONSOLE) app:create-user --role="ROLE_ADMIN" --username="admin" --email="admin@akisroc.dev" --password="adminadmin"
+	$(CONSOLE) app:create-user --role="ROLE_USER" --username="user" --email="user@akisroc.dev" --password="useruser"
 
 
 ## --------------------------------
@@ -105,9 +105,15 @@ phpunit.xml: phpunit.xml.dist ## Create phpunit.xml file from phpunit.xml.dist
 ##     Production build
 ## --------------------------------
 
-prod: ## Build for production
+prod: prod-deps prod-admin ## Build for production
+
+prod-deps:
 	composer install --no-dev -o -a
 	php bin/console cache:clear --env=prod --no-debug
 	php bin/console doctrine:migrations:migrate
 	npm install
 	npm run build
+
+prod-admin:
+	echo "Please create the first administrator user"
+	php bin/console app:create-user --role="ROLE_ADMIN"
