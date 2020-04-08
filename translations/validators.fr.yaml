@@ -15,8 +15,6 @@ violation:
     too_long: "La taille du mot de passe ne peut pas être supérieure à {{ limit }}."
   board:
     blank: "Le sous-forum ne peut pas être vide."
-  place:
-    blank: "Le lieu ne peut pas être vide."
   slug:
     blank: "Le slug ne peut pas être vide."
     too_short: "La taille du slug ne peut pas être inférieure à {{ limit }}."

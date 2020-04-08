@@ -21,19 +21,6 @@
 
 {% block body %}
   {{ block('beta_header') }}  {#@Todo Remove it#}
-  <nav class="places">
-    <header>
-      <h2>RP</h2>
-    </header>
-    <div>
-      {% for place in places %}
-        <a class="place" href="{{ path('place.index', { slug: place.slug }) }}">
-          <h3>{{ place.title }}</h3>
-          <p>{{ place.description }}</p>
-        </a>
-      {% endfor %}
-    </div>
-  </nav>
 
   <nav class="categories">
     <header>

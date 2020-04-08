@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Dev;
 
-use App\DataFixtures\PlaceFixtures;
-use App\Entity\Place;
 use App\Entity\Episode;
 use App\Entity\Protagonist;
 use App\Entity\Story;
@@ -34,14 +32,8 @@ class StoryFixtures extends Fixture implements DependentFixtureInterface
         $i = 0;
         $date = \DateTime::createFromFormat('Ymd', '20200101');
         $interval = \DateInterval::createFromDateString('1 hour + 3 minutes');
-        $nbOfPlaces = count(PlaceFixtures::providePlaces());
         do {
             $story = new Story();
-            /** @var Place $place */
-            $place = $this->getReference(
-                'place_' . rand(0, $nbOfPlaces - 1)
-            );
-            $place->addStory($story);
 
             $title = $faker->colorName . ' ' . $faker->numberBetween(1, 999) . ' ' . $faker->words(2, true);
             $story->setTitle($title);
@@ -77,7 +69,7 @@ class StoryFixtures extends Fixture implements DependentFixtureInterface
     public function getDependencies(): array
     {
         return [
-            UserFixtures::class, PlaceFixtures::class
+            UserFixtures::class
         ];
     }
 }

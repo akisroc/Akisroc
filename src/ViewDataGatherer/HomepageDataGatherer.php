@@ -6,7 +6,6 @@ namespace App\ViewDataGatherer;
 
 use App\Entity\Board;
 use App\Entity\Episode;
-use App\Entity\Place;
 
 /**
  * Class HomepageDataGatherer
@@ -21,7 +20,6 @@ final class HomepageDataGatherer extends AbstractViewDataGatherer
     public function gatherData(): array
     {
         return [
-            'places' => $this->em->getRepository(Place::class)->findAll(),
             'last_episode' => $this->getLastEpisode(),
             'boards' => $this->em->getRepository(Board::class)->findAll()
         ];

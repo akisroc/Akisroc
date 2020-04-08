@@ -15,6 +15,9 @@ and PHPInsights.
 - Licence (GPL-3.0)
 - Accurate error messages on forms
 
+### Removed
+- Places
+
 ### Changed
 - Styles
 - Nicer main menu

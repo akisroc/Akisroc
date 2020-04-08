@@ -43,16 +43,6 @@ class Story extends AbstractEntity
     private ?string $slug = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Place", inversedBy="stories")
-     * @ORM\JoinColumn(nullable=false)
-     *
-     * @Assert\NotBlank(message="violation.place.blank")
-     *
-     * @var Place|null
-     */
-    private ?Place $place = null;
-
-    /**
      * @ORM\OneToMany(targetEntity="Episode", mappedBy="story", cascade={"remove"})
      *
      * @Assert\Count(min=1, minMessage="violation.story.no_episode")
@@ -107,22 +97,6 @@ class Story extends AbstractEntity
     public function setSlug(?string $slug): void
     {
         $this->slug = $slug;
-    }
-
-    /**
-     * @return Place|null
-     */
-    public function getPlace(): ?Place
-    {
-        return $this->place;
-    }
-
-    /**
-     * @param Place|null $place
-     */
-    public function setPlace(?Place $place): void
-    {
-        $this->place = $place;
     }
 
     /**

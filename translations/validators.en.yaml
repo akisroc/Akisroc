@@ -15,8 +15,6 @@ violation:
     too_long: "Password's length cannot be greater than {{ limit }}."
   board:
     blank: "Board must not be blank."
-  place:
-    blank: "Place must not be blank."
   slug:
     blank: "Slug must not be blank."
     too_short: "Slug's length cannot be less than {{ limit }}."
