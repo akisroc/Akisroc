@@ -111,6 +111,34 @@ abstract class AbstractRepository extends EntityRepository
     }
 
     /**
+     * @param array<string, mixed> $criteria
+     *
+     * @return EntityInterface|null
+     *
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function findRandom(array $criteria = []): ?EntityInterface
+    {
+        $qb = $this->createQueryBuilder('entity');
+        $qb->select('COUNT(entity)');
+        $this->applyCriteria($qb, $criteria);
+
+        $count = $qb->getQuery()->getSingleScalarResult();
+        if ($count < 1) {
+            return null;
+        }
+
+        $qb->select('entity');
+        $qb->setFirstResult(
+            rand(0, $count - 1)
+        );
+        $qb->setMaxResults(1);
+
+        return $qb->getQuery()->getOneOrNullResult();
+    }
+
+    /**
      * @param array $criteria
      *
      * @return EntityInterface|null
