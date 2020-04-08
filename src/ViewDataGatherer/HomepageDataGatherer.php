@@ -6,6 +6,7 @@ namespace App\ViewDataGatherer;
 
 use App\Entity\Board;
 use App\Entity\Episode;
+use App\Entity\Story;
 
 /**
  * Class HomepageDataGatherer
@@ -21,6 +22,7 @@ final class HomepageDataGatherer extends AbstractViewDataGatherer
     {
         return [
             'last_episode' => $this->getLastEpisode(),
+            'random_story' => $this->getRandomStory(),
             'boards' => $this->em->getRepository(Board::class)->findAll()
         ];
     }
@@ -46,5 +48,15 @@ final class HomepageDataGatherer extends AbstractViewDataGatherer
         $qb->orderBy('episode.createdAt', 'DESC');
 
         return $qb->getQuery()->getOneOrNullResult();
+    }
+
+    /**
+     * @return Story|null
+     */
+    private function getRandomStory(): ?Story
+    {
+        $r = $this->em->getRepository(Story::class);
+
+        return $r->findRandom();
     }
 }
