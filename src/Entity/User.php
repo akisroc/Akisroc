@@ -356,7 +356,7 @@ class User extends AbstractEntity implements UserInterface, EquatableInterface
      */
     public function getRoles(): array
     {
-        return ['ROLE_USER'];
+        return $this->roles;
     }
 
     /**
