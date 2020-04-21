@@ -351,6 +351,16 @@ class User extends AbstractEntity implements UserInterface, EquatableInterface
     }
 
     /**
+     * @param Story $story
+     */
+    public function voteForStory(Story $story): void
+    {
+        $story->addVote(
+            new Vote($this, $story)
+        );
+    }
+
+    /**
      * {@inheritdoc}
      * @return string[]
      */

@@ -23,6 +23,9 @@ final class HomepageDataGatherer extends AbstractViewDataGatherer
         return [
             'last_episode' => $this->getLastEpisode(),
             'random_story' => $this->getRandomStory(),
+            'trending_story' => $this->em->getRepository(Story::class)->getTrending(
+                new \DateInterval('P1M')
+            ),
             'boards' => $this->em->getRepository(Board::class)->findAll()
         ];
     }

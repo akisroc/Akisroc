@@ -52,11 +52,19 @@ class Story extends AbstractEntity
     private ?Collection $episodes = null;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Vote", mappedBy="user", cascade={"persist", "remove"})
+     *
+     * @var Collection|null
+     */
+    private ?Collection $votes = null;
+
+    /**
      * Story constructor.
      */
     public function __construct()
     {
         $this->episodes = new ArrayCollection();
+        $this->votes = new ArrayCollection();
     }
 
     /**
@@ -130,6 +138,36 @@ class Story extends AbstractEntity
             if ($episode->getStory() === $this) {
                 $episode->setStory(null);
             }
+        }
+    }
+
+    /**
+     * @return Collection|null
+     */
+    public function getVotes(): ?Collection
+    {
+        return $this->votes;
+    }
+
+    /**
+     * @param Vote $vote
+     * @return void
+     */
+    public function addVote(Vote $vote): void
+    {
+        if (!$this->votes->contains($vote)) {
+            $this->votes[] = $vote;
+        }
+    }
+
+    /**
+     * @param Vote $vote
+     * @return void
+     */
+    public function removeVote(Vote $vote): void
+    {
+        if ($this->votes->contains($vote)) {
+            $this->votes->removeElement($vote);
         }
     }
 }

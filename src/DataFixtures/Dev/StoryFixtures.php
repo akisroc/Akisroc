@@ -7,6 +7,7 @@ namespace App\DataFixtures\Dev;
 use App\Entity\Episode;
 use App\Entity\Protagonist;
 use App\Entity\Story;
+use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -18,7 +19,7 @@ use Faker\Factory;
  */
 class StoryFixtures extends Fixture implements DependentFixtureInterface
 {
-    private const EPISODE_COUNT = 500;
+    public const EPISODE_COUNT = 500;
 
     /**
      * @param ObjectManager $manager
@@ -38,6 +39,16 @@ class StoryFixtures extends Fixture implements DependentFixtureInterface
             $title = $faker->colorName . ' ' . $faker->numberBetween(1, 999) . ' ' . $faker->words(2, true);
             $story->setTitle($title);
 
+            // Votes
+            for ($j = 0, $n = UserFixtures::COUNT - 1; $j < $n; ++$j) {
+                if ($faker->boolean(rand(10, 90))) {
+                    /** @var User $user */
+                    $user = $this->getReference("user_$j");
+                    $user->voteForStory($story);
+                }
+            }
+
+            // Episodes
             for ($j = 0, $n = rand(1, 33); $j < $n; ++$j) {
                 $date = clone $date->add($interval);
 
