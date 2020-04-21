@@ -43,7 +43,7 @@ class StoryFixtures extends Fixture implements DependentFixtureInterface
 
                 $episode = new Episode();
                 /** @var Protagonist $protagonist */
-                $protagonist = $this->getReference('protagonist_' . rand(0, UserFixtures::COUNT));
+                $protagonist = $this->getReference('protagonist_' . rand(0, ProtagonistFixtures::COUNT - 1));
                 $protagonist->addEpisode($episode);
                 $story->addEpisode($episode);
 
@@ -69,7 +69,7 @@ class StoryFixtures extends Fixture implements DependentFixtureInterface
     public function getDependencies(): array
     {
         return [
-            UserFixtures::class
+            ProtagonistFixtures::class
         ];
     }
 }
