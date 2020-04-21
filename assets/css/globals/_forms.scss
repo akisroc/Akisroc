@@ -4,33 +4,33 @@ input {
   padding: 12px 4px 6px 4px;
   border: 1px solid transparent;
   border-radius: 2px;
-  border-bottom: 1px solid $color-light-primary;
+  border-bottom: 1px solid $color-secondary;
   background-color: transparent;
-  color: $color-light-primary;
+  color: $color-secondary;
   font-size: 1.3rem;
   font-weight: bold;
   transition: all 0.1s ease-in-out;
   &:hover {
-    border-bottom: 1px solid $color-dark-primary;
+    border-bottom: 1px solid $color-primary;
   }
   &:focus {
     padding: 12px 4px 6px 4px;
     border-radius: 12px;
-    border-bottom: 1px solid $color-dark-primary;
-    color: $color-dark-primary;
+    border-bottom: 1px solid $color-primary;
+    color: $color-primary;
   }
 }
 
 label {
-  color: $color-light-primary;
+  color: $color-secondary;
   font-size: 1.1rem;
   transition: all 0.1s ease-in-out;
   input:focus ~ & {
     font-weight: bold;
     padding-left: 12px;
-    color: $color-dark-primary;
+    color: $color-primary;
   }
   input:hover ~ & {
-    color: $color-dark-primary;
+    color: $color-primary;
   }
 }

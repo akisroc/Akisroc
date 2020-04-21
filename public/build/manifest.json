@@ -1,4 +1,7 @@
 {
+  "build/images/alma.jpg": "/build/images/alma.d958c6c9.jpg",
+  "build/images/bg.jpg": "/build/images/bg.9b963aba.jpg",
+  "build/js/app.js": "/build/js/app.js",
   "build/css/app.css": "/build/css/app.css",
   "build/fonts/LibertinusSans-Bold.woff2": "/build/fonts/LibertinusSans-Bold.ad5f43b7.woff2",
   "build/fonts/LibertinusSans-Regular.woff2": "/build/fonts/LibertinusSans-Regular.47d6ea45.woff2",
@@ -18,11 +21,8 @@
   "build/fonts/fa-solid-900.ttf": "/build/fonts/fa-solid-900.1ab236ed.ttf",
   "build/fonts/fa-solid-900.woff": "/build/fonts/fa-solid-900.bea989e8.woff",
   "build/fonts/fa-solid-900.woff2": "/build/fonts/fa-solid-900.b15db15f.woff2",
-  "build/images/alma.jpg": "/build/images/alma.d958c6c9.jpg",
-  "build/images/bg.jpg": "/build/images/bg.9b963aba.jpg",
   "build/images/fa-brands-400.svg": "/build/images/fa-brands-400.0cb5a5c0.svg",
   "build/images/fa-regular-400.svg": "/build/images/fa-regular-400.89ffa3ab.svg",
   "build/images/fa-solid-900.svg": "/build/images/fa-solid-900.ec763292.svg",
-  "build/js/app.css": "/build/js/app.css",
-  "build/js/app.js": "/build/js/app.js"
+  "build/js/app.css": "/build/js/app.css"
 }

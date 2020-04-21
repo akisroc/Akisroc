@@ -2,14 +2,14 @@
   h2 {
     padding: 8px 0 8px 4px;
     width: 100%;
-    border-bottom: 1px solid $color-dark-primary;
+    border-bottom: 1px solid $color-primary;
     font-size: 3rem;
   }
   .category {
     display: block;
     padding: 20px 0;
     font-size: 2rem;
-    color: $color-cream;
+    color: $color-page;
     transition: all 0.1s ease-in-out;
     h3 {
       font-size: 3rem;

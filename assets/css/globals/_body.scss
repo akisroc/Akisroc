@@ -1,11 +1,11 @@
 body {
   height: 100vh;
-  background-image: linear-gradient(315deg, $color-light-gray 0%, $color-cream 100%);
+  background-image: linear-gradient(315deg, $color-primary 0%, $color-page 100%);
   background-attachment: fixed;
   font-family: "Libertinus Serif", "Helvetica", "serif";
 }
 
 ::selection {
-  background-color: rgba($color-light-primary, 0.4);
-  color: $color-dark-primary;
+  background-color: rgba($color-text, 0.4);
+  color: $color-page;
 }

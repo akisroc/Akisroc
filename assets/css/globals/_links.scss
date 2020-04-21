@@ -1,8 +1,8 @@
 a {
-  color: $color-light-primary;
+  color: $color-primary;
   font-weight: bold;
   transition: color 0.2s ease-in-out;
   &:hover {
-    color: $color-dark-primary;
+    color: $color-secondary;
   }
 }
