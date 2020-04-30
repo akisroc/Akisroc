@@ -1,0 +1,25 @@
+{#Needed variables:#}
+{#  - story#}
+{#  - title#}
+
+{% if story is defined %}
+  <a href="{{ path('story.index', { slug: story.slug }) }}">
+    <article class="story-card">
+      <header>
+        <h2>
+          {% if title is defined %}
+            {{ title }}
+          {% else %}
+            {% trans %}story_card.default_title{% endtrans %}
+          {% endif %}
+        </h2>
+        <h3>
+          {{ story.title }}
+        </h3>
+      </header>
+      <div>
+
+      </div>
+    </article>
+  </a>
+{% endif %}

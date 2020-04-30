@@ -28,16 +28,18 @@
     </header>
     <nav>
       <div>
-        <a href="#">
-          <h3>{% trans %}homepage.active_story{% endtrans %}</h3>
-        </a>
-        <a href="#">
-          <h3>{% trans %}hompeage.random_story{% endtrans %}</h3>
-        </a>
-        <a href="#">
-          <h3>{% trans %}homepage.trending_story{% endtrans %}</h3>
-        </a>
-      </div>
+        {% include '_components/story-card.html.twig' with {
+          story: last_episode.story,
+          title: 'homepage.active_story' | trans
+        } only %}
+        {% include '_components/story-card.html.twig' with {
+          story: random_story,
+          title: 'homepage.random_story' | trans
+        } only %}
+        {% include '_components/story-card.html.twig' with {
+          story: trending_story,
+          title: 'homepage.trending_story' | trans
+        } only %}
       <div>
         <a href="#">
           <h3>{% trans %}homepage.all_stories{% endtrans %}</h3>
