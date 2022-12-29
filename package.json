@@ -21,10 +21,10 @@
     "foundation-sites": "^6.4.4-rc1"
   },
   "devDependencies": {
-    "@symfony/webpack-encore": "^0.17.0",
+    "@symfony/webpack-encore": "^4.2.0",
     "autoprefixer": "^7.1.6",
     "node-sass": "^4.7.2",
-    "postcss-loader": "^2.0.9",
-    "sass-loader": "^6.0.6"
+    "postcss-loader": "^7.0.2",
+    "sass-loader": "^13.2.0"
   }
 }
